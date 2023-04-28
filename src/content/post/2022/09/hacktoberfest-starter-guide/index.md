@@ -1,0 +1,30 @@
+---
+title: Hacktoberfest 2022 is almost there! Get ready!
+publishDate: '2022-09-21'
+tags:
+  - hacktoberfest
+  - open-source
+  - tutorial
+---
+
+September is almost over and **Hacktoberfest** is to begin soon!
+
+But what is [Hacktoberfest](https://hacktoberfest.com/)? It is not an Anonymous hacking anniversary, but a global event with the main goal to _raise awareness about Open Source and encourage as many developers as possible to participate_ regularly, not just in October.
+
+Hacktoberfest also comes with a challenge and the first 40.000 participants to complete it, will be eligible to decide between two prizes: the official Hacktoberfest 2022 t-shirt, or a tree planted in their name.
+
+Participation is bound to Open Source contributions, and starting from this year not only from code but also all the [other ways](/open-source-without-code) we know are counting as contributes.
+
+---
+
+The entire event works thanks to maintainers of projects facilitating all the process and guess what, everyone is a winner!
+
+Less-known projects have the chance of taking the spotlight and finding new contributors, as well as new developers approaching to Open Source have a large amount of repositories ready to welcome and guide them throughout their first steps in Open Source!
+
+Rewards are not only for contributors, but also for maintainers are they're the ones making this event successful!
+
+---
+
+You can find in this video here below my take on how to participate and what to take from this year's edition:
+
+[![Youtube Video!](./preview.jpeg)](https://youtu.be/P_YJ4CbuUs0)

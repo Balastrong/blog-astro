@@ -1,0 +1,25 @@
+---
+title: Open Visual Studio Code from terminal
+publishDate: '2022-10-14'
+tags:
+  - vscode
+  - tutorial
+  - open-source
+  - github
+---
+
+Ok, it's not a super secret feature, but I noticed some of my colleagues and friends do not use it at all while I think it's quite handy, so I'm sharing it here.
+
+You might already know, but you can launch vscode from the terminal by just typing `code`
+
+`code .` will Open vscode on the current location, also cool if you're wandering around your filesystem in the terminal for whatever reason.
+
+It can also accept a parameter that is the path, so with `code your/path` it will open a vscode instance already pointing to that file or folder. This is particularly handy right after `git clone` as all you have to do is `code repo-name` and you're ready to write some code.
+
+Last but for sure not least, I made a short video as usual about the topic, you can find it here:
+
+[![Watch the video](./preview.jpeg)](https://youtube.com/shorts/oUHlR_ouEAA)
+
+---
+
+**So, a question for you, how often do you open vscode from the terminal?**

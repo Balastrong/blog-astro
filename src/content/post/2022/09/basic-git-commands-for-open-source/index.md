@@ -1,0 +1,34 @@
+---
+title: Basic Git commands for Open Source
+publishDate: '2022-09-30'
+tags:
+  - git
+  - open-source
+  - tutorial
+  - github
+---
+
+**Hacktoberfest** is starting tomorrow!! Are you ready??
+
+In case you're quite new to git, I will try to explain in a simple way how to use the basic commands you absolutely need to contribute to Open Source.
+
+_Disclaimer: this tutorial is meant for beginners. I will oversimplify a little bit to make sure the concepts can be easily understood by someone who might have never used git or has little experience._
+
+The commands are:
+
+1. **clone** -> Copy a remote repository in your computer.
+2. **checkout** -> Create a new branch.
+3. **add** -> Put your local changes in the stage area.
+
+- **status** -> Not mandatory, just to see the current state is all as expected.
+
+4. **commit** -> Take a snapshot of the stage area (the file you just added).
+5. **push** -> Upload your commit(s) to the remote repository.
+
+Technically, you could do all these steps even without commands in terminal but with a GUI (Graphical User Interface) such as GitHub Desktop or Sourcetree, however since git is such a widespread and useful tool you're gonna use everyday, you must know at least the basics.
+
+---
+
+If you want to see how these commands can be used in a real case, you can watch this video I just uploaded on my [YouTube Channel](https://www.youtube.com/channel/UC-KqnO3ez7vF-kyIQ_22rdA?sub_confirmation=1) where i talk about Open Source and Web Development!
+
+[![Youtube Video](./preview.jpeg)](https://youtu.be/hTeHtkpTvqI)

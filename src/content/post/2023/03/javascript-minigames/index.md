@@ -1,0 +1,53 @@
+---
+title: 'Do you know JavaScript?'
+publishDate: '2023-03-13'
+image: ./_cover.png
+description: 'A collection of JavaScript minigames to prove your skills.'
+tags:
+  - webdev
+  - javascript
+---
+
+Do you know Javascript? The language we all love has some weird and sometimes unexpected behaviours.
+
+It is a good idea to know them, mostly to avoid unexpected bugs and unpleasant surprises.
+
+Do you want an example?
+
+```js
+const a = 0.1;
+const b = 0.2;
+const c = 0.3;
+
+console.log(a + b === c); // false
+```
+
+The output here is `false`. The sum `0.1 + 0.2` is not equal to `0.3`.
+
+Why does this happen? It's because of how floating point numbers are represented in JavaScript.
+
+One more cool example:
+
+```js
+'2' + '3' === '23'; // true
+```
+
+This was expected, right? We're concatenating two strings. But what if we replace `+` with `*`?
+
+```js
+'2' * '3' === 6; // true
+```
+
+In this case, the `*` operator tried to convert the two strings in numbers, that's why we got `6`.
+
+## The minigames
+
+I've collected 12 situations like these and I will walk you through them in this video. I will also use the node REPL to further expand on some of them when the output is particularly weird.
+
+{% youtube 8gGuu9c9miY %}
+
+---
+
+This video format is something I've had in mind for a while and I wanted to give it a try. To be honest I'm not too satisfied with the outcome, but I wanted to share it anyway to collect feedback and make even better versions in the future. I'd like to go with multiline code snippets and decide if keep the explanation or make it faster and more entertaining by skipping them. What do you think?
+
+With that said, I hope you enjoyed it and learned something new! Please let me know if you have suggestions on how to improve the video, or if you have any other feedback in general.

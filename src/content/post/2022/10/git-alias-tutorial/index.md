@@ -1,0 +1,70 @@
+---
+title: 🕵️‍♂️ Learn git alias and boost your productivity
+publishDate: '2022-10-22'
+image: ./_cover.png
+tags:
+  - git
+  - tutorial
+  - open-source
+---
+
+### Setting up an Alias
+
+Repeating the same git commands over and over again can be such a waste of time! And some of the most powerful ones are usually quite long and impossible to memorize.
+
+That’s why aliases have been introduced!
+
+Setting up an alias is really simple, just open up a terminal and type
+
+```sh
+git config --global alias.[commandName] [long command]
+```
+
+For example: `git config --global alias.st 'status'`
+
+In this case, if I call `git st`, it will give me the result of `git status`.
+
+![git st output](./git-status.jpeg)
+
+Ok, this was easy, but what about long commands such as this one?
+
+```sh
+log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+
+```
+
+You don’t want to write it every single time, right?
+
+Just run this:
+
+```sh
+git config —global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+
+```
+
+And you never have to remember this long command again!
+
+Look at how cool and colorful this log is, by just using `git lg`:
+
+![git lg output](./git-lg.png)
+
+### Understanding Aliases
+
+If with these two examples you agree with me that aliases are cool, let me give you some more information you should have, in order to use aliases mindfully. Later on, I’ll also share with you a list of other smart aliases you might find useful.
+
+**You can find everything in the video down below, where I also show:**
+
+- How to easily edit aliases without setting them from terminal
+- How to use the bang operator `!` (aka exclamation mark)
+- How this this weird syntax is useful: `"!f(){ [some commands here] }; f"`
+- A list of cool aliases to set up for you
+
+### See aliases in action
+
+You can watch the video on [YouTube](https://youtu.be/Uk4GnYoQx_I), or directly here from the embedded player:
+
+{% youtube Uk4GnYoQx_I %}
+
+---
+
+**If you have some cool aliases to share, feel free to drop them here in a comment, thank you!**

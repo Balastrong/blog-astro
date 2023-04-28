@@ -1,0 +1,29 @@
+---
+title: How to find a repository for Hacktoberfest 2022
+publishDate: '2022-09-27'
+tags:
+  - hacktoberfest
+  - open-source
+  - tutorial
+  - github
+---
+
+Hacktoberfest will start in a few days, are you ready??
+
+Let me check my gear... git updated to the latest version, RGB ram is shining in my desktop case and I've already signed up on the official website. What else?
+
+Ah right, I'd like to take the chance of getting to know new amazing projects with Hacktoberfest, but how can I find them?
+
+Well, here's a video on this topic!
+
+{% youtube YcOVmk-PSAI %}
+
+---
+
+Basically I'd suggest to navigate to the Hacktoberfest topic on GitHub (and maybe star it) to have a huuuuge list of repos.
+
+Using the search feature for issues using the labels as filters is good, but the advanced search for both issues and repos can be a good idea too!
+
+Those are good tricks to find projects for hacktoberfest, but all the other ways to find new repos remain valid.
+
+I go more in detail on these tips on the [video](https://youtu.be/YcOVmk-PSAI), if you want to have a look ;)

@@ -1,0 +1,74 @@
+---
+title: How Contribute to Open Source can Change Your Life
+publishDate: '2022-06-26'
+description: '8 reasons why you should start contributing to Open Source today!'
+image: './_cover.jpeg'
+tags:
+  - open-source
+  - tutorial
+---
+
+First of all, what is **Open Source**?
+Let’s take this quote from [RedHat](https://www.redhat.com/en/topics/open-source/what-is-open-source) that is particularly accurate:
+
+> Open source is a term that originally referred to open source software (OSS). Open source software is code that is designed to be publicly accessible—anyone can see, modify, and distribute the code as they see fit.
+> Open source software is developed in a decentralized and collaborative way, relying on peer review and community production. Open source software is often cheaper, more flexible, and has more longevity than its proprietary peers because it is developed by communities rather than a single author or company.
+
+{% youtube uquIcISFtwg %}
+
+---
+
+Here are a few reasons, 8 to be precise, why you should start today!
+
+## 1. Learn new things
+
+Open Source projects are structured by other developers with their own skills, knowledge and experience. This means you will find plenty of architectures, frameworks, patterns, implementations and so on and I’m quite sure you will find something never seen before. What does this mean? Time to learn something new!
+
+As we all know, there are many ways to achieve the exact same goal in programming and there are some best practices, usually based on the context. Contributing to multiple projects might show you some of those different approaches that you can analyze and learn from.
+The next time you’ll face a similar problem in one of your projects, you’ll have much more knowledge about how to handle it and what solution to adopt.
+
+## 2. Strengthen your skills
+
+If you’re an experienced developer, you might encounter implementations or approaches you already know. Is it wasted time? Absolutely not!
+As we know from Latin “Repetita iuvant”, which means “repeating helps”.
+By working in a field you’re confident in, in an open source project, you can refresh and keep up to date with your own knowledge by doing something you’re good at.
+Furthermore, maybe you always used version X of a library but that project uses X+1 which brings some cool features.
+
+## 3. Receive feedback
+
+When you open a PR you might get some comments on your code, most likely from the maintainers of the project.
+Feedback from other developers will help you widen your views and approach problems from various angles. Someone taking their time to share with you feedback is a gift!
+
+## 4. Better knowledge of the software you use
+
+A good starting point for Open Source is contributing to software we actually use. It could be a library or a framework we already know.
+Think of your favourite tools and do a quick search, many of them might be OS and open to contributions!
+Writing code for your favourite library will benefit you in many ways, for example by having a deeper knowledge of it. Bugs you will fix and features you will implement will be available not only to you but to everyone else. Isn’t that a win-win?
+
+## 5. Help the community
+
+We ourselves rely on open-source software more than we might think. If you’re using vscode as editor, it’s Open Source! When you navigate to your favourite websites they might use some OSS under the hood.
+You’re getting a lot for free, it can be a kind action to give back to the community by helping in public projects.
+
+## 6. Networking and finding a new job
+
+A lot of professionals are spending some of their time in OSS, some of them work for interesting companies looking for new hires.
+Working hard on some projects might end up in your work being noticed. One of the users you interact with on GitHub might recommend you to their employer or directly send you an offer!
+
+## 7. Improve your CV
+
+If you’re not that lucky that you directly got a job by being noticed on GitHub, you should still mention in your CV the amazing work you’re doing for the community!
+Having a good online presence is a huge bonus and contributing to OSS is highly appreciated when recruiters do CV screenings.
+This might put you on top of the list and receive that call.
+
+## 8. Personal satisfaction and confidence boost
+
+Last but not least, at a personal level is a lot rewarding and satisfying to see your name in the changelog of a project you contributed to.
+Knowing (and showing off!) that everyone is now using code you wrote means you did something good for the community, be proud of yourself, you deserve it!
+
+---
+
+Do you think there are more reasons to contribute to Open Source?
+If you’re already in the game, what did convince you to begin? If not, is it because you’re struggling in finding a project or you’re just not interested?
+
+Let’s discuss!

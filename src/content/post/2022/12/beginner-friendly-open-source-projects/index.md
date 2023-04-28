@@ -1,0 +1,32 @@
+---
+title: 4 Beginner Friendly Open Source Projects
+publishDate: '2022-12-01'
+tags:
+  - tutorial
+  - open-source
+  - github
+---
+
+If you're familiar with my content, you know I often talk about how to find new Open Source projects and repositories that are waiting our contributions.
+
+However, I get quite often the request of showcasing some projects I know where I'm already a contribtor and if possible, beginner friendly ones.
+
+The projects that came to my mind are:
+
+- [Zod](https://github.com/colinhacks/zod) - TypeScript-first schema validation with static type inference
+- [LinkFree](https://github.com/EddieHubCommunity/LinkFree) - A free, open-source alternative to LinkTree
+- [date-fns](https://github.com/date-fns/date-fns) - Modern JavaScript date utility library
+- [Visual Studio Code](https://github.com/microsoft/vscode) - The famous code editor
+
+LinkFree is plain Javascript while the three others are written in Typescript.
+
+If you're interested in some of them, in this video I uploaded on YouTube you will find more details. In particular, I will briefly analize:
+
+- Instructions to get started - Documentation
+- Programming Language
+- Community
+- Extra notes and trivia
+
+Happy Open Source Contributing!
+
+{% youtube _uetV0wZyXM %}

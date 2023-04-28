@@ -1,0 +1,19 @@
+---
+title: 🧲 Sticky Scroll in vscode
+publishDate: '2022-09-24'
+tags:
+  - vscode
+  - tutorial
+---
+
+Classes and methods might get really long, making you lose context of what the code is about.
+
+Visual Studio Code recently added a new cool feature you can enable in the settings, called **Sticky Scroll**.
+
+When it’s enabled, everytime you go deeper on a nesting level, the first row remains sticky at the top of editor.
+
+Thanks to the project being Open Source, on vscode the are constantly new smart features every month. Some of them, even if small, are highly appreciable!
+
+Here a short video to see it in action!
+
+[![YouTube Video](./preview.jpeg)](https://youtube.com/shorts/hbLq3sQshDY)
