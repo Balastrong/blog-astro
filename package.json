@@ -1,7 +1,6 @@
 {
   "name": "blog-astro",
-  "description": "A template to make your website using Astro + Tailwind CSS.",
-  "version": "0.9.8",
+  "description": "Leonardo Montini's personal website",
   "private": true,
   "scripts": {
     "dev": "astro dev",
@@ -42,6 +41,6 @@
     "typescript": "^5.0.4"
   },
   "engines": {
-    "node": ">=16.12.0"
+    "node": ">=18"
   }
 }
