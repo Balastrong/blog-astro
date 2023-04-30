@@ -7,11 +7,15 @@ tags:
   - chess
 ---
 
+import { Image } from '@astrojs/image/components';
+
 When navigating through GitHub you may land on awesome profiles with "live" content being updated automatically, what kind of sorcery is this?
 
 Let's start from the beginning!
 
-![Chess.com game history](./chesscom-stats.png)
+import chesscom_stats from './_chesscom-stats.png';
+
+<Image src={chesscom_stats} alt="Chess.com game history" />
 
 ## Setup a personal profile
 
@@ -21,7 +25,9 @@ All you have to do is create a new repository with your username and put a READM
 
 In my case, my username is Balastrong so the repo will be Balastrong/Balastrong.
 
-![GitHub README.md badge](./special-repo.png)
+import special_repo from './_special-repo.png';
+
+<Image src={special_repo} alt="GitHub README.md badge" />
 
 GitHub already notices that by adding this little badge in the home of your repo.
 
@@ -33,7 +39,9 @@ Now, the file you're going to edit is README.md and it will fetch some content f
 
 ## Chess.com games!
 
-![Chess.com logo](./chesscom-logo.png)
+import chesscom_logo from './_chesscom-logo.png';
+
+<Image src={chesscom_logo} alt="Chess.com logo" />
 
 Now that we have the combination profile + actions, we can make the magic!
 

@@ -11,13 +11,18 @@ tags:
   - vscode
 ---
 
+import { Image } from '@astrojs/image/components';
+import YouTube from '~/components/widgets/YouTube.astro';
+
 Stop! 🛑 You no longer need to open GitHub and search 🔎 for that issue you were assigned to. You can do it from Visual Studio Code! 📈
 
 Two weeks ago we learned how to create a Pull Request on GitHub from Visual Studio Code and last week we saw how to review it. Today we'll see how to manage issues on GitHub from the editor.
 
 This will mark the end of the series of three videos, showing you how to maximize your productivity when working with GitHub from Visual Studio Code, with the official extension: GitHub Pull Requests and Issues.
 
-{% youtube -nfUgBLBTIo %}
+
+
+<YouTube id="-nfUgBLBTIo" />
 
 ---
 
@@ -31,13 +36,17 @@ _(If you already installed the extension last week, you can skip this step!)_
 
 The first thing you need to do is to install the official **GitHub Pull Requests and Issues** extension for Visual Studio Code. You can find it in the marketplace by searching for "GitHub" or by clicking [here](https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-pull-request-github).
 
-![GitHub Pull Requests and Issues](./github-extension.png)
+import github_extension from './_github-extension.png';
+
+<Image src={github_extension} alt="GitHub Pull Requests and Issues" />
 
 _Note_: make sure to not get confused, the extension called "GitHub" is an old one and deprecated. The new one is called "GitHub Pull Requests and Issues".
 
 As soon as the extension is installed, you'll see a new icon in the Activity Bar on the left side of Visual Studio Code:
 
-![GitHub Pull Requests and Issues Icon](./github-extension-icon.png)
+import github_extension_icon from './_github-extension-icon.png';
+
+<Image src={github_extension_icon} alt="GitHub Pull Requests and Issues Icon" />
 
 Opening it the first time will ask you to login to GitHub, just click on the button and a browser tab will open where you can login to your GitHub account.
 
@@ -45,7 +54,9 @@ Opening it the first time will ask you to login to GitHub, just click on the but
 
 The extension tab actually has two sections: **Pull Requests** and **Issues**. If you expand the **Issues** section, you'll see the + button to create a new issue.
 
-![Create a new issue](./new-issue.png)
+import new_issue from './_new-issue.png';
+
+<Image src={new_issue} alt="Create a new issue" />
 
 By clicking on it, a new temporary file called `NewIssue.md` will be created in the editor. The content will be:
 
@@ -62,7 +73,9 @@ From there, you can replace `Issue Title` with the title of your issue, add the 
 
 Assigning labels is made even easier as you get a list of all the labels in the repository, and you can select the ones you want to assign to the issue.
 
-![Assign labels](./assign-label.png)
+import assign_label from './_assign-label.png';
+
+<Image src={assign_label} alt="Assign labels" />
 
 Once you're done, save the file and click on the ✓ button in the top right corner of the editor to create the issue.
 
@@ -72,7 +85,9 @@ A native vscode notification will inform you that the issue has been created suc
 
 If you want to work on an existing issue, first of all you can read its content by hovering the mouse on top of it. This will show you a preview of the issue and two buttons: `Start working on issue and checkout topic branch` and `Open Issue`.
 
-![Open an existing issue](./issue-button.png)
+import issue_button from './_issue-button.png';
+
+<Image src={issue_button} alt="Open an existing issue" />
 
 Not so much to say about the latter, it will open the issue in the browser, but the first one is very interesting.
 

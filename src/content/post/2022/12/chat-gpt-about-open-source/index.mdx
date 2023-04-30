@@ -7,6 +7,9 @@ tags:
   - chatgpt
 ---
 
+import { Image } from '@astrojs/image/components';
+import YouTube from '~/components/widgets/YouTube.astro';
+
 Everyone is going crazy for ChatGPT so I wanted to give it a try myself. I'm not the best person to talk about AI or how it works under the hood, so I'll take this from a content creator perspective.
 
 There are many claims that this technology can create content on behalf of the user so why not taking this challenge?
@@ -19,7 +22,7 @@ I sent ChatGPT a simple prompt:
 
 The result? It answered with the script of this video:
 
-{% youtube MAj7d8C5p3o %}
+<YouTube id="MAj7d8C5p3o" />
 
 ## And the title?
 
@@ -33,7 +36,9 @@ I only asked ChatGPT to suggest a title, and these are the results:
 1. "The Power of Open Source: How Your Contributions Can Make a Difference"
 1. "Open Soruce Contributions: A Career Boosting Opportunity"
 
-![ChatGPT suggesting some titles for the video](./chatgpt-video-title.png)
+import chatgpt_video_title from './_chatgpt-video-title.png';
+
+<Image src={chatgpt_video_title} alt="ChatGPT suggesting some titles for the video" />
 
 ## Full potential
 

@@ -6,9 +6,15 @@ tags:
   - git
 ---
 
+import { Image } from '@astrojs/image/components';
+
 If you have 59 seconds and in particular you're also on mobile, you might enjoy watching the YouTube #Shorts video.
 
-[![YouTube Video](./preview.png)](https://youtube.com/shorts/KrgNpJA0sX4)
+import preview from './_preview.png';
+
+<a href="https://youtube.com/shorts/KrgNpJA0sX4">
+  <Image src={preview} alt="YouTube Video" />
+</a>
 
 ---
 
@@ -51,4 +57,7 @@ It will set in your global git configuration file the value `true` to `push.auto
 With that set, all first-time push on new branches will automatically set the default upstream.
 
 To see it live, you can have a look at this short YouTube video.
-[![YouTube Video](./preview.png)](https://youtube.com/shorts/KrgNpJA0sX4)
+
+<a href="https://youtube.com/shorts/KrgNpJA0sX4">
+  <Image src={preview} alt="YouTube Video" />
+</a>

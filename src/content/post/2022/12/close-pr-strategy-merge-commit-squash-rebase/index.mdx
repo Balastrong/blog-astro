@@ -10,13 +10,17 @@ tags:
 image: ./_cover.png
 ---
 
+import YouTube from '~/components/widgets/YouTube.astro';
+
 When Merging a Pull Request on GitHub, you mainly have three options, with a merge commit, squash or rebase.
 
-![Pull Request Options: Merge, Squash and Rebase](./merge-options.png)
+import merge_options from './_merge-options.png';
+
+<Image src={merge_options} alt="Pull Request Options: Merge, Squash and Rebase" />
 
 Is there anything wrong in always doing a merge commit? Well, there isn’t right or wrong here, but considering the other strategies might will likely bring you some benefits. Let me tell you why.
 
-{% youtube rFRtsiQEJZw %}
+<YouTube id="rFRtsiQEJZw" />
 
 _In the video I will go in detail about the three strategies, and I will also do a "live demo" with GitHub stickers and JS pins, if you're curious I'd recommend you to watch the video, otherwise you can find the full text content here below._
 
@@ -32,7 +36,9 @@ The biggest advantage is that you can easily track down the exact commit where a
 
 The downside is that when multiple commits are on multiple branches, the history quickly become really tangled and following the path of a change can be quite a challenge.
 
-![Merge Demo](./merge.png)
+import merge from './_merge.png';
+
+<Image src={merge} alt="Merge Demo" />
 
 ### Squash merge
 
@@ -44,7 +50,9 @@ As a result, the history is much cleaner and while working on a branch you can d
 
 Who doesn’t like squash merge, usually brings the fact that you’re losing a lot of commit history, but it’s up to you if you think commits on a branch are valuable when reviewing old activity or rather is just noise.
 
-![Squash Demo](./squash.png)
+import squash from './_squash.png';
+
+<Image src={squash} alt="Squash Demo" />
 
 ### Rebase
 
@@ -56,7 +64,9 @@ Does this make Rebase the best strategy ever? Well... actually not necessarily, 
 
 If you get a merge conflict during a rebase, it’s fairly easy to unintentionally lose parts of your code code and if you need to catch up multiple commits you might end up resolving a merge conflict for each single commit, rather than just one in the other merge strategies.
 
-![Rebase Demo](./rebase.png)
+import rebase from './_rebase.png';
+
+<Image src={rebase} alt="Rebase Demo" />
 
 ### My two cents
 
@@ -76,7 +86,9 @@ If you want to enforce only some merge strategies on GitHub, head over the setti
 
 Here you will find three sections to allow merge commit, squash or rebase in your pull requests.
 
-![Merge Settings](./merge-settings.png)
+import merge_settings from './_merge-settings.png';
+
+<Image src={merge_settings} alt="Merge Settings" />
 
 If you keep only one selected, all PRs in your repo will be merged with that specific strategy.
 
@@ -86,7 +98,9 @@ As you can see rebase doesn’t have this option and the reason is simple. As we
 
 Since you’re already in this page, if you scroll down a little bit more you might also want to check this flag to automatically delete branches after a PR is merged.
 
-![Option to delete a branch](./delete-branch.png)
+import delete_branch from './_delete-branch.png';
+
+<Image src={delete_branch} alt="Option to delete a branch" />
 
 ### Closing
 

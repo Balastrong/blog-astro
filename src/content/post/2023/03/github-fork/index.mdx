@@ -10,11 +10,14 @@ tags:
   - git
 ---
 
+import { Image } from '@astrojs/image/components';
+import YouTube from '~/components/widgets/YouTube.astro';
+
 How to Fork a repository on GitHub is as easy as pressing a button, we take this for granted, but why is it required? Wouldn’t just cloning the repository be enough?
 
 Here’s a brief video about the most essential GitHub feature to enable collaboration between developers in the open-source world.
 
-{% youtube VbfvQzCoiQc %}
+<YouTube id="VbfvQzCoiQc" />
 
 ---
 
@@ -26,7 +29,9 @@ Today, we're going to talk about one of the most important features of GitHub, a
 
 First of all, what does it mean? It is essentially making a copy of a repository from someone else's account to your account. It’s not like... stealing the repo: you will end up with a copy linked to the original one as you can also see right below the repository name on GitHub.
 
-![Forked repository](./forked.png)
+import forked from './_forked.png';
+
+<Image src={forked} alt="Forked repository" />
 
 So, why do we fork? Well, forking is really important because it allows collaboration. Suppose you find someone else's code that you want to contribute to or add some features to it. You cannot just push your changes in the original repo because you probably don’t have write access. In that case, you can fork the repository, make the changes in your own copy, and then create a pull request to ask if your changes can be merged back into the original repository.
 
@@ -40,7 +45,9 @@ To fork a repository, navigate to it on GitHub and click the "fork" button on th
 
 One thing to keep in mind when forking is that your copy will not automatically sync with the original repository. If the original one gets any changes, you will have to pull those changes into your fork manually. Don’t worry though, all you have to do is from your repo just click the sync button and then in your local version, make sure to git pull.
 
-![Syncing a fork](./sync.png)
+import sync from './_sync.png';
+
+<Image src={sync} alt="Syncing a fork" />
 
 Quick tip: when you push changes on a forked repository, don’t forget to always do that in a separate branch, try to avoid pushing commits on main.
 

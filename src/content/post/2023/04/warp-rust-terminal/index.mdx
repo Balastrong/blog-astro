@@ -9,6 +9,8 @@ tags:
   - rust
 ---
 
+import { Image } from '@astrojs/image/components';
+
 When I moved from Windows to Mac a year ago I also developed the habit of using the terminal much more. It might be because at first I was just confused by the slight differences in the UI, but turns out I feel I'm way more productive with the terminal on Mac then I was on Windows.
 
 Navigating through the folders, running commands, using git, etc. It's just faster.
@@ -29,7 +31,9 @@ I'm honestly curious about what Rust can do and also `to work like a modern app`
 
 When I ran Warp the first time, after logging in I noticed the menu on the right side. It shows the changelog and a quick tutorial which I really appreciated.
 
-![Warp intro](./intro.png)
+import intro from './_intro.png';
+
+<Image src={intro} alt="Warp intro" />
 
 What I would expect from tools like this is to have some cool features that make the terminal better than the default one, but I understand that there can't be buttons everywhere as it's a terminal after all.
 
@@ -51,7 +55,9 @@ Ok wait, before a holy war begins, they already thought about it and you can act
 - Start at the top (Classic mode)
 - Pin to the top (Reverse mode)
 
-![Input Position](./input-position.png)
+import input_position from './_input-position.png';
+
+<Image src={input_position} alt="Input Position" />
 
 Basically, the Classic mode is the behaviour all terminals have, but you can also decide if you want to pin the input at the bottom (default for Warp) or at the top.
 
@@ -69,7 +75,9 @@ Not impressed yet? You can go multiline! As a regular text editor, with Shift+En
 
 Now that you're writing this multiline script, you can copy-paste some parts and since we're talking about a modern app... you can have multiple cursors!
 
-![Multiple cursors](./multicursor.png)
+import multicursor from './_multicursor.png';
+
+<Image src={multicursor} alt="Multiple cursors" />
 
 ### Tabs
 
@@ -85,7 +93,9 @@ With blocks, this is waaaaay easier!
 
 Outputs are contained in blocks, you can scroll to read the output but you have the prompt and the input at the top of the block. Besides, if you click on it, the border will become visible so it's clear to see where a command ends and another one begins.
 
-![Blocks](./blocks.png)
+import blocks from './_blocks.png';
+
+<Image src={blocks} alt="Blocks" />
 
 But blocks are not just a visual thing, you can also interact with them! You can do so many things I could probably write an entire article about it. And I think I will :D
 
@@ -103,7 +113,9 @@ We're in 2023, basically every single app has some sort of AI, so why not a term
 
 In Warp you can summon the AI by typing `#` in the input area, followed by your command written in natural language. In this example I just asked how I can remove `node_modules` from my project.
 
-![Warp AI](./ai.png)
+import ai from './_ai.png';
+
+<Image src={ai} alt="Warp AI" />
 
 In a moment I got the suggested command and with Cmd+Enter I can run it.
 
@@ -127,7 +139,9 @@ Cool scenario: you type `git` and then press Tab. You won't only get the known g
 
 It's worth mentioning that it also shows what your custom alias stands for!
 
-![Commands Lookup](./lookup.png)
+import lookup from './_lookup.png';
+
+<Image src={lookup} alt="Commands Lookup" />
 
 You can see in the screenshot it picked up `lg` and `lgo` which are aliases I use every time I want to have a quick glimpse at the commit history, but what about `log` and `reflog`? I mean, they don't start with `lg` which was my initial prompt.
 

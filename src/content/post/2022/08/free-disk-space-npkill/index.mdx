@@ -6,11 +6,17 @@ tags:
   - npm
 ---
 
+import { Image } from '@astrojs/image/components';
+
 ## Intro
 
 In this article I'll tell you about a cool tool I just found on npm, called `npkill`, that helps you cleaning `node_modules` from projects you no longer user but still want to keep.
 
-[![YouTube Video](./preview.png)](https://youtube.com/shorts/76UXyiPJQwI)
+import preview from './_preview.png';
+
+<a href="https://youtube.com/shorts/76UXyiPJQwI">
+  <Image src={preview} alt="YouTube Video" />
+</a>
 
 Video link: https://youtube.com/shorts/76UXyiPJQwI
 
@@ -37,7 +43,9 @@ For many reasons, you might want to keep those projects and not delete them, for
 
 I found a cool tool that helps exactly for this scenario, it's called [npkill](https://npkill.js.org/) and you can find it on [npm.js](https://www.npmjs.com/package/npkill).
 
-![npkill](./npkill.png)
+import npkill from './_npkill.png';
+
+<Image src={npkill} alt="npkill" />
 
 This CLI tool will navigate for your disk looking for `node_modules` folders and will list all of them. After the scan, you will have the power to select them one by one and hit `SPACE` to delete the entire folder.
 
@@ -82,4 +90,7 @@ Let me know if you already knew this tool or if you're going to use it... how mu
 ---
 
 Want to see it in action? Check out this YouTube #Shorts video!
-[![YouTube Video](./preview.png)](https://youtube.com/shorts/76UXyiPJQwI)
+
+<a href="https://youtube.com/shorts/76UXyiPJQwI">
+  <Image src={preview} alt="YouTube Video" />
+</a>

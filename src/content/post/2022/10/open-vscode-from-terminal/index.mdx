@@ -8,6 +8,8 @@ tags:
   - github
 ---
 
+import { Image } from '@astrojs/image/components';
+
 Ok, it's not a super secret feature, but I noticed some of my colleagues and friends do not use it at all while I think it's quite handy, so I'm sharing it here.
 
 You might already know, but you can launch vscode from the terminal by just typing `code`
@@ -18,8 +20,11 @@ It can also accept a parameter that is the path, so with `code your/path` it wil
 
 Last but for sure not least, I made a short video as usual about the topic, you can find it here:
 
-[![Watch the video](./preview.jpeg)](https://youtube.com/shorts/oUHlR_ouEAA)
+import preview from './_preview.jpeg';
 
+<a href="https://youtube.com/shorts/oUHlR_ouEAA" target="_blank">
+  <Image src={preview} alt="Watch the video" />
+</a>
 ---
 
 **So, a question for you, how often do you open vscode from the terminal?**

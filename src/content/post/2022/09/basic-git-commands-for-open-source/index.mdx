@@ -8,6 +8,8 @@ tags:
   - github
 ---
 
+import { Image } from '@astrojs/image/components';
+
 **Hacktoberfest** is starting tomorrow!! Are you ready??
 
 In case you're quite new to git, I will try to explain in a simple way how to use the basic commands you absolutely need to contribute to Open Source.
@@ -31,4 +33,8 @@ Technically, you could do all these steps even without commands in terminal but 
 
 If you want to see how these commands can be used in a real case, you can watch this video I just uploaded on my [YouTube Channel](https://www.youtube.com/channel/UC-KqnO3ez7vF-kyIQ_22rdA?sub_confirmation=1) where i talk about Open Source and Web Development!
 
-[![Youtube Video](./preview.jpeg)](https://youtu.be/hTeHtkpTvqI)
+import preview from './_preview.jpeg';
+
+<a href="https://youtu.be/hTeHtkpTvqI" target="_blank">
+  <Image src={preview} alt="Youtube Video" />
+</a>

@@ -8,6 +8,9 @@ tags:
   - open-source
 ---
 
+import { Image } from '@astrojs/image/components';
+import YouTube from '~/components/widgets/YouTube.astro';
+
 ### Setting up an Alias
 
 Repeating the same git commands over and over again can be such a waste of time! And some of the most powerful ones are usually quite long and impossible to memorize.
@@ -24,7 +27,9 @@ For example: `git config --global alias.st 'status'`
 
 In this case, if I call `git st`, it will give me the result of `git status`.
 
-![git st output](./git-status.jpeg)
+import git_status from './_git-status.jpeg';
+
+<Image src={git_status} alt="git st output" />
 
 Ok, this was easy, but what about long commands such as this one?
 
@@ -46,7 +51,9 @@ And you never have to remember this long command again!
 
 Look at how cool and colorful this log is, by just using `git lg`:
 
-![git lg output](./git-lg.png)
+import git_lg from './_git-lg.png';
+
+<Image src={git_lg} alt="git lg output" />
 
 ### Understanding Aliases
 
@@ -63,7 +70,7 @@ If with these two examples you agree with me that aliases are cool, let me give 
 
 You can watch the video on [YouTube](https://youtu.be/Uk4GnYoQx_I), or directly here from the embedded player:
 
-{% youtube Uk4GnYoQx_I %}
+<YouTube id="Uk4GnYoQx_I" />
 
 ---
 

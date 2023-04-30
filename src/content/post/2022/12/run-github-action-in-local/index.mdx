@@ -9,6 +9,9 @@ tags:
   - open-source
 ---
 
+import { Image } from '@astrojs/image/components';
+import YouTube from '~/components/widgets/YouTube.astro';
+
 GitHub Actions are so cool, you can automate your workflow for free and they’re really easy to set up.
 
 However, since the actions run on GitHub, every time you want to change something you need to commit and push to your repository. For example if you’re fixing a failing build for an expected reason, it might take quite a few frustrating cycles of code-commit-push-repeat.
@@ -47,4 +50,4 @@ Now that we have everything set up, let me show you some of the main act capabil
 
 The first two minutes of the video are pretty much the article you just read until this point. I suggest you to watch them because you know, I always like to hide some puns and jokes in my videos, but if you're only interested in the live demo feel free to skip to the minute 2:03. Enjoy!
 
-{% youtube Ugonll0e2Os %}
+<YouTube id="Ugonll0e2Os" />

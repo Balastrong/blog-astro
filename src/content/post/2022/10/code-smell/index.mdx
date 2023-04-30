@@ -9,6 +9,9 @@ tags:
   - clean-code
 ---
 
+import { Image } from '@astrojs/image/components';
+import YouTube from '~/components/widgets/YouTube.astro';
+
 ## What is a Code Smell?
 
 Let me provide you with my personal definition and some examples to get a better picture of what we’re talking about.
@@ -33,7 +36,9 @@ I’m not saying it’s forbidden to copy paste, but when you do it please think
 
 I know, the solution is not always that easy but you better do that extra reasoning to avoid repeating code when unnecessary.
 
-![Duplicated code](./smell-1.jpeg)
+import smell_1 from './_smell-1.jpeg';
+
+<Image src={smell_1} alt="Duplicated code" />
 
 ---
 
@@ -45,7 +50,9 @@ When someone reads your code, it has to be straightforward to understand what a 
 
 Also, if there are conventions on the casing, make sure to use the right one. Those are highly dependant on the language, but you can search online and there are dozen of styleguides. Pick one and follow it consistently.
 
-![Naming Conventions](./smell-2.png)
+import smell_2 from './_smell-2.png';
+
+<Image src={smell_2} alt="Naming Conventions" />
 
 ---
 
@@ -57,7 +64,9 @@ There’s nothing wrong by itself, but take this example. Ok it’s quite short 
 
 This is a little example, but when you find yourself nesting code on the third or fourth level, think about it, you might get rid of a couple nesting by just returning in the first few lines. This will make the code way easier to read and maintain.
 
-![Return Early](./smell-3.png)
+import smell_3 from './_smell-3.png';
+
+<Image src={smell_3} alt="Return Early" />
 
 ---
 
@@ -67,7 +76,7 @@ Spotting code smells requires a little bit of experience and practice, so that y
 
 If you want to train this skill, feel free to [subscribe to my YouTube channel](https://www.youtube.com/channel/UC-KqnO3ez7vF-kyIQ_22rdA?sub_confirmation=1). Once a week I share a code smell minigame just like this one:
 
-{% youtube Fdbha07mFzo %}
+<YouTube id="Fdbha07mFzo" />
 
 ---
 
@@ -75,4 +84,4 @@ What do you think? I created a playlist of minigames or challenges just like thi
 
 Guess what, the playlist is called “**Can you spot the code smell?**”
 
-[![Code Smell Playlist](./preview.jpeg)](https://youtube.com/playlist?list=PLOQjd5dsGSxKcEVtnt1EIAPj6Z0PvPv-f)
+https://youtube.com/playlist?list=PLOQjd5dsGSxKcEVtnt1EIAPj6Z0PvPv-f

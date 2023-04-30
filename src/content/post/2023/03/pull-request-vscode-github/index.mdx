@@ -12,6 +12,9 @@ tags:
   - vscode
 ---
 
+import { Image } from '@astrojs/image/components';
+import YouTube from '~/components/widgets/YouTube.astro';
+
 Did anyone say the word _Productivity_? We're all used to the GitHub User Interface so we usually navigate to GitHub, then search for our repository and then click the button to create a Pull Request.
 
 But did you know that you can do all of this from Visual Studio Code? In this article, we'll see how to create a Pull Request from Visual Studio Code in literally two clicks.
@@ -22,7 +25,7 @@ This article will also be the first of a trilogy about the Github+VScode workflo
 
 If you're new to my articles, you know I usually match them with a YouTube video. Fun fact: while recording it I noticed the Visual Studio Code extension had a little bug, the perfect opportunity to contribute to the project and to use the extension to create a Pull Request fixing a bug of the extension itself. I'll tell you more in the video:
 
-{% youtube Ma67EbIHi64 %}
+<YouTube id="Ma67EbIHi64" />
 
 In any case, if you don't really like watching videos, I'll do my best to explain everything down here with some screenshots to make it easier to follow.
 
@@ -30,13 +33,17 @@ In any case, if you don't really like watching videos, I'll do my best to explai
 
 The first thing you need to do is to install the official **GitHub Pull Requests and Issues** extension for Visual Studio Code. You can find it in the marketplace by searching for "GitHub" or by clicking [here](https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-pull-request-github).
 
-![GitHub Pull Requests and Issues](./github-extension.png)
+import github_extension from './_github-extension.png';
+
+<Image src={github_extension} alt="GitHub Pull Requests and Issues" />
 
 _Note_: make sure to not get confused, the extension called "GitHub" is an old one and deprecated. The new one is called "GitHub Pull Requests and Issues".
 
 As soon as the extension is installed, you'll see a new icon in the Activity Bar on the left side of Visual Studio Code:
 
-![GitHub Pull Requests and Issues Icon](./github-extension-icon.png)
+import github_extension_icon from './_github-extension-icon.png';
+
+<Image src={github_extension_icon} alt="GitHub Pull Requests and Issues Icon" />
 
 Opening it the first time will ask you to login to GitHub, just click on the button and a browser tab will open where you can login to your GitHub account.
 
@@ -44,11 +51,15 @@ Opening it the first time will ask you to login to GitHub, just click on the but
 
 Now that you're logged in, you can create a Pull Request from Visual Studio Code by clicking the icon on the top bar:
 
-![GitHub Pull Requests and Issues Header](./extension-header.png)
+import extension_header from './_extension-header.png';
+
+<Image src={extension_header} alt="GitHub Pull Requests and Issues Header" />
 
 If you're already on a pushed branch, this is the panel that will open:
 
-![GitHub Pull Requests and Issues Preview](./pr-preview.png)
+import pr_preview from './_pr-preview.png';
+
+<Image src={pr_preview} alt="GitHub Pull Requests and Issues Preview" />
 
 ### Merge Changes From
 
@@ -84,7 +95,9 @@ Waaaait a moment, before clicking the Create button, you can also open the Compa
 
 From this panel you can see all changes that will be included in the Pull Request in the diff format you're used to see on vscode, so green files are added, red are deleted and yellow are modified.
 
-![Compare panel](./compare.png)
+import compare from './_compare.png';
+
+<Image src={compare} alt="Compare panel" />
 
 ### Add labels
 
@@ -94,7 +107,9 @@ To be honest I'm not sure this is a feature or a bug, I might open an issue on t
 
 Anyway, if you click that button, the quick pick menu will open on vscode letting you select the labels you want to add to the PR from the list of labels available in the repository.
 
-![Add labels](./labels.png)
+import labels from './_labels.png';
+
+<Image src={labels} alt="Add labels" />
 
 And as I [mention in the video](https://youtu.be/Ma67EbIHi64), this is exactly where I found the bug!
 

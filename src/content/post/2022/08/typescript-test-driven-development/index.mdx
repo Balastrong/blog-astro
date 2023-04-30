@@ -9,6 +9,9 @@ tags:
   - testing
 ---
 
+import { Image } from '@astrojs/image/components';
+import YouTube from '~/components/widgets/YouTube.astro';
+
 _You can find a [video version](https://youtu.be/jNBw9_qNgmo) of this article on my [YouTube Channel](https://www.youtube.com/channel/UC-KqnO3ez7vF-kyIQ_22rdA)._
 
 ## Intro
@@ -19,7 +22,7 @@ In short, what it does is extract a random object considering its weight. An obj
 
 As a side quest, we're going to keep code coverage at 100% ✅
 
-{% youtube jNBw9_qNgmo %}
+<YouTube id="jNBw9_qNgmo" />
 
 ### Output
 
@@ -96,7 +99,9 @@ https://gist.github.com/Balastrong/e0aef8b0889616c6bdcc3fe749e219ce
 
 `npm run test` and it's all green and 100% again! ✅
 
-![Coverage](./tests.png)
+import tests from './_tests.png';
+
+<Image src={tests} alt="Coverage" />
 
 ### Standalone
 
@@ -116,4 +121,8 @@ In the meantime, the library has been extended with more utility methods (`getIt
 
 Feel free to jump on GitHub and extend it, even more, I'm waiting for your Pull Requests! :)
 
-[![Video Thumbnail](./preview.jpeg)](https://youtu.be/jNBw9_qNgmo)
+import preview from './_preview.jpeg';
+
+<a href="https://youtu.be/jNBw9_qNgmo">
+  <Image src={preview} alt="Video Thumbnail" />
+</a>

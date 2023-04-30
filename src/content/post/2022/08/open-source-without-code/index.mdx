@@ -10,9 +10,15 @@ tags:
   - tutorial
 ---
 
+import { Image } from '@astrojs/image/components';
+
 _You can find a [video version](https://youtu.be/NEzYE1-37SA) of this article on my [YouTube channel](https://www.youtube.com/channel/UC-KqnO3ez7vF-kyIQ_22rdA)._
 
-[![YouTube Video](./preview.jpeg)](https://youtu.be/NEzYE1-37SA)
+import preview from './_preview.jpeg';
+
+<a href="https://youtu.be/NEzYE1-37SA">
+  <Image src={preview} alt="YouTube Video" />
+</a>
 
 ---
 
@@ -67,7 +73,9 @@ This can be intended as a visual medium of documentation. Complex structures or 
 
 You can see some examples from the [vscode repo](https://github.com/microsoft/vscode/wiki/Source-Code-Organization), where they show in a simple diagram their core architecture or how they manage the multi-target environment.
 
-![vscode structure](./vscode.png)
+import vscode from './_vscode.png';
+
+<Image src={vscode} alt="vscode structure" />
 
 ## Code related
 

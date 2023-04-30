@@ -9,6 +9,9 @@ tags:
   - code-coverage
 ---
 
+import { Image } from '@astrojs/image/components';
+import YouTube from '~/components/widgets/YouTube.astro';
+
 On a project I finally hit 100% Code Coverage 🎯 what could go wrong now? I tested ALL lines of my code, there are no bugs! Well... not really.
 
 If your only goal is having high coverage, you're probably doing more harm than good, wasting time on near-to-useless tests just to see the green coverage report. And bugs might still be there.
@@ -27,13 +30,15 @@ Beware: **Code Coverage is a tool, not a goal**.
 
 If you're curious to hear more about my opinion on Code Coverage, I recorded a video and you can find it on YouTube!
 
-{% youtube WxoSoxVgyUw %}
+<YouTube id="WxoSoxVgyUw" />
 
 ---
 
 As a bonus content, to further explain the concept, there's a joke on this tweet that makes it really easy to understand:
 
-![Tweet](./tweet.png)
+import tweet from './_tweet.png';
+
+<Image src={tweet} alt="Tweet" />
 
 Code coverage is not enough and edge cases are not enough still. You need to test the business logic, not the code. Coverage will come naturally.
 

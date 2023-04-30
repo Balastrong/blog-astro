@@ -8,16 +8,23 @@ tags:
   - merge-conflict
 ---
 
+import { Image } from '@astrojs/image/components';
+import YouTube from '~/components/widgets/YouTube.astro';
+
 Merge conflicts can be scary, but if you know how to use your tools, there's no need to worry!
 _(Unless you're merging two branches 3 months old and there are 57 files with multiple conflicts. In that case, panic is understandable!)_
 
 Visual Studio Code recently introduced the [three-way merge editor](https://code.visualstudio.com/updates/v1_69#_3-way-merge-editor).
 
-![Inline Editor](./ex-line.png)
+import ex_line from './_ex-line.png';
+
+<Image src={ex_line} alt="Inline Editor" />
 
 This was supposed to replace the old inline editor.
 
-![Three-way Editor](./ex-three-way.png)
+import ex_three_way from './_ex-three-way.png';
+
+<Image src={ex_three_way} alt="Three-way Editor" />
 
 However, as soon as the new editor has been set as default, the community loudly asked to get their old UI back. Have a look at [Issue#160806](https://github.com/microsoft/vscode/issues/160806)
 
@@ -38,7 +45,7 @@ Since I use VSCode as my primary IDE (actually, it's a text editor), I recorded 
 
 I also showcase both inline (old) and three-way (new) editors, so you can decide which one you like the most!
 
-{% youtube lz5OuKzvadQ %}
+<YouTube id="lz5OuKzvadQ" />
 
 ---
 

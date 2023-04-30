@@ -8,6 +8,8 @@ tags:
   - pullrequest
 ---
 
+import { Image } from '@astrojs/image/components';
+
 ## Intro
 
 Let's see the steps you need from zero to creating your first Pull Request.
@@ -23,7 +25,11 @@ It's mostly for beginners, so if you're already actively contributing you might 
 
 If you want to start today ([you should](https://youtu.be/uquIcISFtwg)), then you better watch the video!
 
-[![Youtube Video](./preview.png) ](https://youtube.com/shorts/0HKE5nDypUg)
+import preview from './_preview.png';
+
+<a href="https://youtube.com/shorts/0HKE5nDypUg">
+  <Image src={preview} alt="Youtube Video" />
+</a>
 
 ## How to create your First Pull Request on GitHub in less than 60 seconds
 

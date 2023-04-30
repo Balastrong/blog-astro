@@ -11,6 +11,9 @@ tags:
   - vscode
 ---
 
+import { Image } from '@astrojs/image/components';
+import YouTube from '~/components/widgets/YouTube.astro';
+
 Doing Code Review 📖 on a GitHub Pull Request without leaving Visual Studio Code? Easy! 👇
 
 Last week we learned how to create a PR from VSCode, today we'll see how to review it. Spoiler: you can do it from the extension you already installed last week 😉
@@ -19,7 +22,9 @@ I will showcase in the video all the advantages of reviewing a Pull Request from
 
 Aaaand there's even more, as anticipated, this is part of a series of three videos so... there's one more coming out in the next few days!
 
-{% youtube DSl-L6B_Qb4 %}
+
+
+<YouTube id="DSl-L6B_Qb4" />
 
 Not a fan of video content? No problem, as usual I write down the concepts explained in the video in written form as well!
 
@@ -33,13 +38,17 @@ _(If you already installed the extension last week, you can skip this step!)_
 
 The first thing you need to do is to install the official **GitHub Pull Requests and Issues** extension for Visual Studio Code. You can find it in the marketplace by searching for "GitHub" or by clicking [here](https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-pull-request-github).
 
-![GitHub Pull Requests and Issues](./github-extension.png)
+import github_extension from './_github-extension.png';
+
+<Image src={github_extension} alt="GitHub Pull Requests and Issues" />
 
 _Note_: make sure to not get confused, the extension called "GitHub" is an old one and deprecated. The new one is called "GitHub Pull Requests and Issues".
 
 As soon as the extension is installed, you'll see a new icon in the Activity Bar on the left side of Visual Studio Code:
 
-![GitHub Pull Requests and Issues Icon](./github-extension-icon.png)
+import github_extension_icon from './_github-extension-icon.png';
+
+<Image src={github_extension_icon} alt="GitHub Pull Requests and Issues Icon" />
 
 Opening it the first time will ask you to login to GitHub, just click on the button and a browser tab will open where you can login to your GitHub account.
 
@@ -47,7 +56,9 @@ Opening it the first time will ask you to login to GitHub, just click on the but
 
 The first thing you notice when selecting a Pull Request from the sidebar is the changed files.
 
-![Changed files](./changed-files.png)
+import changed_files from './_changed-files.png';
+
+<Image src={changed_files} alt="Changed files" />
 
 When clicking on one of them a Diff Editor will open so that you can see the changes made to the file by comparing them to the base branch.
 
@@ -55,7 +66,9 @@ When clicking on one of them a Diff Editor will open so that you can see the cha
 
 If you click on "Description" from the sidebar, you'll see the Pull Request overview:
 
-![Pull Request Overview](./pr-overview.png)
+import pr_overview from './_pr-overview.png';
+
+<Image src={pr_overview} alt="Pull Request Overview" />
 
 From here you can see all the relevant information you can also find on the web UI on GitHub. It's not readonly though, but you can fully interact with it from the editor.
 
@@ -77,7 +90,9 @@ In case you don't have a CI/CD pipeline in place (you should though, at least CI
 
 Speaking of CI/CD, you can also check the status of the GitHub Actions workflow directly from the editor!
 
-![GitHub Actions](./ci-status.png)
+import ci_status from './_ci-status.png';
+
+<Image src={ci_status} alt="GitHub Actions" />
 
 ## Edit tabs
 

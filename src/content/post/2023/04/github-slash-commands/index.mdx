@@ -8,6 +8,9 @@ tags:
   - git
 ---
 
+import { Image } from '@astrojs/image/components';
+import YouTube from '~/components/widgets/YouTube.astro';
+
 Wait, what? Slash commands are available on GitHub?
 
 Just open up a text editor, it can be a new issue, a new pull request or even a comment and type `/` to see all the available commands.
@@ -24,6 +27,6 @@ There's also a `/tasklist` command which inserts a tasklist and only works in an
 
 I recorded a two minutes video to show you how it works:
 
-{% youtube r3z4sotrQXQ %}
+<YouTube id="r3z4sotrQXQ" />
 
 Learn more on the official docs: https://docs.github.com/en/issues/tracking-your-work-with-issues/about-slash-commands

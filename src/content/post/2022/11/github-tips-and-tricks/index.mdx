@@ -7,13 +7,16 @@ tags:
   - open-source
 ---
 
+import { Image } from '@astrojs/image/components';
+import YouTube from '~/components/widgets/YouTube.astro';
+
 Hello everyone, [Leonardo](https://twitter.com/Balastrong) here!
 
 Today we talk about GitHub and some cool features it offers to improve the context and the communication between developers, through Issues and Pull Requests.
 
 As usual, before diving into the article, let me share the video version you can find on my [YouTube channel](https://www.youtube.com/c/DevLeonardo):
 
-{% youtube G6x-gUD409U %}
+<YouTube id="G6x-gUD409U" />
 
 These are some of the features shown in the video:
 
@@ -22,14 +25,20 @@ These are some of the features shown in the video:
 With a special syntax, you can suggest code changes when commenting a Pull Request.
 
 Everyone with write access to the repo will see a "commit" button to immediately commit the suggested change.
-![Code suggestions](./code-suggestion.png)
+
+import code_suggestion from './_code-suggestion.png';
+
+<Image src={code_suggestion} alt="Code suggestions" />
 
 ---
 
 ### Render labels
 
 Yes, labels can be nicely rendered as well, here's an example:
-![Rendered labels](./render-label.jpeg)
+
+import render_label from './_render-label.jpeg';
+
+<Image src={render_label} alt="Rendered labels" />
 
 ---
 
@@ -39,7 +48,9 @@ When you link an issue with `#` followed by the issue number, a link is rendered
 
 By the way, you can mention issues with `GH-[IssueNumber]` as well!
 
-![Details of linked issues](./issues.png)
+import issues from './_issues.png';
+
+<Image src={issues} alt="Details of linked issues" />
 
 ---
 
@@ -49,7 +60,9 @@ Mentioning an issue in a PR, with some special keywords (for example `closes #3`
 
 If this is activated, you can see it in the bottom right corner of the Pull Request.
 
-![Closing issue](./close-issue.png)
+import close_issue from './_close-issue.png';
+
+<Image src={close_issue} alt="Closing issue" />
 
 ---
 
@@ -57,7 +70,9 @@ If this is activated, you can see it in the bottom right corner of the Pull Requ
 
 If you type `Duplicate of` and mention an issue, that one will be marked as duplicate and it is shown right below your comment.
 
-![Duplicate](./duplicate.jpeg)
+import duplicate from './_duplicate.jpeg';
+
+<Image src={duplicate} alt="Duplicate" />
 
 ---
 
@@ -65,7 +80,7 @@ If you want to see all of these in action plus some additional ones, you can wat
 
 If you want to support me, go watch it and leave a like ❤️
 
-{% youtube G6x-gUD409U %}
+<YouTube id="G6x-gUD409U" />
 
 ---
 

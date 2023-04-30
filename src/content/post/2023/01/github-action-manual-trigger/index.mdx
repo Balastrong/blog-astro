@@ -9,6 +9,9 @@ tags:
   - workflow
 ---
 
+import { Image } from '@astrojs/image/components';
+import YouTube from '~/components/widgets/YouTube.astro';
+
 There's a plethora of triggers you can use to run a GitHub Action. You can run it on a schedule, on a push or a pull request, or even on a release.
 
 Today the spotlight is on `workflow_dispatch`, a trigger that allows you to manually trigger a GitHub Action, without having to push or create a pull request. **Bonus: you can also pass custom parameters!**
@@ -26,13 +29,17 @@ on:
 
 That's it! Now you can manually trigger your GitHub Action by going to the Actions tab of your repository and clicking on the "Run workflow" button:
 
-![Run workflow button](./run-workflow-button.png)
+import run_workflow_button from './_run-workflow-button.png';
+
+<Image src={run_workflow_button} alt="Run workflow button" />
 
 ## Live Demo
 
 If you want to see it in action (pun intended!) you can watch the video below. Otherwise, if you prefer to read, you can jump to the next section.
 
-{% youtube KGfncu595pc %}
+
+
+<YouTube id="KGfncu595pc" />
 
 ## Passing inputs
 
@@ -51,7 +58,9 @@ on:
 
 You can now pass an input to your workflow by clicking on the "Run workflow" button and filling the input field:
 
-![Run workflow button](./run-workflow-input.png)
+import run_workflow_input from './_run-workflow-input.png';
+
+<Image src={run_workflow_input} alt="Run workflow button" />
 
 You can then access the input in your workflow file from the `github.event.inputs` object:
 
@@ -86,7 +95,9 @@ You can also specify the type of the input. There are many types, for example: `
 
 You can also specify if the field is `required` and add a default value.
 
-![Run workflow fields](./run-workflow-fields.png)
+import run_workflow_fields from './_run-workflow-fields.png';
+
+<Image src={run_workflow_fields} alt="Run workflow fields" />
 
 ## Lean more
 
