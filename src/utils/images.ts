@@ -1,3 +1,5 @@
+import { Post } from '~/types';
+
 const load = async function () {
   let images: Record<string, () => Promise<unknown>> | undefined = undefined;
   try {
@@ -17,9 +19,16 @@ export const fetchLocalImages = async () => {
 };
 
 /** */
-export const findImage = async (imagePath?: string) => {
+export const findImage = async ({ image: imagePath, id: postId }: Pick<Post, 'image' | 'id'>) => {
   if (typeof imagePath !== 'string') {
     return null;
+  }
+
+  if (imagePath.startsWith('./') && !!postId) {
+    const postPath = postId.split('/').slice(0, -1).join('/');
+    const image = imagePath.replace('./', '');
+
+    return `/src/content/post/${postPath}/${image}`;
   }
 
   if (imagePath.startsWith('http://') || imagePath.startsWith('https://') || imagePath.startsWith('/')) {

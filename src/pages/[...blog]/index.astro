@@ -8,6 +8,7 @@ import ToBlogLink from '~/components/blog/ToBlogLink.astro';
 import { getCanonical, getPermalink } from '~/utils/permalinks';
 import { fetchPosts } from '~/utils/blog';
 import { findImage } from '~/utils/images';
+import { Post } from '~/types';
 
 export async function getStaticPaths() {
   if (BLOG?.disabled || BLOG?.post?.disabled) return [];
@@ -19,14 +20,16 @@ export async function getStaticPaths() {
   }));
 }
 
-const { post } = Astro.props;
+const { post } = Astro.props as {
+  post: Post;
+};
 const url = getCanonical(getPermalink(post.permalink, 'post'));
 
 const meta = {
   title: post.title,
   description: post.description,
   canonical: post.canonical || url,
-  image: await findImage(post.image),
+  image: await findImage(post),
   noindex: BLOG?.post?.noindex,
   ogType: 'article',
 };
