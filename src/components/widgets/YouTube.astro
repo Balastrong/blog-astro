@@ -2,4 +2,12 @@
 const { id } = Astro.props;
 ---
 
-<lite-youtube videoid={id} playlabel="Play: Keynote (Google I/O '18)" playlabel="hey"></lite-youtube>
+<div>
+  <iframe
+    width="560"
+    height="315"
+    src={'https://www.youtube.com/embed/' + id}
+    title="YouTube Video"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen></iframe>
+</div>
