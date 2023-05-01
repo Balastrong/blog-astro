@@ -14,7 +14,7 @@ export interface Props {
 
 const {
   title = await Astro.slots.render('title'),
-  allPostsText = 'View all posts',
+  allPostsText = 'Read all posts',
   allPostsLink = getBlogPermalink(),
   information = await Astro.slots.render('information'),
   postIds = [],
