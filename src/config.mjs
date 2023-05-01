@@ -1,4 +1,4 @@
-import defaultImage from './assets/images/default.png';
+import defaultImage from './assets/images/propic_blue.jpg';
 
 const CONFIG = {
   name: 'Leonardo Montini',
