@@ -1,15 +1,15 @@
 import defaultImage from './assets/images/default.png';
 
 const CONFIG = {
-  name: 'AstroWind',
+  name: 'Leonardo Montini',
 
-  origin: 'https://astrowind.vercel.app',
+  origin: 'https://leonardomontini.dev',
   basePathname: '/',
   trailingSlash: false,
 
-  title: 'AstroWind — Free template for create a website with Astro + Tailwind CSS',
+  title: 'Leonardo Montini',
   description:
-    '🚀 Suitable for Startups, Small Business, Sass Websites, Professional Portfolios, Marketing Websites, Landing Pages & Blogs.',
+    "Technical content on Open Source, Web Development and Visual Studio Code. I'm Leonardo Montini and that's what I like to talk about, let's get in touch!",
   defaultImage: defaultImage,
 
   defaultTheme: 'system', // Values: "system" | "light" | "dark" | "light:only" | "dark:only"
@@ -29,7 +29,7 @@ const CONFIG = {
 
   blog: {
     disabled: false,
-    postsPerPage: 4,
+    postsPerPage: 8,
 
     post: {
       permalink: '/%slug%', // Variables: %slug%, %year%, %month%, %day%, %hour%, %minute%, %second%, %category%
