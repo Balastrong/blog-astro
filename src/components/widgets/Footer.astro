@@ -10,13 +10,13 @@ interface Link {
 
 interface Links {
   title?: string;
-  links: Array<Link>;
+  links: Link[];
 }
 
 export interface Props {
-  links: Array<Links>;
-  secondaryLinks: Array<Link>;
-  socialLinks: Array<Link>;
+  links?: Links[];
+  secondaryLinks?: Link[];
+  socialLinks: Link[];
   footNote?: string;
   theme?: string;
 }

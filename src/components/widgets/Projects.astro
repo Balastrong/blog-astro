@@ -1,17 +1,13 @@
 ---
 import { Icon } from 'astro-icon';
-import { GitHubRepository } from '~/types';
-
-interface Repository {
-  owner?: string;
-  repo?: string;
-}
+import { GitHubRepo, GitHubRepository } from '~/types';
+import { getRepoData } from '~/libs/github';
 
 export interface Props {
   title?: string;
   subtitle?: string;
   highlight?: string;
-  repositories: Repository[];
+  repositories: GitHubRepo[];
 }
 
 const {
@@ -21,9 +17,7 @@ const {
   repositories = [],
 } = Astro.props;
 
-const gitHubApiUrl = 'https://api.github.com/repos/';
-
-const promises = repositories?.map(async ({ owner, repo }) => (await fetch(gitHubApiUrl + owner + '/' + repo))?.json());
+const promises = repositories?.map(async ({ owner, repo }) => (await getRepoData(owner, repo))?.json());
 
 const items = (await Promise.allSettled(promises))
   .filter((res) => res.status === 'fulfilled')
@@ -58,14 +52,18 @@ const items = (await Promise.allSettled(promises))
       }
       <div class={`grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-12 dark:text-white items-stretch`}>
         {
-          items.map(({ full_name, description }) => (
-            <div class="relative flex flex-col p-6 bg-white dark:bg-slate-900 rounded shadow-lg hover:shadow-md transition border border-transparent dark:border-slate-800">
-              <div class="flex items-center">
-                <Icon name="tabler:brand-github" class="w-10 h-10" />
-                <div class="ml-4 text-xl font-bold">
+          items.map(({ full_name, description, stargazers_count }) => (
+            <div class="relative flex flex-col p-6 bg-white dark:bg-slate-900 rounded-xl shadow-lg hover:shadow-md transition border border-transparent dark:border-slate-800">
+              <div class="flex items-start">
+                <Icon name="tabler:brand-github" class="w-8 min-w-min h-8" />
+                <div class="ml-2 text-xl font-bold">
                   <a href={''} target="_blank" rel="noopener noreferrer">
                     {full_name}
                   </a>
+                </div>
+                <div class="flex gap-2 ml-auto items-center">
+                  {stargazers_count}
+                  <Icon name="tabler:star" class="w-5 h-5" />
                 </div>
               </div>
               {description && <p class="text-muted dark:text-gray-400 text-md mt-4" set:html={description} />}

@@ -150,3 +150,8 @@ export interface License {
   url: string;
   node_id: string;
 }
+
+export type GitHubRepo = {
+  owner: string;
+  repo: string;
+};

@@ -1,4 +1,5 @@
 import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
+import { GitHubRepo } from './types';
 
 export const headerData = {
   links: [
@@ -37,3 +38,30 @@ export const footerData = {
     { ariaLabel: 'RSS', icon: 'tabler:rss', href: getAsset('/rss.xml') },
   ],
 };
+
+export const openSourceProjects: GitHubRepo[] = [
+  {
+    owner: 'Microsoft',
+    repo: 'vscode',
+  },
+  {
+    owner: 'qwikifiers',
+    repo: 'qwik-ui',
+  },
+  {
+    owner: 'Microsoft',
+    repo: 'vscode-pull-request-github',
+  },
+  {
+    owner: 'colinhacks',
+    repo: 'zod',
+  },
+  {
+    owner: 'Schrodinger-Hat',
+    repo: 'osday-2023',
+  },
+  {
+    owner: 'Microsoft',
+    repo: 'vscode-js-debug',
+  },
+];

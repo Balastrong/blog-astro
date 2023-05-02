@@ -2,6 +2,7 @@
 import Projects from '~/components/widgets/Projects.astro';
 import { SITE } from '~/config.mjs';
 import Layout from '~/layouts/PageLayout.astro';
+import { openSourceProjects } from '~/data';
 
 const meta = {
   title: SITE.title + ' | Web Developer, Open Source enthusiast and Content Creator',
@@ -15,31 +16,6 @@ const meta = {
     title="Contributions"
     subtitle="Some projects I contributed to which I'm really proud of!"
     highlight="Open Source"
-    repositories={[
-      {
-        owner: 'Balastrong',
-        repo: 'close-tabs',
-      },
-      {
-        owner: 'Balastrong',
-        repo: 'blog',
-      } /*
-      {
-        owner: 'Balastrong',
-        repo: 'blog',
-      },
-      {
-        owner: 'Balastrong',
-        repo: 'blog',
-      },
-      {
-        owner: 'Balastrong',
-        repo: 'blog',
-      },
-      {
-        owner: 'Balastrong',
-        repo: 'blog',
-      },*/,
-    ]}
+    repositories={openSourceProjects}
   />
 </Layout>
