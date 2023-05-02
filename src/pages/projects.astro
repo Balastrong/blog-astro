@@ -2,10 +2,10 @@
 import Projects from '~/components/widgets/Projects.astro';
 import { SITE } from '~/config.mjs';
 import Layout from '~/layouts/PageLayout.astro';
-import { openSourceProjects } from '~/data';
+import { myProjects } from '~/data';
 
 const meta = {
-  title: SITE.title + ' | Open Source contributions',
+  title: SITE.title + ' | My Open Source projects',
   description: SITE.description,
   dontUseTitleTemplate: true,
 };
@@ -13,9 +13,9 @@ const meta = {
 
 <Layout {meta}>
   <Projects
-    title="Contributions"
-    subtitle="Some projects I contributed to which I'm really proud of!"
+    title="My Projects"
+    subtitle="Some of my favourite Open Source projects I own/maintain"
     highlight="Open Source"
-    repositories={openSourceProjects}
+    repositories={myProjects}
   />
 </Layout>

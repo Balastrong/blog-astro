@@ -52,12 +52,12 @@ const items = (await Promise.allSettled(promises))
       }
       <div class={`grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-12 dark:text-white items-stretch`}>
         {
-          items.map(({ full_name, description, stargazers_count }) => (
+          items.map(({ full_name, description, stargazers_count, html_url }) => (
             <div class="relative flex flex-col p-6 bg-white dark:bg-slate-900 rounded-xl shadow-lg hover:shadow-md transition border border-transparent dark:border-slate-800">
               <div class="flex items-start">
                 <Icon name="tabler:brand-github" class="w-8 min-w-min h-8" />
                 <div class="ml-2 text-xl font-bold">
-                  <a href={''} target="_blank" rel="noopener noreferrer">
+                  <a href={html_url} target="_blank" rel="noopener noreferrer">
                     {full_name}
                   </a>
                 </div>
