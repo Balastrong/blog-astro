@@ -14,8 +14,6 @@ export interface Props {
   repositories: Repository[];
 }
 
-export const prerender = true;
-
 const {
   title = await Astro.slots.render('title'),
   subtitle = await Astro.slots.render('subtitle'),
