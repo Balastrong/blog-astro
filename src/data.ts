@@ -71,8 +71,8 @@ export const openSourceProjects: GitHubRepo[] = [
 ];
 
 export const myProjects: GitHubRepo[] = [
-  'close-tabs',
   'chess-stats-action',
+  'close-tabs',
   'trello-card-numbers-plus',
   'wrand',
   'blog',
