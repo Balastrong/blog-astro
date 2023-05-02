@@ -21,7 +21,7 @@ export const headerData = {
     },
     {
       text: 'Open Source',
-      href: getPermalink(),
+      href: getPermalink('/open-source'),
     },
   ],
   actions: [{ type: 'button', text: 'YouTube', href: 'https://www.youtube.com/@DevLeonardo' }],

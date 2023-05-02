@@ -9,7 +9,7 @@ const CONFIG = {
 
   title: 'Leonardo Montini',
   description:
-    "Technical content on Open Source, Web Development and Visual Studio Code. I'm Leonardo Montini and that's what I like to talk about, let's get in touch!",
+    "Technical content on Open Source, Web Development, GitHub and Visual Studio Code. I'm Leonardo Montini and that's what I like to talk about, let's get in touch!",
   defaultImage: defaultImage,
 
   defaultTheme: 'system', // Values: "system" | "light" | "dark" | "light:only" | "dark:only"
