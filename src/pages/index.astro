@@ -3,7 +3,8 @@ import { SITE } from '~/config.mjs';
 import Layout from '~/layouts/PageLayout.astro';
 
 import PostGrid from '~/components/blog/PostGrid.astro';
-import VideoGrid from '~/components/video/VideoGrid.astro';
+import ShortItem from '~/components/video/ShortItem.astro';
+import VideoItem from '~/components/video/VideoItem.astro';
 import Hero from '~/components/widgets/Hero.astro';
 import Latest from '~/components/widgets/Latest.astro';
 import { youTubeChannelUrl } from '~/data';
@@ -60,7 +61,9 @@ const { shortVideos, longVideos } = await categorizeVideo(videos, {
     subtitleLink={youTubeChannelUrl + '/videos'}
     isLinkExternal
   >
-    <VideoGrid videos={longVideos} />
+    <div class="grid gap-6 row-gap-5 md:grid-cols-3 -mb-6">
+      {longVideos.map((video) => <VideoItem video={video} />)}
+    </div>
   </Latest>
 
   <Latest
@@ -70,6 +73,8 @@ const { shortVideos, longVideos } = await categorizeVideo(videos, {
     subtitleLink={youTubeChannelUrl + '/shorts'}
     isLinkExternal
   >
-    <VideoGrid videos={shortVideos} />
+    <div class="grid gap-6 row-gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-6 -mb-6">
+      {shortVideos.map((video) => <ShortItem video={video} />)}
+    </div>
   </Latest>
 </Layout>

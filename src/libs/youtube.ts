@@ -69,6 +69,10 @@ export function getThumbnailUrl(video: YouTubeVideo) {
   return video.snippet.thumbnails.high.url ?? video.snippet.thumbnails.default.url;
 }
 
+export function getShortThumbnailUrl(video: YouTubeVideo) {
+  return `https://i.ytimg.com/vi/${video.id.videoId}/oar2.jpg`;
+}
+
 export function getVideoUrl(video: YouTubeVideo | string) {
   if (typeof video === 'string') {
     return `https://www.youtube.com/watch?v=${video}`;

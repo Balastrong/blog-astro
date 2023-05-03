@@ -4,7 +4,7 @@ import { Picture } from '@astrojs/image/components';
 import { BLOG } from '~/config.mjs';
 import type { YouTubeVideo } from '~/types';
 
-import { getThumbnailUrl, getVideoUrl } from '~/libs/youtube';
+import { getShortThumbnailUrl, getVideoUrl } from '~/libs/youtube';
 
 export type Props = {
   video: YouTubeVideo;
@@ -12,10 +12,9 @@ export type Props = {
 
 const { video } = Astro.props;
 
-const thumbnail = getThumbnailUrl(video);
+const thumbnail = getShortThumbnailUrl(video);
 const videoUrl = getVideoUrl(video);
 const videoTitle = video.snippet.title;
-const videoDescription = video.snippet.description;
 ---
 
 <article class="mb-6 transition">
@@ -26,12 +25,12 @@ const videoDescription = video.snippet.description;
           <Picture
             src={thumbnail}
             class="md:object-cover w-full md:w-auto rounded shadow-lg bg-gray-400 dark:bg-slate-700"
-            widths={[400, 900]}
-            width={400}
-            height={224}
-            sizes="(max-width: 900px) 400px, 900px"
+            widths={[224, 448]}
+            width={224}
+            height={400}
+            sizes="(max-width: 448px) 224px, 448px"
             alt={videoTitle}
-            aspectRatio="16:9"
+            aspectRatio="9:16"
             loading="lazy"
             decoding="async"
           />
@@ -39,7 +38,7 @@ const videoDescription = video.snippet.description;
       )
     }
   </div>
-  <h3 class="mb-2 text-xl font-bold leading-tight sm:text-2xl font-heading">
+  <h4 class="mb-2 text-md font-bold leading-tight sm:text-xl font-heading">
     {
       BLOG?.post?.disabled ? (
         videoTitle
@@ -53,6 +52,5 @@ const videoDescription = video.snippet.description;
         </a>
       )
     }
-  </h3>
-  <p class="text-muted dark:text-slate-400 text-lg">{videoDescription}</p>
+  </h4>
 </article>
