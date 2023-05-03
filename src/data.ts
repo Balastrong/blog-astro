@@ -11,7 +11,7 @@ export const headerData = {
     },
     {
       text: 'Video',
-      href: getPermalink(),
+      href: getPermalink('#video'),
     },
     {
       text: 'Open Source',

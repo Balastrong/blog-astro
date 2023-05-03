@@ -54,6 +54,9 @@ const { shortVideos, longVideos } = await categorizeVideo(videos, {
     <PostGrid posts={posts} />
   </Latest>
 
+  <div class="relative">
+    <div class="absolute -top-20" id="video"></div>
+  </div>
   <Latest
     title="Watch my latest videos"
     titleSide="left"

@@ -16,7 +16,7 @@ export async function getVideos(amount = 20): Promise<YouTubeVideo[]> {
 
     const data = await res.json();
 
-    return data.items;
+    return data?.items ?? [];
   } catch (error) {
     console.error(error);
   }
