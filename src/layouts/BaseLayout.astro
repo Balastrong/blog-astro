@@ -7,9 +7,9 @@ import BasicScripts from '~/components/common/BasicScripts.astro';
 import { MetaSEO } from '~/types';
 import { SITE } from '~/config.mjs';
 
-export interface Props {
+export type Props = {
   meta?: MetaSEO;
-}
+};
 
 const { meta = {} } = Astro.props;
 const { language = 'en', textDirection = 'ltr' } = SITE;

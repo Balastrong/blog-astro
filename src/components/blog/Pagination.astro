@@ -2,12 +2,12 @@
 import { Icon } from 'astro-icon';
 import { getPermalink } from '~/utils/permalinks';
 
-export interface Props {
+export type Props = {
   prevUrl: string;
   nextUrl: string;
   prevText?: string;
   nextText?: string;
-}
+};
 
 const { prevUrl, nextUrl, prevText = 'Newer posts', nextText = 'Older posts' } = Astro.props;
 ---

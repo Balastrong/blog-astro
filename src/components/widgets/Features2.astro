@@ -1,18 +1,18 @@
 ---
 import { Icon } from 'astro-icon';
 
-interface Item {
+type Item = {
   title?: string;
   description?: string;
   icon?: string;
-}
+};
 
-export interface Props {
+export type Props = {
   title?: string;
   subtitle?: string;
   highlight?: string;
   items: Array<Item>;
-}
+};
 
 const {
   title = await Astro.slots.render('title'),
@@ -43,10 +43,7 @@ const {
             )}
 
             {subtitle && (
-              <p
-                class="max-w-3xl mx-auto sm:text-center text-xl text-muted dark:text-slate-400"
-                set:html={subtitle}
-              />
+              <p class="max-w-3xl mx-auto sm:text-center text-xl text-muted dark:text-slate-400" set:html={subtitle} />
             )}
           </div>
         )

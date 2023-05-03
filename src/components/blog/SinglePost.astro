@@ -10,10 +10,10 @@ import { getFormattedDate } from '~/utils/utils';
 
 import type { Post } from '~/types';
 
-export interface Props {
+export type Props = {
   post: Post;
   url: string | URL;
-}
+};
 
 const { post, url } = Astro.props;
 ---

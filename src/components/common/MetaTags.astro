@@ -10,9 +10,9 @@ import { getAsset, getCanonical } from '~/utils/permalinks';
 
 import CustomStyles from '~/components/CustomStyles.astro';
 
-export interface Props extends MetaSEO {
+export type Props = MetaSEO & {
   dontUseTitleTemplate?: boolean;
-}
+};
 
 const defaultImage = SITE.defaultImage
   ? (

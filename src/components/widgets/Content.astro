@@ -2,13 +2,13 @@
 import { Icon } from 'astro-icon';
 import { Picture } from '@astrojs/image/components';
 
-interface Item {
+type Item = {
   title: string;
   description?: string;
   icon?: string;
-}
+};
 
-export interface Props {
+export type Props = {
   title?: string;
   subtitle?: string;
   highlight?: string;
@@ -17,7 +17,7 @@ export interface Props {
   image?: string | any; // TODO: find HTMLElementProps
   isReversed?: boolean;
   isAfterContent?: boolean;
-}
+};
 
 const {
   title = await Astro.slots.render('title'),

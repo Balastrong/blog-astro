@@ -2,19 +2,19 @@
 import { Icon } from 'astro-icon';
 import { Picture } from '@astrojs/image/components';
 
-interface CallToAction {
+type CallToAction = {
   text: string;
   href: string;
   icon?: string;
-}
+};
 
-export interface Props {
+export type Props = {
   title?: string;
   subtitle?: string;
   callToAction?: string | CallToAction;
   callToAction2?: string | CallToAction;
   image?: string | any; // TODO: find HTMLElementProps
-}
+};
 
 const {
   title = await Astro.slots.render('title'),
@@ -42,7 +42,9 @@ const {
         }
         <div class="max-w-3xl mx-auto lg:max-w-none">
           {subtitle && <p class="text-xl text-muted mb-6 dark:text-slate-300" set:html={subtitle} />}
-          <div class="max-w-xs sm:max-w-md m-auto flex flex-nowrap flex-col sm:flex-row sm:justify-center gap-4 lg:justify-start lg:m-0 lg:max-w-7xl">
+          <div
+            class="max-w-xs sm:max-w-md m-auto flex flex-nowrap flex-col sm:flex-row sm:justify-center gap-4 lg:justify-start lg:m-0 lg:max-w-7xl"
+          >
             {
               callToAction && (
                 <div class="flex w-full sm:w-auto">

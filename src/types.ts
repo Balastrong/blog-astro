@@ -1,4 +1,4 @@
-export interface Post {
+export type Post = {
   id: string;
   slug: string;
 
@@ -22,9 +22,9 @@ export interface Post {
   content?: string;
 
   readingTime?: number;
-}
+};
 
-export interface MetaSEO {
+export type MetaSEO = {
   title?: string;
   description?: string;
   image?: string;
@@ -35,9 +35,9 @@ export interface MetaSEO {
 
   ogTitle?: string;
   ogType?: string;
-}
+};
 
-export interface GitHubRepository {
+export type GitHubRepository = {
   id: number;
   node_id: string;
   name: string;
@@ -120,9 +120,9 @@ export interface GitHubRepository {
   temp_clone_token: string;
   network_count: number;
   subscribers_count: number;
-}
+};
 
-export interface Owner {
+export type Owner = {
   login: string;
   id: number;
   node_id: string;
@@ -141,15 +141,15 @@ export interface Owner {
   received_events_url: string;
   type: string;
   site_admin: boolean;
-}
+};
 
-export interface License {
+export type License = {
   key: string;
   name: string;
   spdx_id: string;
   url: string;
   node_id: string;
-}
+};
 
 export type GitHubRepo = {
   owner: string;

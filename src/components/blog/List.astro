@@ -2,9 +2,9 @@
 import Item from '~/components/blog/ListItem.astro';
 import type { Post } from '~/types';
 
-export interface Props {
+export type Props = {
   posts: Array<Post>;
-}
+};
 
 const { posts } = Astro.props;
 ---

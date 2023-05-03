@@ -1,14 +1,14 @@
 ---
 import classnames from 'classnames';
 
-export interface Props {
+export type Props = {
   title?: string;
   titleSide?: 'left' | 'center' | 'right';
   subtitleText?: string;
   subtitleLink?: string | URL;
   isLinkExternal?: boolean;
   information?: string;
-}
+};
 
 const {
   title = await Astro.slots.render('title'),

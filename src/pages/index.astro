@@ -44,10 +44,10 @@ const { shortVideos, longVideos } = await categorizeVideo(videos);
   </Hero>
 
   <Latest
-    title="Read my latest articles"
+    title="Latest articles"
     titleSide="center"
     subtitleLink={getBlogPermalink()}
-    subtitleText={'Read all posts'}
+    subtitleText={'Read all my articles'}
   >
     <PostGrid posts={posts} />
   </Latest>
@@ -56,9 +56,9 @@ const { shortVideos, longVideos } = await categorizeVideo(videos);
     <div class="absolute -top-20" id="video"></div>
   </div>
   <Latest
-    title="Watch my latest videos"
+    title="Latest videos"
     titleSide="left"
-    subtitleText="To all my videos"
+    subtitleText="Watch all my videos"
     subtitleLink={youTubeChannelUrl + '/videos'}
     isLinkExternal
   >
@@ -68,9 +68,9 @@ const { shortVideos, longVideos } = await categorizeVideo(videos);
   </Latest>
 
   <Latest
-    title="Watch my latest shorts"
+    title="Latest shorts"
     titleSide="right"
-    subtitleText="To all my shorts"
+    subtitleText="Watch all my shorts"
     subtitleLink={youTubeChannelUrl + '/shorts'}
     isLinkExternal
   >

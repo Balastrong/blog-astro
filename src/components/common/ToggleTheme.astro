@@ -3,12 +3,12 @@ import { Icon } from 'astro-icon';
 
 import { SITE } from '~/config.mjs';
 
-export interface Props {
+export type Props = {
   label?: string;
   class?: string;
   iconClass?: string;
   iconName?: string;
-}
+};
 
 const {
   label = 'Toggle between Dark and Light mode',

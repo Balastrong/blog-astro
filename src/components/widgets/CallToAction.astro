@@ -1,17 +1,17 @@
 ---
 import { Icon } from 'astro-icon';
 
-interface CallToAction {
+type CallToAction = {
   text: string;
   href: string;
   icon?: string;
-}
+};
 
-export interface Props {
+export type Props = {
   title?: string;
   description?: string;
   callToAction?: string | CallToAction;
-}
+};
 
 const {
   title = await Astro.slots.render('title'),

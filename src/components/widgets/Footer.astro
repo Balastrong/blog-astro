@@ -1,25 +1,25 @@
 ---
 import { Icon } from 'astro-icon';
 
-interface Link {
+type Link = {
   text?: string;
   href?: string;
   ariaLabel?: string;
   icon?: string;
-}
+};
 
-interface Links {
+type Links = {
   title?: string;
   links: Link[];
-}
+};
 
-export interface Props {
+export type Props = {
   links?: Links[];
   secondaryLinks?: Link[];
   socialLinks: Link[];
   footNote?: string;
   theme?: string;
-}
+};
 
 const { socialLinks = [], theme = 'light' } = Astro.props;
 ---

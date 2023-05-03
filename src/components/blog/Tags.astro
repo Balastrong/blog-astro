@@ -4,10 +4,10 @@ import { getPermalink } from '~/utils/permalinks';
 import { BLOG } from '~/config.mjs';
 import type { Post } from '~/types';
 
-export interface Props {
+export type Props = {
   tags: Post['tags'];
   class?: string;
-}
+};
 
 const { tags, class: className = 'text-sm' } = Astro.props;
 ---

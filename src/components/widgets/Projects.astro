@@ -3,12 +3,12 @@ import { Icon } from 'astro-icon';
 import { GitHubRepo, GitHubRepository } from '~/types';
 import { getRepoData } from '~/libs/github';
 
-export interface Props {
+export type Props = {
   title?: string;
   subtitle?: string;
   highlight?: string;
   repositories: GitHubRepo[];
-}
+};
 
 const {
   title = await Astro.slots.render('title'),

@@ -4,13 +4,13 @@ import Grid from '~/components/blog/Grid.astro';
 import { getBlogPermalink } from '~/utils/permalinks';
 import { findPostsByIds } from '~/utils/blog';
 
-export interface Props {
+export type Props = {
   title?: string;
   allPostsText?: string;
   allPostsLink?: string | URL;
   information?: string;
   postIds: string[];
-}
+};
 
 const {
   title = await Astro.slots.render('title'),
