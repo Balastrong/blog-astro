@@ -38,7 +38,9 @@ async function isVideoShort(videoId?: string) {
       const res = await fetch('https://yt.lemnoslife.com/channels?part=shorts&id=' + CHANNEL_ID);
       const data = await res.json();
       shortVideoIds = new Set(data.items[0].shorts.map((item: { videoId: string }) => item.videoId) ?? []);
+      console.log('shortVideoIds', shortVideoIds);
     } catch (error) {
+      console.error(error);
       shortVideoIds = new Set();
     }
   }
