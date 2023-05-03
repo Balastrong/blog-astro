@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "@astrojs/netlify": "^2.2.2",
+    "classnames": "^2.3.2",
     "lite-youtube-embed": "^0.2.0"
   }
 }

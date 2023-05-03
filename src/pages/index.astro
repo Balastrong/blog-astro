@@ -20,7 +20,9 @@ const meta = {
 const posts = await findLatestPosts({ count: 4 });
 
 const videos = await getVideos();
-const { shortVideos, longVideos } = await categorizeVideo(videos);
+const { shortVideos, longVideos } = await categorizeVideo(videos, {
+  minShortCount: 6,
+});
 ---
 
 <Layout {meta}>
@@ -42,15 +44,32 @@ const { shortVideos, longVideos } = await categorizeVideo(videos);
     </Fragment>
   </Hero>
 
-  <Latest title="Read my latest articles" subtitleLink={getBlogPermalink()} subtitleText={'Read all posts'}>
+  <Latest
+    title="Read my latest articles"
+    titleSide="center"
+    subtitleLink={getBlogPermalink()}
+    subtitleText={'Read all posts'}
+  >
     <PostGrid posts={posts} />
   </Latest>
 
-  <Latest title="Watch my latest videos" subtitleText="To all my videos" subtitleLink={youTubeChannelUrl + '/videos'}>
+  <Latest
+    title="Watch my latest videos"
+    titleSide="left"
+    subtitleText="To all my videos"
+    subtitleLink={youTubeChannelUrl + '/videos'}
+    isLinkExternal
+  >
     <VideoGrid videos={longVideos} />
   </Latest>
 
-  <Latest title="Watch my latest shorts" subtitleText="To all my shorts" subtitleLink={youTubeChannelUrl + '/shorts'}>
+  <Latest
+    title="Watch my latest shorts"
+    titleSide="right"
+    subtitleText="To all my shorts"
+    subtitleLink={youTubeChannelUrl + '/shorts'}
+    isLinkExternal
+  >
     <VideoGrid videos={shortVideos} />
   </Latest>
 </Layout>

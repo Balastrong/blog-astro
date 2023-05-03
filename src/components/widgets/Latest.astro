@@ -1,23 +1,39 @@
 ---
+import classnames from 'classnames';
+
 export interface Props {
   title?: string;
+  titleSide?: 'left' | 'center' | 'right';
   subtitleText?: string;
   subtitleLink?: string | URL;
+  isLinkExternal?: boolean;
   information?: string;
-  count?: number;
 }
 
 const {
   title = await Astro.slots.render('title'),
+  titleSide = 'left',
   subtitleText = 'Read all posts',
   subtitleLink,
+  isLinkExternal,
   information = await Astro.slots.render('information'),
 } = Astro.props;
 ---
 
 <section class="px-4 py-8 mx-auto max-w-7xl lg:py-12">
-  <div class="flex flex-col lg:justify-between lg:flex-row mb-8">
-    <div>
+  <div
+    class={classnames('flex flex-col lg:flex-row mb-8', {
+      'lg:justify-start': titleSide === 'left',
+      'lg:justify-center': titleSide === 'center',
+      'lg:justify-end': titleSide === 'right',
+    })}
+  >
+    <div
+      class={classnames('flex flex-col', {
+        'items-end': titleSide === 'right',
+        'items-center': titleSide === 'center',
+      })}
+    >
       {
         title && (
           <h2
@@ -29,8 +45,9 @@ const {
       {
         subtitleText && subtitleLink && (
           <a
-            class="text-muted dark:text-slate-400 hover:text-primary transition ease-in duration-200 block mb-6 lg:mb-0"
+            class="text-muted dark:text-slate-400 hover:text-primary transition ease-in duration-200 block mb-6 lg:mb-0 w-fit"
             href={subtitleLink}
+            target={isLinkExternal ? '_blank' : '_self'}
           >
             {subtitleText} »
           </a>
