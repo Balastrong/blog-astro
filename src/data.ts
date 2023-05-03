@@ -3,15 +3,6 @@ import { GitHubRepo } from './types';
 
 export const headerData = {
   links: [
-    /*{
-      text: 'Pages',
-      links: [
-        {
-          text: 'Features',
-          href: '#',
-        },
-      ],
-    },*/
     {
       text: 'Blog',
       href: getBlogPermalink(),
@@ -22,11 +13,16 @@ export const headerData = {
     },
     {
       text: 'Open Source',
-      href: getPermalink('/open-source'),
-    },
-    {
-      text: 'My Projects',
-      href: getPermalink('/projects'),
+      links: [
+        {
+          text: 'Contributions',
+          href: getPermalink('/contributions'),
+        },
+        {
+          text: 'My Projects',
+          href: getPermalink('/projects'),
+        },
+      ],
     },
   ],
   actions: [{ type: 'button', text: 'YouTube', href: 'https://www.youtube.com/@DevLeonardo' }],
