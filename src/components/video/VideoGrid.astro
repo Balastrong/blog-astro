@@ -1,0 +1,14 @@
+---
+import VideoItem from '~/components/video/VideoItem.astro';
+import type { YouTubeVideo } from '~/types';
+
+export interface Props {
+  videos: YouTubeVideo[];
+}
+
+const { videos } = Astro.props;
+---
+
+<div class="grid gap-6 row-gap-5 md:grid-cols-3 -mb-6">
+  {videos.map((video) => <VideoItem video={video} />)}
+</div>

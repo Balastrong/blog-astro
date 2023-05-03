@@ -1,6 +1,8 @@
 import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
 import { GitHubRepo } from './types';
 
+export const youTubeChannelUrl = 'https://www.youtube.com/@DevLeonardo';
+
 export const headerData = {
   links: [
     {
@@ -25,13 +27,13 @@ export const headerData = {
       ],
     },
   ],
-  actions: [{ type: 'button', text: 'YouTube', href: 'https://www.youtube.com/@DevLeonardo' }],
+  actions: [{ type: 'button', text: 'YouTube', href: youTubeChannelUrl }],
 };
 
 export const footerData = {
   socialLinks: [
     { ariaLabel: 'Twitter', icon: 'tabler:brand-twitter', href: 'https://twitter.com/balastrong' },
-    { ariaLabel: 'YouTube', icon: 'tabler:brand-youtube', href: 'https://www.youtube.com/@DevLeonardo' },
+    { ariaLabel: 'YouTube', icon: 'tabler:brand-youtube', href: youTubeChannelUrl },
     { ariaLabel: 'Linkedin', icon: 'tabler:brand-linkedin', href: 'https://www.linkedin.com/in/leonardo-montini/' },
     { ariaLabel: 'Discord', icon: 'tabler:brand-discord', href: 'https://discord.gg/bqwyEa6We6' },
     { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com/Balastrong' },

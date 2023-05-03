@@ -2,8 +2,13 @@
 import { SITE } from '~/config.mjs';
 import Layout from '~/layouts/PageLayout.astro';
 
-import LatestPosts from '~/components/blog/LatestPosts.astro';
+import PostGrid from '~/components/blog/PostGrid.astro';
+import VideoGrid from '~/components/video/VideoGrid.astro';
 import Hero from '~/components/widgets/Hero.astro';
+import Latest from '~/components/widgets/Latest.astro';
+import { youTubeChannelUrl } from '~/data';
+import { categorizeVideo, getVideos } from '~/libs/youtube';
+import { findLatestPosts } from '~/utils/blog';
 import { getBlogPermalink } from '~/utils/permalinks';
 
 const meta = {
@@ -11,6 +16,11 @@ const meta = {
   description: SITE.description,
   dontUseTitleTemplate: true,
 };
+
+const posts = await findLatestPosts({ count: 4 });
+
+const videos = await getVideos();
+const { shortVideos, longVideos } = await categorizeVideo(videos);
 ---
 
 <Layout {meta}>
@@ -32,5 +42,15 @@ const meta = {
     </Fragment>
   </Hero>
 
-  <LatestPosts title="Read my latest articles" />
+  <Latest title="Read my latest articles" subtitleLink={getBlogPermalink()} subtitleText={'Read all posts'}>
+    <PostGrid posts={posts} />
+  </Latest>
+
+  <Latest title="Watch my latest videos" subtitleText="To all my videos" subtitleLink={youTubeChannelUrl + '/videos'}>
+    <VideoGrid videos={longVideos} />
+  </Latest>
+
+  <Latest title="Watch my latest shorts" subtitleText="To all my shorts" subtitleLink={youTubeChannelUrl + '/shorts'}>
+    <VideoGrid videos={shortVideos} />
+  </Latest>
 </Layout>

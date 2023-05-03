@@ -1,0 +1,58 @@
+---
+import { Picture } from '@astrojs/image/components';
+
+import { BLOG } from '~/config.mjs';
+import type { YouTubeVideo } from '~/types';
+
+import { getThumbnailUrl, getVideoUrl } from '~/libs/youtube';
+
+export type Props = {
+  video: YouTubeVideo;
+};
+
+const { video } = Astro.props;
+
+const thumbnail = getThumbnailUrl(video);
+const videoUrl = getVideoUrl(video);
+const videoTitle = video.snippet.title;
+const videoDescription = video.snippet.description;
+---
+
+<article class="mb-6 transition">
+  <div class="relative bg-gray-400 dark:bg-slate-700 rounded shadow-lg mb-6">
+    {
+      thumbnail && (
+        <a href={videoUrl} target="_blank">
+          <Picture
+            src={thumbnail}
+            class="md:object-cover w-full md:w-auto rounded shadow-lg bg-gray-400 dark:bg-slate-700"
+            widths={[400, 900]}
+            width={400}
+            height={224}
+            sizes="(max-width: 900px) 400px, 900px"
+            alt={videoTitle}
+            aspectRatio="16:9"
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
+      )
+    }
+  </div>
+  <h3 class="mb-2 text-xl font-bold leading-tight sm:text-2xl font-heading">
+    {
+      BLOG?.post?.disabled ? (
+        videoTitle
+      ) : (
+        <a
+          href={videoUrl}
+          target="_blank"
+          class="hover:text-primary dark:hover:text-blue-700  transition ease-in duration-200"
+        >
+          {videoTitle}
+        </a>
+      )
+    }
+  </h3>
+  <p class="text-muted dark:text-slate-400 text-lg">{videoDescription}</p>
+</article>

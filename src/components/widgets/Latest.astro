@@ -1,30 +1,23 @@
 ---
-import Grid from '~/components/blog/Grid.astro';
-
-import { getBlogPermalink } from '~/utils/permalinks';
-import { findLatestPosts } from '~/utils/blog';
-
 export interface Props {
   title?: string;
-  allPostsText?: string;
-  allPostsLink?: string | URL;
+  subtitleText?: string;
+  subtitleLink?: string | URL;
   information?: string;
+  count?: number;
 }
 
 const {
   title = await Astro.slots.render('title'),
-  allPostsText = 'Read all posts',
-  allPostsLink = getBlogPermalink(),
+  subtitleText = 'Read all posts',
+  subtitleLink,
   information = await Astro.slots.render('information'),
-  count = 4,
 } = Astro.props;
-
-const posts = await findLatestPosts({ count });
 ---
 
 <section class="px-4 py-8 mx-auto max-w-7xl lg:py-12">
   <div class="flex flex-col lg:justify-between lg:flex-row mb-8">
-    <div class="md:max-w-sm">
+    <div>
       {
         title && (
           <h2
@@ -34,12 +27,12 @@ const posts = await findLatestPosts({ count });
         )
       }
       {
-        allPostsText && allPostsLink && (
+        subtitleText && subtitleLink && (
           <a
             class="text-muted dark:text-slate-400 hover:text-primary transition ease-in duration-200 block mb-6 lg:mb-0"
-            href={allPostsLink}
+            href={subtitleLink}
           >
-            {allPostsText} »
+            {subtitleText} »
           </a>
         )
       }
@@ -48,5 +41,5 @@ const posts = await findLatestPosts({ count });
     {information && <p class="text-muted dark:text-slate-400 lg:text-sm lg:max-w-md" set:html={information} />}
   </div>
 
-  <Grid posts={posts} />
+  <slot />
 </section>

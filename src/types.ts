@@ -155,3 +155,39 @@ export type GitHubRepo = {
   owner: string;
   repo: string;
 };
+
+export type YouTubeVideo = {
+  etag: string;
+  id: {
+    kind: string;
+    videoId?: string;
+    playlistId?: string;
+  };
+  kind: string;
+  snippet: {
+    publishedAt: string;
+    channelId: string;
+    title: string;
+    description: string;
+    thumbnails: {
+      default: {
+        url: string;
+        width: number;
+        height: number;
+      };
+      medium: {
+        url: string;
+        width: number;
+        height: number;
+      };
+      high: {
+        url: string;
+        width: number;
+        height: number;
+      };
+    };
+    channelTitle: string;
+    liveBroadcastContent: string;
+    publishTime: string;
+  };
+};
