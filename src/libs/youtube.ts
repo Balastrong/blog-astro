@@ -2,6 +2,8 @@ import { YouTubeVideo } from '~/types';
 
 const CHANNEL_ID = 'UC-KqnO3ez7vF-kyIQ_22rdA';
 
+let shortVideoIds: Set<string>;
+
 export async function getVideos(amount = 20): Promise<YouTubeVideo[]> {
   if (import.meta.env.DEV_NO_YOUTUBE_API) {
     return DUMMY_VIDEOS;
@@ -27,34 +29,32 @@ export async function getVideos(amount = 20): Promise<YouTubeVideo[]> {
 async function isVideoShort(videoId?: string) {
   if (!videoId) return false;
 
-  try {
-    const res = await fetch('https://yt.lemnoslife.com/videos?part=short&id=' + videoId);
-    const response = await res.json();
-    return !!response?.items[0].short?.available;
-  } catch (error) {
-    console.error(error);
-    return false;
+  if (import.meta.env.DEV_NO_YOUTUBE_API) {
+    return Math.random() > 0.5;
   }
+
+  if (shortVideoIds === undefined) {
+    try {
+      const res = await fetch('https://yt.lemnoslife.com/channels?part=shorts&id=' + CHANNEL_ID);
+      const data = await res.json();
+      shortVideoIds = new Set(data.items[0].shorts.map((item: { videoId: string }) => item.videoId) ?? []);
+    } catch (error) {
+      shortVideoIds = new Set();
+    }
+  }
+
+  return shortVideoIds.has(videoId);
 }
 
-export async function categorizeVideo(
-  videos: YouTubeVideo[],
-  defaults?: { minLongCount?: number; minShortCount?: number }
-) {
-  const minLongCount = defaults?.minLongCount ?? 3;
-  const minShortCount = defaults?.minShortCount ?? 3;
-  if (import.meta.env.DEV_NO_YOUTUBE_API) {
-    return {
-      shortVideos: DUMMY_VIDEOS.slice(0, minShortCount),
-      longVideos: DUMMY_VIDEOS.slice(minShortCount, minShortCount + minLongCount),
-    };
-  }
+export async function categorizeVideo(videos: YouTubeVideo[], defaults?: { longCount?: number; shortCount?: number }) {
+  const longCount = defaults?.longCount ?? 6;
+  const shortCount = defaults?.shortCount ?? 6;
 
   const longVideos: YouTubeVideo[] = [];
   const shortVideos: YouTubeVideo[] = [];
-  const fullfilled = () => shortVideos.length >= minShortCount && longVideos.length >= minLongCount;
+  const fullfilled = () => shortVideos.length >= shortCount && longVideos.length >= longCount;
 
-  for (let i = 0; i < videos.length || !fullfilled(); i++) {
+  for (let i = 0; i < videos.length && !fullfilled(); i++) {
     if (await isVideoShort(videos[i]?.id?.videoId)) {
       shortVideos.push(videos[i]);
     } else {
@@ -62,7 +62,7 @@ export async function categorizeVideo(
     }
   }
 
-  return { shortVideos, longVideos };
+  return { shortVideos: shortVideos.slice(0, shortCount), longVideos: longVideos.slice(0, longCount) };
 }
 
 export function getThumbnailUrl(video: YouTubeVideo) {

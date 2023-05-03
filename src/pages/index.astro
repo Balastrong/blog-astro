@@ -21,9 +21,7 @@ const meta = {
 const posts = await findLatestPosts({ count: 4 });
 
 const videos = await getVideos();
-const { shortVideos, longVideos } = await categorizeVideo(videos, {
-  minShortCount: 6,
-});
+const { shortVideos, longVideos } = await categorizeVideo(videos);
 ---
 
 <Layout {meta}>
