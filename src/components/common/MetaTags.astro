@@ -87,7 +87,7 @@ const image =
 {SITE.googleSiteVerificationId && <meta name="google-site-verification" content={SITE.googleSiteVerificationId} />}
 
 <!-- Google Analytics -->
-{SITE.googleAnalyticsId && <GoogleAnalytics id={String(SITE.googleAnalyticsId)} partytown={true} />}
+{SITE.googleAnalyticsId && !import.meta.env.DEV && <GoogleAnalytics id={String(SITE.googleAnalyticsId)} partytown={true} />}
 
 <link rel="shortcut icon" href={getAsset('/favicon.ico')} />
 
