@@ -9,6 +9,8 @@ import image from '@astrojs/image';
 import mdx from '@astrojs/mdx';
 import partytown from '@astrojs/partytown';
 import compress from 'astro-compress';
+import orama from '@orama/plugin-astro';
+import react from '@astrojs/react';
 import { readingTimeRemarkPlugin } from './src/utils/frontmatter.mjs';
 
 import { SITE } from './src/config.mjs';
@@ -40,7 +42,12 @@ export default defineConfig({
       serviceEntryPoint: '@astrojs/image/sharp',
     }),
     mdx(),
-
+    react(),
+    orama({
+      articles: {
+        pathMatcher: /.*/,
+      },
+    }),
     ...whenExternalScripts(() =>
       partytown({
         config: { forward: ['dataLayer.push'] },
