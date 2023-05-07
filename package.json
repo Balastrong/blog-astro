@@ -50,7 +50,6 @@
     "@types/react": "^18.2.5",
     "@types/react-dom": "^18.2.3",
     "classnames": "^2.3.2",
-    "lite-youtube-embed": "^0.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }
