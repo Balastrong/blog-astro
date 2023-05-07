@@ -1,7 +1,11 @@
+const plugin = require('tailwindcss/plugin');
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-  content: ['./src/**/*.{astro,html,js,jsx,md,svelte,ts,tsx,vue}'],
+  content: {
+    files: ['./src/**/*.{astro,html,js,jsx,md,svelte,ts,tsx,vue}'],
+    transform: (content) => content.replace(/taos:/g, ''),
+  },
   theme: {
     extend: {
       colors: {
@@ -16,6 +20,16 @@ module.exports = {
       },
     },
   },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [
+    require('@tailwindcss/typography'),
+    plugin(({ addBase }) => {
+      addBase({
+        ['html.js :where([class*="taos:"]:not(.taos-init))']: {
+          visibility: 'hidden',
+        },
+      });
+    }),
+  ],
   darkMode: 'class',
+  safelist: ['!duration-[0ms]', '!delay-[0ms]', 'html.js :where([class*="taos:"]:not(.taos-init))'],
 };

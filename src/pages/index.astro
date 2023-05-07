@@ -1,7 +1,6 @@
 ---
 import { SITE } from '~/config.mjs';
 import Layout from '~/layouts/PageLayout.astro';
-import OramaSearch from '~/components/common/OramaSearch';
 
 import PostGrid from '~/components/blog/PostGrid.astro';
 import ShortItem from '~/components/video/ShortItem.astro';
@@ -50,7 +49,9 @@ const { shortVideos, longVideos } = await categorizeVideo(videos);
     subtitleLink={getBlogPermalink()}
     subtitleText={'Read all my articles'}
   >
-    <PostGrid posts={posts} />
+    <div class="delay-[100ms] duration-[400ms] taos:translate-y-[200px] taos:opacity-0">
+      <PostGrid posts={posts} />
+    </div>
   </Latest>
 
   <div class="relative">
@@ -63,20 +64,28 @@ const { shortVideos, longVideos } = await categorizeVideo(videos);
     subtitleLink={youTubeChannelUrl + '/videos'}
     isLinkExternal
   >
-    <div class="grid gap-6 row-gap-5 md:grid-cols-3 -mb-6">
+    <div
+      class="grid gap-6 row-gap-5 md:grid-cols-3 -mb-6 delay-[100ms] duration-[400ms] taos:translate-x-[-200px] taos:opacity-0"
+      data-taos-offset="150"
+    >
       {longVideos.map((video) => <VideoItem video={video} />)}
     </div>
   </Latest>
 
-  <Latest
-    title="Latest shorts"
-    titleSide="right"
-    subtitleText="Watch all my shorts"
-    subtitleLink={youTubeChannelUrl + '/shorts'}
-    isLinkExternal
-  >
-    <div class="grid gap-6 row-gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-6 -mb-6">
-      {shortVideos.map((video) => <ShortItem video={video} />)}
-    </div>
-  </Latest>
+  <div class="overflow-hidden">
+    <Latest
+      title="Latest shorts"
+      titleSide="right"
+      subtitleText="Watch all my shorts"
+      subtitleLink={youTubeChannelUrl + '/shorts'}
+      isLinkExternal
+    >
+      <div
+        class="grid gap-6 row-gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-6 -mb-6 delay-[100ms] duration-[400ms] taos:translate-x-[200px] taos:opacity-0"
+        data-taos-offset="150"
+      >
+        {shortVideos.map((video) => <ShortItem video={video} />)}
+      </div>
+    </Latest>
+  </div>
 </Layout>
