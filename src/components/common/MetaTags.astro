@@ -75,7 +75,7 @@ const image =
     // site_name: 'SiteName',
   }}
   twitter={{
-    // handle: '@handle',
+    handle: '@balastrong',
     // site: '@site',
     cardType: image ? 'summary_large_image' : undefined,
   }}
@@ -87,11 +87,10 @@ const image =
 {SITE.googleSiteVerificationId && <meta name="google-site-verification" content={SITE.googleSiteVerificationId} />}
 
 <!-- Google Analytics -->
-{SITE.googleAnalyticsId && !import.meta.env.DEV && <GoogleAnalytics id={String(SITE.googleAnalyticsId)} partytown={true} />}
+{
+  SITE.googleAnalyticsId && !import.meta.env.DEV && (
+    <GoogleAnalytics id={String(SITE.googleAnalyticsId)} partytown={true} />
+  )
+}
 
 <link rel="shortcut icon" href={getAsset('/favicon.ico')} />
-
-<!-- 
-<link rel="stylesheet" href="node_modules/lite-youtube-embed/src/lite-yt-embed.css" />
-<script src="node_modules/lite-youtube-embed/src/lite-yt-embed.js"></script>
--->
