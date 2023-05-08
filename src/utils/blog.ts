@@ -65,7 +65,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
   };
 };
 
-const load = async function (): Promise<Array<Post>> {
+const load = async function (): Promise<Post[]> {
   const posts = await getCollection('post');
   const normalizedPosts = posts.map(async (post) => await getNormalizedPost(post));
 
@@ -76,10 +76,10 @@ const load = async function (): Promise<Array<Post>> {
   return results;
 };
 
-let _posts: Array<Post>;
+let _posts: Post[];
 
 /** */
-export const fetchPosts = async (): Promise<Array<Post>> => {
+export const fetchPosts = async (): Promise<Post[]> => {
   if (!_posts) {
     _posts = await load();
   }
@@ -88,12 +88,12 @@ export const fetchPosts = async (): Promise<Array<Post>> => {
 };
 
 /** */
-export const findPostsBySlugs = async (slugs: Array<string>): Promise<Array<Post>> => {
+export const findPostsBySlugs = async (slugs: string[]): Promise<Post[]> => {
   if (!Array.isArray(slugs)) return [];
 
   const posts = await fetchPosts();
 
-  return slugs.reduce(function (r: Array<Post>, slug: string) {
+  return slugs.reduce(function (r: Post[], slug: string) {
     posts.some(function (post: Post) {
       return slug === post.slug && r.push(post);
     });
@@ -102,12 +102,12 @@ export const findPostsBySlugs = async (slugs: Array<string>): Promise<Array<Post
 };
 
 /** */
-export const findPostsByIds = async (ids: Array<string>): Promise<Array<Post>> => {
+export const findPostsByIds = async (ids: string[]): Promise<Post[]> => {
   if (!Array.isArray(ids)) return [];
 
   const posts = await fetchPosts();
 
-  return ids.reduce(function (r: Array<Post>, id: string) {
+  return ids.reduce(function (r: Post[], id: string) {
     posts.some(function (post: Post) {
       return id === post.id && r.push(post);
     });
@@ -116,9 +116,32 @@ export const findPostsByIds = async (ids: Array<string>): Promise<Array<Post>> =
 };
 
 /** */
-export const findLatestPosts = async ({ count }: { count?: number }): Promise<Array<Post>> => {
+export const findLatestPosts = async ({ count }: { count?: number }): Promise<Post[]> => {
   const _count = count || 4;
   const posts = await fetchPosts();
 
   return posts ? posts.slice(0, _count) : [];
+};
+
+export const findSimilarPosts = (post: Post, config?: { count?: number }): Post[] => {
+  const _count = config?.count || 3;
+
+  return _posts
+    .filter((p) => p.id !== post.id && !!p.image)
+    .map((p) => {
+      const score =
+        p.tags?.reduce((acc, tag) => {
+          if (post.tags?.includes(tag)) {
+            acc += 1;
+          }
+          return acc;
+        }, 0) ?? 0;
+      return {
+        p,
+        score: score,
+      };
+    })
+    .sort((a, b) => b.score - a.score)
+    .map((p) => p.p)
+    .slice(0, _count);
 };
