@@ -2,6 +2,7 @@ import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
 import { GitHubRepo } from './types';
 
 export const youTubeChannelUrl = 'https://www.youtube.com/@DevLeonardo';
+export const twitterUrl = 'https://twitter.com/balastrong';
 
 export const headerData = {
   links: [
@@ -32,7 +33,7 @@ export const headerData = {
 
 export const footerData = {
   socialLinks: [
-    { ariaLabel: 'Twitter', icon: 'tabler:brand-twitter', href: 'https://twitter.com/balastrong' },
+    { ariaLabel: 'Twitter', icon: 'tabler:brand-twitter', href: twitterUrl },
     { ariaLabel: 'YouTube', icon: 'tabler:brand-youtube', href: youTubeChannelUrl },
     { ariaLabel: 'Linkedin', icon: 'tabler:brand-linkedin', href: 'https://www.linkedin.com/in/leonardo-montini/' },
     { ariaLabel: 'Discord', icon: 'tabler:brand-discord', href: 'https://discord.gg/bqwyEa6We6' },

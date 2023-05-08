@@ -1,0 +1,31 @@
+---
+import propic from 'src/assets/images/propic_blue.jpg';
+import { twitterUrl, youTubeChannelUrl } from 'src/data';
+---
+
+<div class="w-full dark:prose-invert prose-a:text-primary dark:prose-a:text-blue-400">
+  <div class="text-2xl font-bold mb-2">About the author</div>
+  <div>
+    <div class="float-left">
+      <img src={propic.src} alt="Astro logo" class="inline-block mr-2 rounded-lg w-[115px] sm:w-[150px]" />
+    </div>
+    <div class="flex flex-col gap-1">
+      <p>
+        Hello! My name is <strong>Leonardo</strong> and as you might have noticed, I like to talk about Web Development and
+        Open Source!
+      </p>
+      <p>
+        I use GitHub every day and my favourite editor is Visual Studio Code... this might influence a little bit my
+        conent! :D
+      </p>
+      <p>
+        If you like what I do, you should have a look at my <a href={youTubeChannelUrl} target="_blank"
+          >YouTube Channel</a
+        >!
+      </p>
+      <p class="hidden sm:block">
+        Let's get in touch, feel free to send me a DM on <a href={twitterUrl} target="_blank">Twitter</a>!
+      </p>
+    </div>
+  </div>
+</div>
