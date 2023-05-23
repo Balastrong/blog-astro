@@ -6,5 +6,5 @@ do
     # Run a command on each file
     echo "Processing file: $file"
     # Replace the following echo command with the command you want to run on each file
-    ./migrateImages.sh $file
+    ./_migrateImages.sh $file
 done
