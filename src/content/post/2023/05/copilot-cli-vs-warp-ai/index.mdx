@@ -1,6 +1,6 @@
 ---
 title: 'Playing with Copilot CLI on top of Warp terminal'
-publishedDate: 2023-05-23
+publishDate: '2023-05-23'
 image: ./_cover.png
 description: The power of GitHub Copilot embedded in your favourite terminal, enhanced by the Warp AI assistant
 tags:
@@ -54,8 +54,7 @@ Let's warm up with an easy one, the good old getting rid of the `node_modules` f
 
 After about a second the tool suggested the expected `rm -rf node_modules`, and you can see below the explanation was still pending.
 
-
-import node_modules_1 from "./_node-modules-1.png";
+import node_modules_1 from './_node-modules-1.png';
 
 <Image src={node_modules_1} alt="Delete node modules 1" />
 
@@ -63,8 +62,7 @@ One more second later and also the explanation arrived.
 
 It's time to select with the up/down arrows if you want to run the command, revise the query or cancel and get back to the prompt.
 
-
-import node_modules_2 from "./_node-modules-2.png";
+import node_modules_2 from './_node-modules-2.png';
 
 <Image src={node_modules_2} alt="Delete node modules 2" />
 
@@ -72,8 +70,7 @@ It's worth noting that after selecting the first option it's still not immediate
 
 At first, this made me think "No" was automatically selected when pressing Enter but looks like it's not the case.
 
-
-import node_modules_3 from "./_node-modules-3.png";
+import node_modules_3 from './_node-modules-3.png';
 
 <Image src={node_modules_3} alt="Delete node modules 3" />
 
@@ -83,15 +80,13 @@ I pressed `y` and the command was executed. You can see the output here: https:/
 
 The `??` counterpart in Warp is `#`, so let's use it to ask Warp the same question! The first difference I see is that as soon as you type `#` the AI panel appears.
 
-
-import node_warp_1 from "./_node-warp-1.png";
+import node_warp_1 from './_node-warp-1.png';
 
 <Image src={node_warp_1} alt="Delete node modules with Warp 1" />
 
 Press Enter and after about a second the command appears under "Suggested command".
 
-
-import node_warp_2 from "./_node-warp-2.png";
+import node_warp_2 from './_node-warp-2.png';
 
 <Image src={node_warp_2} alt="Delete node modules with Warp 2" />
 
@@ -99,15 +94,13 @@ With `Cmd+Enter` the command is not executed but actually put into the terminal,
 
 Speaking of the explanation, you can request it by clicking on the "Explain how this works" button.
 
-
-import warp_explain_1 from "./_warp-explain-1.png";
+import warp_explain_1 from './_warp-explain-1.png';
 
 <Image src={warp_explain_1} alt="Warp AI Explain" />
 
 A side panel will appear and by pressing Enter again you will see the in-depth explanation.
 
-
-import warp_explain_2 from "./_warp-explain-2.png";
+import warp_explain_2 from './_warp-explain-2.png';
 
 <Image src={warp_explain_2} alt="Warp AI Explain" />
 
@@ -131,8 +124,7 @@ The explanation isn't at the same depth though! Copilot arrives faster but with 
 
 This time I don't have a strong feeling about either approach so I'm once more asking for your opinion.
 
-
-import comments from "./_comments.png";
+import comments from './_comments.png';
 
 <Image src={comments} alt="Write a comment" />
 
@@ -178,8 +170,7 @@ find content/blog -name "*.png" | xargs zip blogImages
 
 Again, the explanation is really really short but isn't missing anything in particular.
 
-
-import zip_copilot_1 from "./_zip-copilot-1.png";
+import zip_copilot_1 from './_zip-copilot-1.png';
 
 <Image src={zip_copilot_1} alt="Copilot Zip" />
 
@@ -197,8 +188,7 @@ The explanation here as usual is longer and with more "natural language", as if 
 >
 > In other words, this command creates a zip file named "blogImages.zip" containing all the ".jpg" and ".png" files in the "content/blog" directory.
 
-
-import zip_warp_1 from "./_zip-warp-1.png";
+import zip_warp_1 from './_zip-warp-1.png';
 
 <Image src={zip_warp_1} alt="Warp Zip" />
 
