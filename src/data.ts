@@ -80,3 +80,7 @@ export const myProjects: GitHubRepo[] = [
   owner: 'Balastrong',
   repo,
 }));
+
+export const seriesNames = {
+  'copilot-x': 'Copilot X',
+};

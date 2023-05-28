@@ -23,28 +23,27 @@ export const cleanSlug = (text = '') =>
 export const POST_PERMALINK_PATTERN = trimSlash(BLOG?.post?.permalink || '/%slug%');
 
 export const BLOG_BASE = cleanSlug(BLOG?.list?.pathname);
-export const CATEGORY_BASE = cleanSlug(BLOG?.category?.pathname || 'category');
+export const SERIES_BASE = cleanSlug(BLOG?.series?.pathname || 'series');
 export const TAG_BASE = cleanSlug(BLOG?.tag?.pathname) || 'tag';
 
 /** */
 export const getCanonical = (path = ''): string | URL => {
   const url = String(new URL(path, SITE.origin));
   if (SITE.trailingSlash == false && path && url.endsWith('/')) {
-    return url.slice(0,-1)
-  }
-  else if (SITE.trailingSlash == true && path && !url.endsWith('/') ) {
+    return url.slice(0, -1);
+  } else if (SITE.trailingSlash == true && path && !url.endsWith('/')) {
     return url + '/';
   }
   return url;
-}
+};
 
 /** */
 export const getPermalink = (slug = '', type = 'page'): string => {
   let permalink: string;
 
   switch (type) {
-    case 'category':
-      permalink = createPath(CATEGORY_BASE, trimSlash(slug));
+    case 'series':
+      permalink = createPath(SERIES_BASE, trimSlash(slug));
       break;
 
     case 'tag':

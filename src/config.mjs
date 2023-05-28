@@ -32,7 +32,7 @@ const CONFIG = {
     postsPerPage: 8,
 
     post: {
-      permalink: '/%slug%', // Variables: %slug%, %year%, %month%, %day%, %hour%, %minute%, %second%, %category%
+      permalink: '/%slug%', // Variables: %slug%, %year%, %month%, %day%, %hour%, %minute%, %second%, %series%
       noindex: false,
       disabled: false,
     },
@@ -43,8 +43,8 @@ const CONFIG = {
       disabled: false,
     },
 
-    category: {
-      pathname: 'category', // Category main path /category/some-category
+    series: {
+      pathname: 'series', // Series main path /series/some-series
       noindex: true,
       disabled: false,
     },

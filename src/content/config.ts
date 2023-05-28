@@ -13,7 +13,6 @@ const post = defineCollection({
     draft: z.boolean().optional(),
 
     excerpt: z.string().optional(),
-    category: z.string().optional(),
     tags: z.array(z.string()).optional(),
     author: z.string().optional(),
   }),

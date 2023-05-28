@@ -14,7 +14,7 @@ export type Post = {
   draft?: boolean;
 
   excerpt?: string;
-  category?: string;
+  series?: string;
   tags?: Array<string>;
   author?: string;
 
@@ -22,7 +22,6 @@ export type Post = {
   content?: string;
 
   readingTime?: number;
-  series?: string;
 };
 
 export type MetaSEO = {

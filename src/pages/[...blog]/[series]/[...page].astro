@@ -7,42 +7,42 @@ import Headline from '~/components/blog/Headline.astro';
 import Pagination from '~/components/blog/Pagination.astro';
 
 import { fetchPosts } from '~/utils/blog';
-import { CATEGORY_BASE } from '~/utils/permalinks';
+import { SERIES_BASE } from '~/utils/permalinks';
 
 export async function getStaticPaths({ paginate }) {
-  if (BLOG?.disabled || BLOG?.category?.disabled) return [];
+  if (BLOG?.disabled || BLOG?.series?.disabled) return [];
 
   const posts = await fetchPosts();
-  const categories = new Set();
+  const series = new Set();
   posts.map((post) => {
-    typeof post.category === 'string' && categories.add(post.category.toLowerCase());
+    typeof post.series === 'string' && series.add(post.series.toLowerCase());
   });
 
-  return Array.from(categories).map((category: string) =>
+  return Array.from(series).map((series: string) =>
     paginate(
-      posts.filter((post) => typeof post.category === 'string' && category === post.category.toLowerCase()),
+      posts.filter((post) => typeof post.series === 'string' && series === post.series.toLowerCase()),
       {
-        params: { category: category, blog: CATEGORY_BASE || undefined },
+        params: { series: series, blog: SERIES_BASE || undefined },
         pageSize: BLOG.postsPerPage,
-        props: { category },
+        props: { series },
       }
     )
   );
 }
 
-const { page, category } = Astro.props;
+const { page, series } = Astro.props;
 
 const currentPage = page.currentPage ?? 1;
 const meta = {
-  title: `Category'${category}' ${currentPage > 1 ? ` — Page ${currentPage}` : ''}`,
+  title: `Series: '${series}' ${currentPage > 1 ? ` — Page ${currentPage}` : ''}`,
   description: SITE.description,
-  noindex: BLOG?.category?.noindex,
+  noindex: BLOG?.series?.noindex,
 };
 ---
 
 <Layout meta={meta}>
   <section class="px-6 sm:px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-4xl">
-    <Headline><span class="capitalize">{category.replaceAll('-', ' ')}</span></Headline>
+    <Headline><span class="capitalize">{series.replaceAll('-', ' ')}</span></Headline>
     <BlogList posts={page.data} />
     <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
   </section>

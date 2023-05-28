@@ -2,8 +2,9 @@ import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import type { Post } from '~/types';
 import { cleanSlug, trimSlash, POST_PERMALINK_PATTERN } from './permalinks';
+import { seriesNames } from '~/data';
 
-const generatePermalink = async ({ id, slug, publishDate, category }) => {
+const generatePermalink = async ({ id, slug, publishDate, series }) => {
   const year = String(publishDate.getFullYear()).padStart(4, '0');
   const month = String(publishDate.getMonth() + 1).padStart(2, '0');
   const day = String(publishDate.getDate()).padStart(2, '0');
@@ -13,7 +14,7 @@ const generatePermalink = async ({ id, slug, publishDate, category }) => {
 
   const permalink = POST_PERMALINK_PATTERN.replace('%slug%', slug)
     .replace('%id%', id)
-    .replace('%category%', category || '')
+    .replace('%series%', series || '')
     .replace('%year%', year)
     .replace('%month%', month)
     .replace('%day%', day)
@@ -34,7 +35,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
 
   const {
     tags: rawTags = [],
-    category: rawCategory,
+    series: rawSeries,
     author = 'Anonymous',
     publishDate: rawPublishDate = new Date(),
     ...rest
@@ -42,7 +43,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
 
   const slug = cleanSlug(rawSlug.split('/').pop());
   const publishDate = new Date(rawPublishDate);
-  const category = rawCategory ? cleanSlug(rawCategory) : undefined;
+  const series = rawSeries ? cleanSlug(rawSeries) : undefined;
   const tags = rawTags.map((tag: string) => cleanSlug(tag));
 
   return {
@@ -50,7 +51,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     slug: slug,
 
     publishDate: publishDate,
-    category: category,
+    series: series,
     tags: tags,
     author: author,
 
@@ -59,7 +60,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     Content: Content,
     // or 'body' in case you consume from API
 
-    permalink: await generatePermalink({ id, slug, publishDate, category }),
+    permalink: await generatePermalink({ id, slug, publishDate, series }),
 
     readingTime: remarkPluginFrontmatter?.readingTime,
   };
@@ -163,3 +164,5 @@ export const findSimilarPosts = (post: Post, config?: { count?: number }): Post[
     .map((p) => p.p)
     .slice(0, _count);
 };
+
+export const getSeriesName = (series: string): string => seriesNames[series] || series;
