@@ -22,6 +22,7 @@ export type Post = {
   content?: string;
 
   readingTime?: number;
+  series?: string;
 };
 
 export type MetaSEO = {

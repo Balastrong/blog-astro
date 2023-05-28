@@ -6,7 +6,7 @@ import SinglePost from '~/components/blog/SinglePost.astro';
 import ToBlogLink from '~/components/blog/ToBlogLink.astro';
 
 import { getCanonical, getPermalink } from '~/utils/permalinks';
-import { fetchPosts, findSimilarPosts } from '~/utils/blog';
+import { fetchPosts, findSimilarPosts, findPostsInSeries } from '~/utils/blog';
 import { findImage } from '~/utils/images';
 import { Post } from '~/types';
 import GridItemSmall from '~/components/blog/GridItemSmall.astro';
@@ -15,18 +15,20 @@ export async function getStaticPaths() {
   if (BLOG?.disabled || BLOG?.post?.disabled) return [];
   return (await fetchPosts()).map((post) => {
     const similarPosts = findSimilarPosts(post);
+    const postsInSeries = findPostsInSeries(post.series);
     return {
       params: {
         blog: post.permalink,
       },
-      props: { post, similarPosts },
+      props: { post, similarPosts, postsInSeries },
     };
   });
 }
 
-const { post, similarPosts } = Astro.props as {
+const { post, similarPosts, postsInSeries } = Astro.props as {
   post: Post;
   similarPosts: Post[];
+  postsInSeries: Post[];
 };
 const url = getCanonical(getPermalink(post.permalink, 'post'));
 
@@ -43,6 +45,27 @@ const meta = {
 <Layout {meta}>
   <SinglePost post={{ ...post, image: meta.image }} url={url} />
   <div class="mx-auto px-6 sm:px-6 max-w-3xl mt-5">
+    {
+      post.series && (
+        <div>
+          <div class="text-2xl font-bold mb-3 text-center">
+            {post.series} ({postsInSeries.length} Parts Series)
+          </div>
+          {postsInSeries.map((p, index) => (
+            <div class="mb-3">
+              <span
+                class={`inline-block w-6 h-6 mr-2 rounded-full text-center ${
+                  p.id === post.id ? 'bg-green-500' : 'bg-gray-500'
+                }`}
+              >
+                {index + 1}
+              </span>
+              <a href={getPermalink(p.permalink, 'post')}>{p.title}</a>
+            </div>
+          ))}
+        </div>
+      )
+    }
     <div class="text-2xl font-bold mb-3 text-center">You might also like</div>
     <div class="grid gap-3 grid-cols-2 sm:grid-cols-3">
       {

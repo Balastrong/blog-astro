@@ -77,6 +77,7 @@ const load = async function (): Promise<Post[]> {
 };
 
 let _posts: Post[];
+let _series: Map<string, Post[]>;
 
 /** */
 export const fetchPosts = async (): Promise<Post[]> => {
@@ -113,6 +114,23 @@ export const findPostsByIds = async (ids: string[]): Promise<Post[]> => {
     });
     return r;
   }, []);
+};
+
+export const findPostsInSeries = (series?: string): Post[] => {
+  if (!series) return [];
+
+  if (!_series) {
+    _series = new Map<string, Post[]>();
+    _posts.forEach((post) => {
+      if (!post.series) return;
+      const series = post.series;
+      const seriesPosts = _series.get(series) || [];
+      seriesPosts.push(post);
+      _series.set(series, seriesPosts);
+    });
+  }
+
+  return _series.get(series) || [];
 };
 
 /** */
