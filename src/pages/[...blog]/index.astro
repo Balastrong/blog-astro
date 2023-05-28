@@ -52,10 +52,10 @@ const meta = {
             {post.series} ({postsInSeries.length} Parts Series)
           </div>
           {postsInSeries.map((p, index) => (
-            <div class="mb-3">
+            <div class="mb-3 mx-3">
               <span
-                class={`inline-block w-6 h-6 mr-2 rounded-full text-center ${
-                  p.id === post.id ? 'bg-green-500' : 'bg-gray-500'
+                class={`inline-block w-6 h-6 mr-2 rounded-full text-center text-gray-50 ${
+                  p.id === post.id ? 'bg-green-500 dark:bg-green-700' : 'bg-gray-400 dark:bg-gray-600'
                 }`}
               >
                 {index + 1}
