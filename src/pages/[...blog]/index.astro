@@ -1,15 +1,15 @@
 ---
 import { BLOG } from '~/config.mjs';
 
-import Layout from '~/layouts/PageLayout.astro';
 import SinglePost from '~/components/blog/SinglePost.astro';
 import ToBlogLink from '~/components/blog/ToBlogLink.astro';
+import Layout from '~/layouts/PageLayout.astro';
 
-import { getCanonical, getPermalink } from '~/utils/permalinks';
-import { fetchPosts, findSimilarPosts, findPostsInSeries, getSeriesName } from '~/utils/blog';
-import { findImage } from '~/utils/images';
-import { Post } from '~/types';
 import GridItemSmall from '~/components/blog/GridItemSmall.astro';
+import { Post } from '~/types';
+import { fetchPosts, findPostsInSeries, findSimilarPosts } from '~/utils/blog';
+import { findImage } from '~/utils/images';
+import { getCanonical, getPermalink } from '~/utils/permalinks';
 
 export async function getStaticPaths() {
   if (BLOG?.disabled || BLOG?.post?.disabled) return [];
@@ -49,7 +49,7 @@ const meta = {
       post.series && (
         <div>
           <div class="text-2xl font-bold mb-3 text-center">
-            {getSeriesName(post.series)} ({postsInSeries.length} Parts Series)
+            {post.seriesName} ({postsInSeries.length} Parts Series)
           </div>
           {postsInSeries.map((p, index) => (
             <div class="mb-3 mx-3">

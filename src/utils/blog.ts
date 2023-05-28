@@ -52,6 +52,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
 
     publishDate: publishDate,
     series: series,
+    seriesName: getSeriesName(series),
     tags: tags,
     author: author,
 
@@ -165,4 +166,4 @@ export const findSimilarPosts = (post: Post, config?: { count?: number }): Post[
     .slice(0, _count);
 };
 
-export const getSeriesName = (series: string): string => seriesNames[series] || series;
+export const getSeriesName = (series?: string): string => (series ? seriesNames[series] || series : '');

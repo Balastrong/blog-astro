@@ -15,6 +15,7 @@ export type Post = {
 
   excerpt?: string;
   series?: string;
+  seriesName?: string;
   tags?: Array<string>;
   author?: string;
 

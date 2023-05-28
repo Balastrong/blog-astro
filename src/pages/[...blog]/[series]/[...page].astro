@@ -6,7 +6,7 @@ import BlogList from '~/components/blog/List.astro';
 import Headline from '~/components/blog/Headline.astro';
 import Pagination from '~/components/blog/Pagination.astro';
 
-import { fetchPosts } from '~/utils/blog';
+import { fetchPosts, getSeriesName } from '~/utils/blog';
 import { SERIES_BASE } from '~/utils/permalinks';
 
 export async function getStaticPaths({ paginate }) {
@@ -24,17 +24,17 @@ export async function getStaticPaths({ paginate }) {
       {
         params: { series: series, blog: SERIES_BASE || undefined },
         pageSize: BLOG.postsPerPage,
-        props: { series },
+        props: { series, seriesName: getSeriesName(series) },
       }
     )
   );
 }
 
-const { page, series } = Astro.props;
+const { page, seriesName } = Astro.props;
 
 const currentPage = page.currentPage ?? 1;
 const meta = {
-  title: `Series: '${series}' ${currentPage > 1 ? ` — Page ${currentPage}` : ''}`,
+  title: `${seriesName} ${currentPage > 1 ? ` — Page ${currentPage}` : ''}`,
   description: SITE.description,
   noindex: BLOG?.series?.noindex,
 };
@@ -42,7 +42,7 @@ const meta = {
 
 <Layout meta={meta}>
   <section class="px-6 sm:px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-4xl">
-    <Headline><span class="capitalize">{series.replaceAll('-', ' ')}</span></Headline>
+    <Headline><span class="capitalize">{seriesName}</span></Headline>
     <BlogList posts={page.data} />
     <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
   </section>
