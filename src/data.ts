@@ -64,8 +64,16 @@ export const openSourceProjects: GitHubRepo[] = [
     repo: 'osday-2023',
   },
   {
+    owner: 'oramasearch',
+    repo: 'orama',
+  },
+  {
     owner: 'Microsoft',
     repo: 'vscode-js-debug',
+  },
+  {
+    owner: 'EddieHubCommunity',
+    repo: 'LinkFree',
   },
 ];
 

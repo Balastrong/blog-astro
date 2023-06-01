@@ -21,7 +21,8 @@ const promises = repositories?.map(async ({ owner, repo }) => (await getRepoData
 
 const items = (await Promise.allSettled(promises))
   .filter((res) => res.status === 'fulfilled')
-  .map((res: any) => res.value as GitHubRepository);
+  .map((res: any) => res.value as GitHubRepository)
+  .sort((a, b) => b.stargazers_count - a.stargazers_count);
 ---
 
 <section class="relative">
@@ -52,17 +53,15 @@ const items = (await Promise.allSettled(promises))
       }
       <div class={`grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-12 dark:text-white items-stretch`}>
         {
-          items.map(({ full_name, description, stargazers_count, html_url }) => (
+          items.map(({ name, owner: { login }, description, stargazers_count, html_url }) => (
             <div class="relative flex flex-col p-6 bg-white dark:bg-slate-900 rounded-xl shadow-lg hover:shadow-md transition border border-transparent dark:border-slate-800">
-              <div class="flex items-start">
+              <div class="flex items-start gap-2">
                 <Icon name="tabler:brand-github" class="w-8 min-w-min h-8" />
-                <div class="ml-2 text-xl font-bold">
-                  <a href={html_url} target="_blank" rel="noopener noreferrer">
-                    {full_name}
-                  </a>
-                </div>
+                <a href={html_url} target="_blank" rel="noopener noreferrer">
+                  <span class="text-x">{login}</span> / <span class="text-xl font-bold">{name}</span>
+                </a>
                 <div class="flex gap-2 ml-auto items-center">
-                  {stargazers_count}
+                  {stargazers_count?.toLocaleString()}
                   <Icon name="tabler:star" class="w-5 h-5" />
                 </div>
               </div>
