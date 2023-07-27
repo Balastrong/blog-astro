@@ -17,11 +17,12 @@ export type Props = {
 };
 
 const { post, url } = Astro.props;
+const transitionName = post.title.replace(/\s/g, '-').toLowerCase();
 ---
 
 <section class="pt-8 sm:pt-12 mx-auto">
   <article>
-    <header class={post.image ? '' : ''}>
+    <header>
       <div class="flex justify-between flex-col sm:flex-row max-w-3xl mx-auto mt-0 mb-2 px-4 sm:px-6 sm:items-center">
         <p>
           <Icon name="tabler:clock" class="w-4 h-4 inline-block -mt-0.5 dark:text-gray-400" />
@@ -53,20 +54,22 @@ const { post, url } = Astro.props;
 
       {
         post.image ? (
-          <Picture
-            src={post.image}
-            class="max-w-full lg:max-w-6xl mx-auto mb-6 sm:rounded-md bg-gray-400 dark:bg-slate-700"
-            widths={[400, 900]}
-            sizes="(max-width: 900px) 400px, 900px"
-            alt={post.description || ''}
-            loading="eager"
-            aspectRatio={16 / 9}
-            width={900}
-            height={506}
-            loading="eager"
-            decoding="async"
-            background={undefined}
-          />
+          <div transition:name={transitionName}>
+            <Picture
+              src={post.image}
+              class="max-w-full lg:max-w-6xl mx-auto mb-6 sm:rounded-md bg-gray-400 dark:bg-slate-700"
+              widths={[400, 900]}
+              sizes="(max-width: 900px) 400px, 900px"
+              alt={post.description || ''}
+              loading="eager"
+              aspectRatio={16 / 9}
+              width={900}
+              height={506}
+              loading="eager"
+              decoding="async"
+              background={undefined}
+            />
+          </div>
         ) : (
           <div class="max-w-3xl mx-auto px-4 sm:px-6">
             <div class="border-t dark:border-slate-700" />
