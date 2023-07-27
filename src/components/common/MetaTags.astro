@@ -2,13 +2,13 @@
 import { getImage } from '@astrojs/image';
 import { GoogleAnalytics } from '@astrolib/analytics';
 import { AstroSeo } from '@astrolib/seo';
-import { ViewTransitions } from 'astro:transitions';
 import { SITE } from '~/config.mjs';
 import { MetaSEO } from '~/types';
 import { getRelativeUrlByFilePath } from '~/utils/directories';
 import { getAsset, getCanonical } from '~/utils/permalinks';
 
 import CustomStyles from '~/components/CustomStyles.astro';
+import ViewTransitions from './ViewTransitions.astro';
 
 export type Props = MetaSEO & {
   dontUseTitleTemplate?: boolean;

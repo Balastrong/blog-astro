@@ -54,7 +54,7 @@ const transitionName = post.title.replace(/\s/g, '-').toLowerCase();
 
       {
         post.image ? (
-          <div transition:name={transitionName}>
+          <div transition:name={transitionName} transition:animate="morph">
             <Picture
               src={post.image}
               class="max-w-full lg:max-w-6xl mx-auto mb-6 sm:rounded-md bg-gray-400 dark:bg-slate-700"
