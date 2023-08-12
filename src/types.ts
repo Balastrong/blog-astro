@@ -19,7 +19,8 @@ export type Post = {
   tags?: Array<string>;
   author?: string;
 
-  Content: unknown;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Content: any;
   content?: string;
 
   readingTime?: number;
