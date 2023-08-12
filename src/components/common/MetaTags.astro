@@ -9,6 +9,7 @@ import { getRelativeUrlByFilePath } from '~/utils/directories';
 import { getAsset, getCanonical } from '~/utils/permalinks';
 
 import CustomStyles from '~/components/CustomStyles.astro';
+import { ViewTransitions } from 'astro:transitions';
 
 export type Props = MetaSEO & {
   dontUseTitleTemplate?: boolean;
@@ -94,3 +95,5 @@ const image =
 }
 
 <link rel="shortcut icon" href={getAsset('/favicon.ico')} />
+
+<ViewTransitions />

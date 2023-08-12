@@ -31,6 +31,10 @@ export default defineConfig({
     remarkPlugins: [readingTimeRemarkPlugin],
   },
 
+  experimental: {
+    viewTransitions: true,
+  },
+
   integrations: [
     tailwind({
       config: {

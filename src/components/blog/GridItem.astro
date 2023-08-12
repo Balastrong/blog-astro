@@ -4,6 +4,7 @@ import { Picture } from '@astrojs/image/components';
 import PostTags from '~/components/blog/Tags.astro';
 import { BLOG } from '~/config.mjs';
 import type { Post } from '~/types';
+import { getTransitionName } from '~/utils/blog';
 import { findImage } from '~/utils/images';
 import { getPermalink } from '~/utils/permalinks';
 
@@ -19,24 +20,29 @@ const image = await findImage(post);
   <div class="relative bg-gray-400 dark:bg-slate-700 rounded-md shadow-lg mb-6">
     {
       image && (
-        <a href={getPermalink(post.permalink, 'post')}>
-          <Picture
-            src={image}
-            class="md:object-cover w-full md:w-auto rounded-md shadow-lg bg-gray-400 dark:bg-slate-700"
-            widths={[400, 900]}
-            width={400}
-            height={224}
-            sizes="(max-width: 900px) 400px, 900px"
-            alt={post.title}
-            aspectRatio="16:9"
-            loading="lazy"
-            decoding="async"
-          />
-        </a>
+        <div transition:name={getTransitionName(post, 'image')}>
+          <a href={getPermalink(post.permalink, 'post')}>
+            <Picture
+              src={image}
+              class="md:object-cover w-full md:w-auto rounded-md shadow-lg bg-gray-400 dark:bg-slate-700"
+              widths={[400, 900]}
+              width={400}
+              height={224}
+              sizes="(max-width: 900px) 400px, 900px"
+              alt={post.title}
+              aspectRatio="16:9"
+              loading="lazy"
+              decoding="async"
+            />
+          </a>
+        </div>
       )
     }
   </div>
-  <h3 class="mb-2 text-xl font-bold leading-tight sm:text-2xl font-heading">
+  <h3
+    class="mb-2 text-xl font-bold leading-tight sm:text-2xl font-heading"
+    transition:name={getTransitionName(post, 'title')}
+  >
     {
       BLOG?.post?.disabled ? (
         post.title
@@ -51,5 +57,7 @@ const image = await findImage(post);
     }
   </h3>
   <PostTags tags={post.tags} />
-  <p class="text-muted dark:text-slate-400 text-lg">{post.excerpt || post.description}</p>
+  <p class="text-muted dark:text-slate-400 text-lg" transition:name={getTransitionName(post, 'description')}>
+    {post.excerpt || post.description}
+  </p>
 </article>

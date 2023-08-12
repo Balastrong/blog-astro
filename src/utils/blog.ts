@@ -58,7 +58,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
 
     ...rest,
 
-    Content: Content,
+    Content,
     // or 'body' in case you consume from API
 
     permalink: await generatePermalink({ id, slug, publishDate, series }),
@@ -167,3 +167,7 @@ export const findSimilarPosts = (post: Post, config?: { count?: number }): Post[
 };
 
 export const getSeriesName = (series?: string): string => (series ? seriesNames[series] || series : '');
+
+type TransitionName = 'image' | 'title' | 'description';
+export const getTransitionName = (post: Pick<Post, 'title'>, prefix: TransitionName): string =>
+  `${prefix}-${post.title.replace(/\s/g, '-').toLowerCase()}`;
