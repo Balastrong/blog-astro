@@ -9,7 +9,7 @@ import Hero from '~/components/widgets/Hero.astro';
 import Latest from '~/components/widgets/Latest.astro';
 import { youTubeChannelUrl } from '~/data';
 import { categorizeVideo, getVideos } from '~/libs/youtube';
-import { findLatestPosts } from '~/utils/blog';
+import { findLatestPosts, getPostsCount } from '~/utils/blog';
 import { getBlogPermalink } from '~/utils/permalinks';
 
 const meta = {
@@ -18,7 +18,8 @@ const meta = {
   dontUseTitleTemplate: true,
 };
 
-const posts = await findLatestPosts({ count: 4 });
+const latestPosts = await findLatestPosts({ count: 4 });
+const postsCount = await getPostsCount();
 
 const videos = await getVideos();
 const { shortVideos, longVideos } = await categorizeVideo(videos);
@@ -47,9 +48,9 @@ const { shortVideos, longVideos } = await categorizeVideo(videos);
     title="Latest articles"
     titleSide="center"
     subtitleLink={getBlogPermalink()}
-    subtitleText={'Read all my articles'}
+    subtitleText={`Read all my articles (${postsCount})`}
   >
-    <PostGrid posts={posts} />
+    <PostGrid posts={latestPosts} />
   </Latest>
 
   <div class="relative">

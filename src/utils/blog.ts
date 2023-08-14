@@ -171,3 +171,8 @@ export const getSeriesName = (series?: string): string => (series ? seriesNames[
 type TransitionName = 'image' | 'title' | 'description';
 export const getTransitionName = (post: Pick<Post, 'title'>, prefix: TransitionName): string =>
   `${prefix}-${post.title.replace(/\s/g, '-').toLowerCase()}`;
+
+export const getPostsCount = async (): Promise<number> => {
+  const posts = await fetchPosts();
+  return posts.length;
+};
