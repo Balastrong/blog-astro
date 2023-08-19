@@ -82,7 +82,7 @@ export const myProjects: GitHubRepo[] = [
   'close-tabs',
   'trello-card-numbers-plus',
   'wrand',
-  'blog',
+  'github-stats',
   'blog-astro',
 ].map((repo) => ({
   owner: 'Balastrong',
