@@ -1,0 +1,62 @@
+---
+title: 'Give credit to Open Source Contributors'
+publishDate: 2023-10-04
+image: ./_cover.png
+description: "Green squares cannot cover everything, here's one more way to say Thank You"
+tags:
+  - open-source
+  - github
+---
+
+import YouTube from '~/components/widgets/YouTube.astro';
+import { Image } from '@astrojs/image/components';
+
+Tables like this one are in a lot of repositories, giving well deserved credit to their contributors.
+
+And you know, developers are lazy so there has to be an automation to manage this.
+
+import all_contributors from './_all-contributors.png';
+
+<Image src={all_contributors} alt="Example of All Contributors table" />
+
+Today’s topic is the all-contributors tool and I will show you how you can integrate it in your project and why you should!
+
+Contributors merging a PR will get a green square in their profile, but not every contribution is actually submitted through a pull request.
+
+That’s why there’s an emoji key table which includes many other actions giving value to the project, such as writing blog posts, mentoring new contributors or answering questions on discord.
+
+Here's a video where I talk about the two main ways to use this tool which are the Bot and the CLI.
+
+<YouTube id="9okPS0yjsK0" />
+
+## Bot
+
+The bot is a GitHub App that will automatically create a Pull Request to add a new contributor to the table.
+
+Once installed, you can invoke it with a comment in an issue or pull request, like this:
+
+```markdown
+@all-contributors please add @balastrong for code
+```
+
+Pros are that it's automatic, you literally just have to write a comment and the bot will do the rest with the PR ready to be merged.
+Cons, it spams a little bit of notifications.
+
+## CLI
+
+Similarly to the bot, once installed in your project you can run the CLI to add a new contributor to the table.
+
+```bash
+npx all-contributors add balastrong code
+```
+
+Pros: you can control when/how you want to add contributors as it just edits the files locally.
+Cons: as it's less _automagic_, you will need to manually commit and push the changes.
+
+## Conclusion
+
+Which one is better? I definitely think it depends on how you want to use it, but both ways are super easy to set up and use.
+
+I’m using it on my [github-stats community project](https://github.com/Balastrong/github-stats) and I think it’s a great way to say thank you to everyone involved in the success of an open source project.
+
+Want to learn more? You can watch [my video](https://youtu.be/9okPS0yjsK0) or directly head over the [all-contributors website](https://allcontributors.org/).
