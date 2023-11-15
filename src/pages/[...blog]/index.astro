@@ -6,6 +6,7 @@ import ToBlogLink from '~/components/blog/ToBlogLink.astro';
 import Layout from '~/layouts/PageLayout.astro';
 
 import GridItemSmall from '~/components/blog/GridItemSmall.astro';
+import { TopProgress } from '~/components/common/TopProgress';
 import { Post } from '~/types';
 import { fetchPosts, findPostsInSeries, findSimilarPosts } from '~/utils/blog';
 import { findImage } from '~/utils/images';
@@ -43,6 +44,7 @@ const meta = {
 ---
 
 <Layout {meta}>
+  <TopProgress client:only />
   <SinglePost post={{ ...post, image: meta.image }} url={url} />
   <div class="mx-auto px-6 sm:px-6 max-w-3xl mt-5">
     {

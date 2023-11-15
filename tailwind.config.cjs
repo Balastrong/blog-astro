@@ -18,6 +18,16 @@ module.exports = {
         serif: ['var(--aw-font-serif)', ...defaultTheme.fontFamily.serif],
         heading: ['var(--aw-font-heading)', ...defaultTheme.fontFamily.sans],
       },
+      keyframes: {
+        opacity: {
+          '0%': { opacity: '0' },
+          '30%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+      },
+      animation: {
+        opacity: 'opacity 2s',
+      },
     },
   },
   plugins: [
