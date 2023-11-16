@@ -2,7 +2,7 @@
 title: 'Debug a React app with Visual Studio Code'
 publishDate: 2023-11-16
 image: ./_cover.png
-description: ''
+description: 'Visual Studio Code has an integrated debugger, easy to use and works pretty much with everything!'
 tags:
   - debugger
   - vscode
@@ -34,19 +34,19 @@ This will create a file called `launch.json` inside the `.vscode` folder of your
 
 ```json
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "type": "chrome",
-            "request": "launch",
-            "name": "Launch Chrome against localhost",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
-        }
-    ]
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Launch Chrome against localhost",
+      "url": "http://localhost:8080",
+      "webRoot": "${workspaceFolder}"
+    }
+  ]
 }
 ```
 
@@ -79,7 +79,6 @@ If the application flow now passes into that line, the execution will stop there
 import breakpoint from './_breakpoint.png';
 
 <Image src={breakpoint} alt="Breakpoint" />
-
 
 ## Variables
 
