@@ -1,0 +1,113 @@
+{
+  "$schema": "https://frontmatter.codes/frontmatter.schema.json",
+  "frontMatter.taxonomy.contentTypes": [
+    {
+      "name": "default",
+      "pageBundle": false,
+      "previewPath": null,
+      "fields": [
+        {
+          "title": "title",
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "title": "publishDate",
+          "name": "publishDate",
+          "type": "datetime"
+        },
+        {
+          "title": "image",
+          "name": "image",
+          "type": "image"
+        },
+        {
+          "title": "description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "tags",
+          "name": "tags",
+          "type": "tags"
+        }
+      ]
+    },
+    {
+      "name": "post",
+      "previewPath": "'post'",
+      "pageBundle": false,
+      "clearEmpty": true,
+      "fields": [
+        {
+          "name": "title",
+          "type": "string",
+          "single": true,
+          "required": true
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "single": true,
+          "required": true,
+          "default": true
+        },
+        {
+          "name": "series",
+          "type": "string",
+          "single": true,
+          "required": true,
+          "default": true
+        },
+        {
+          "name": "image",
+          "type": "string",
+          "single": true,
+          "required": true,
+          "default": true
+        },
+        {
+          "name": "canonical",
+          "type": "string",
+          "single": true,
+          "required": true,
+          "default": true
+        },
+        {
+          "name": "draft",
+          "type": "boolean",
+          "required": true,
+          "default": true
+        },
+        {
+          "name": "excerpt",
+          "type": "string",
+          "single": true,
+          "required": true,
+          "default": true
+        },
+        {
+          "name": "tags",
+          "type": "list",
+          "required": true,
+          "default": true
+        },
+        {
+          "name": "author",
+          "type": "string",
+          "single": true,
+          "required": true,
+          "default": true
+        }
+      ]
+    }
+  ],
+  "frontMatter.framework.id": "astro",
+  "frontMatter.preview.host": "http://localhost:4321",
+  "frontMatter.content.pageFolders": [
+    {
+      "title": "posts",
+      "path": "[[workspace]]/src/content/post/"
+    }
+  ]
+}
