@@ -28,13 +28,13 @@ export const headerData = {
       ],
     },
   ],
-  actions: [{ type: 'button', text: 'YouTube', href: youTubeChannelUrl }],
+  actions: [{ type: 'button', text: 'YouTube', href: youTubeChannelUrl + '?sub_confirmation=1' }],
 };
 
 export const footerData = {
   socialLinks: [
     { ariaLabel: 'Twitter', icon: 'tabler:brand-twitter', href: twitterUrl },
-    { ariaLabel: 'YouTube', icon: 'tabler:brand-youtube', href: youTubeChannelUrl },
+    { ariaLabel: 'YouTube', icon: 'tabler:brand-youtube', href: youTubeChannelUrl + '?sub_confirmation=1' },
     { ariaLabel: 'Linkedin', icon: 'tabler:brand-linkedin', href: 'https://www.linkedin.com/in/leonardo-montini/' },
     { ariaLabel: 'Discord', icon: 'tabler:brand-discord', href: 'https://discord.gg/bqwyEa6We6' },
     { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com/Balastrong' },
