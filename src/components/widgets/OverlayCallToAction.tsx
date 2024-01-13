@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { youTubeChannelUrl } from '../../data';
+import { overlayStorage } from '~/utils/overlayStorage';
+
+const INITIAL_DELAY = 15_000;
 
 export const OverlayCallToAction = () => {
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
+    if (!overlayStorage.shouldShowOverlay()) return;
+
     const timeout = setTimeout(() => {
       setShow(true);
-    }, 700);
+    }, INITIAL_DELAY);
     return () => clearTimeout(timeout);
   }, []);
 
@@ -24,7 +29,7 @@ export const OverlayCallToAction = () => {
 
   const close = () => {
     setShow(false);
-    localStorage.setItem('overlay', 'true');
+    overlayStorage.setLastSeen();
   };
 
   return show ? (
@@ -35,13 +40,13 @@ export const OverlayCallToAction = () => {
       onClick={close}
     >
       <div
-        className="fixed flex flex-col gap-6 w-[600px] max-w-[80%] translate-y-1/2 bottom-[50%] translate-x-1/2 right-[50%] rounded-lg text-center p-6 bg-light dark:bg-dark shadow-2xl"
+        className="fixed flex flex-col gap-6 w-[500px] xl:w-[600px] max-w-[80%] translate-y-1/2 bottom-[50%] translate-x-1/2 right-[50%] rounded-lg text-center p-6 bg-light dark:bg-dark shadow-2xl"
         onClick={(e) => {
           e.stopPropagation();
         }}
       >
         <section>
-          <h2 className="text-2xl font-bold">Do you like this article?</h2>
+          <h2 className="text-2xl font-bold">Are you enjoying this article?</h2>
         </section>
         <section className="flex flex-col gap-4">
           {/* <p>
