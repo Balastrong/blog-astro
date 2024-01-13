@@ -11,6 +11,8 @@ export type Post = {
   canonical?: string | URL;
   permalink?: string;
 
+  youtubeId?: string;
+
   draft?: boolean;
 
   excerpt?: string;

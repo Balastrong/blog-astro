@@ -1,17 +1,16 @@
 ---
 import { BLOG } from '~/config.mjs';
 
+import GridItemSmall from '~/components/blog/GridItemSmall.astro';
 import SinglePost from '~/components/blog/SinglePost.astro';
 import ToBlogLink from '~/components/blog/ToBlogLink.astro';
-import Layout from '~/layouts/PageLayout.astro';
-
-import GridItemSmall from '~/components/blog/GridItemSmall.astro';
 import { TopProgress } from '~/components/common/TopProgress';
+import { OverlayCallToAction } from '~/components/widgets/OverlayCallToAction';
+import Layout from '~/layouts/PageLayout.astro';
 import { Post } from '~/types';
 import { fetchPosts, findPostsInSeries, findSimilarPosts } from '~/utils/blog';
 import { findImage } from '~/utils/images';
 import { getCanonical, getPermalink } from '~/utils/permalinks';
-import { OverlayCallToAction } from '~/components/widgets/OverlayCallToAction';
 
 export async function getStaticPaths() {
   if (BLOG?.disabled || BLOG?.post?.disabled) return [];
@@ -46,7 +45,7 @@ const meta = {
 
 <Layout {meta}>
   <TopProgress client:only />
-  <OverlayCallToAction client:only />
+  <OverlayCallToAction youtubeId={post.youtubeId} client:only />
   <SinglePost post={{ ...post, image: meta.image }} url={url} />
   <div class="mx-auto px-6 sm:px-6 max-w-3xl mt-5">
     {

@@ -25,7 +25,7 @@ const getHoursDelay = (count: number) => {
   if (count === 2) return 2;
   if (count === 3) return 24;
 
-  return 99999999;
+  return 168; // 1 week
 };
 
 export const overlayStorage = {

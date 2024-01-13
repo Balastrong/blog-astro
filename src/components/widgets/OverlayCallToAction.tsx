@@ -4,16 +4,26 @@ import { overlayStorage } from '~/utils/overlayStorage';
 
 const INITIAL_DELAY = 15_000;
 
-export const OverlayCallToAction = () => {
+export const OverlayCallToAction = ({ youtubeId }: { youtubeId: string | undefined }) => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
     if (!overlayStorage.shouldShowOverlay()) return;
 
+    const escapeListener = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        close();
+      }
+    };
+    document.addEventListener('keydown', escapeListener);
+
     const timeout = setTimeout(() => {
       setShow(true);
     }, INITIAL_DELAY);
-    return () => clearTimeout(timeout);
+    return () => {
+      clearTimeout(timeout);
+      document.removeEventListener('keydown', escapeListener);
+    };
   }, []);
 
   const [animate, setAnimate] = useState(false);
@@ -49,13 +59,15 @@ export const OverlayCallToAction = () => {
           <h2 className="text-2xl font-bold">Are you enjoying this article?</h2>
         </section>
         <section className="flex flex-col gap-4">
-          {/* <p>
-            Did you know there's also a video version?{' '}
-            <a href="" className="underline cursor-pointer">
-              Watch it here
-            </a>
-            .
-          </p> */}
+          {youtubeId && (
+            <p>
+              Did you know there's also a video version?{' '}
+              <a href={`https://youtu.be/${youtubeId}`} className="underline cursor-pointer">
+                Watch it here
+              </a>
+              .
+            </p>
+          )}
           <p>
             I run a YouTube channel called Dev Leonardo - learning Web Development through Open Source - come have a
             look!
@@ -63,7 +75,7 @@ export const OverlayCallToAction = () => {
         </section>
         <section className="flex flex-col md:flex-row gap-4 md:gap-2 justify-evenly items-center mt-1">
           <div className="underline cursor-pointer" onClick={close}>
-            Maybe later
+            Maybe later, thanks
           </div>
           <a className="btn btn-primary cursor-pointer" href={youTubeChannelUrl + '?sub_confirmation=1'}>
             Go to YouTube

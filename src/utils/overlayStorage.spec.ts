@@ -81,5 +81,27 @@ describe('overlayStorage', () => {
       vi.setSystemTime(new Date().getTime() + 2 * 60 * 60 * 1000);
       expect(shouldShowOverlay()).toBe(true);
     });
+
+    test('should return true after a week if seen 4+ times', () => {
+      setLastSeen();
+      setLastSeen();
+      setLastSeen();
+      setLastSeen();
+      const day = 24 * 60 * 60 * 1000;
+      vi.setSystemTime(new Date().getTime() + 7 * day - 1);
+      expect(shouldShowOverlay()).toBe(false);
+
+      vi.setSystemTime(new Date().getTime() + 1);
+      expect(shouldShowOverlay()).toBe(true);
+
+      setLastSeen();
+      expect(shouldShowOverlay()).toBe(false);
+
+      vi.setSystemTime(new Date().getTime() + 7 * day - 1);
+      expect(shouldShowOverlay()).toBe(false);
+
+      vi.setSystemTime(new Date().getTime() + 1);
+      expect(shouldShowOverlay()).toBe(true);
+    });
   });
 });

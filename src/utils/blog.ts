@@ -33,6 +33,8 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
   const { id, slug: rawSlug = '', data } = post;
   const { Content, remarkPluginFrontmatter } = await post.render();
 
+  const youtubeId = post.body.match(/<YouTube.*?id="(.*?)".*?>/g)?.map((match) => match.match(/id="(.*?)"/)?.[1])?.[0];
+
   const {
     tags: rawTags = [],
     series: rawSeries,
@@ -47,14 +49,14 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
   const tags = rawTags.map((tag: string) => cleanSlug(tag));
 
   return {
-    id: id,
-    slug: slug,
-
-    publishDate: publishDate,
-    series: series,
+    id,
+    slug,
+    publishDate,
+    series,
     seriesName: getSeriesName(series),
-    tags: tags,
-    author: author,
+    tags,
+    author,
+    youtubeId,
 
     ...rest,
 
@@ -62,7 +64,6 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     // or 'body' in case you consume from API
 
     permalink: await generatePermalink({ id, slug, publishDate, series }),
-
     readingTime: remarkPluginFrontmatter?.readingTime,
   };
 };
