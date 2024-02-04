@@ -1,0 +1,21 @@
+---
+import Projects from '~/components/widgets/Projects.astro';
+import { SITE } from '~/config.mjs';
+import { communityProjects } from '~/data';
+import Layout from '~/layouts/PageLayout.astro';
+
+const meta = {
+  title: SITE.title + ' | My Open Source projects',
+  description: SITE.description,
+  dontUseTitleTemplate: true,
+};
+---
+
+<Layout {meta}>
+  <Projects
+    title="Community Projects"
+    subtitle="Projects realized with the DevLeonardo Community"
+    highlight="Open Source"
+    repositories={communityProjects}
+  />
+</Layout>

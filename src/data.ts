@@ -25,6 +25,10 @@ export const headerData = {
           text: 'My Projects',
           href: getPermalink('/projects'),
         },
+        {
+          text: 'Community Projects',
+          href: getPermalink('/community-projects'),
+        },
       ],
     },
   ],
@@ -52,6 +56,10 @@ export const openSourceProjects: GitHubRepo[] = [
     repo: 'qwik-ui',
   },
   {
+    owner: 'BuilderIO',
+    repo: 'qwik',
+  },
+  {
     owner: 'Microsoft',
     repo: 'vscode-pull-request-github',
   },
@@ -71,10 +79,6 @@ export const openSourceProjects: GitHubRepo[] = [
     owner: 'Microsoft',
     repo: 'vscode-js-debug',
   },
-  {
-    owner: 'EddieHubCommunity',
-    repo: 'LinkFree',
-  },
 ];
 
 export const myProjects: GitHubRepo[] = [
@@ -82,10 +86,14 @@ export const myProjects: GitHubRepo[] = [
   'close-tabs',
   'trello-card-numbers-plus',
   'wrand',
-  'github-stats',
   'blog-astro',
 ].map((repo) => ({
   owner: 'Balastrong',
+  repo,
+}));
+
+export const communityProjects: GitHubRepo[] = ['github-stats', 'billsplit'].map((repo) => ({
+  owner: 'DevLeonardoCommunity',
   repo,
 }));
 
