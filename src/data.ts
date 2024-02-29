@@ -99,4 +99,5 @@ export const communityProjects: GitHubRepo[] = ['github-stats', 'billsplit'].map
 
 export const seriesNames = {
   'copilot-x': 'Copilot X',
+  'tanstack-router': 'TanStack Router',
 };

@@ -133,7 +133,11 @@ export const findPostsInSeries = (series?: string): Post[] => {
     });
   }
 
-  return _series.get(series) || [];
+  const foundSeries = _series.get(series);
+
+  if (!foundSeries) return [];
+
+  return foundSeries.sort((a, b) => a.publishDate.valueOf() - b.publishDate.valueOf());
 };
 
 /** */
