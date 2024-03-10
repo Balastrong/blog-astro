@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { youTubeChannelUrl } from '../../data';
+import { youTubeChannelUrlSubscribe } from '../../data';
 import { overlayStorage } from '~/utils/overlayStorage';
 
 const INITIAL_DELAY = 15_000;
@@ -77,7 +77,7 @@ export const OverlayCallToAction = ({ youtubeId }: { youtubeId: string | undefin
           <div className="underline cursor-pointer" onClick={close}>
             Maybe later, thanks
           </div>
-          <a className="btn btn-primary cursor-pointer" href={youTubeChannelUrl + '?sub_confirmation=1'}>
+          <a className="btn btn-primary cursor-pointer" href={youTubeChannelUrlSubscribe}>
             Go to YouTube
           </a>
         </section>

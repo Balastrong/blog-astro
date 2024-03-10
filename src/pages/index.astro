@@ -7,7 +7,7 @@ import ShortItem from '~/components/video/ShortItem.astro';
 import VideoItem from '~/components/video/VideoItem.astro';
 import Hero from '~/components/widgets/Hero.astro';
 import Latest from '~/components/widgets/Latest.astro';
-import { youTubeChannelUrl } from '~/data';
+import { linkedinUrl, youTubeChannelUrl, youTubeChannelUrlSubscribe } from '~/data';
 import { categorizeVideo, getVideos } from '~/libs/youtube';
 import { findLatestPosts, getPostsCount } from '~/utils/blog';
 import { getBlogPermalink } from '~/utils/permalinks';
@@ -29,18 +29,26 @@ const { shortVideos, longVideos } = await categorizeVideo(videos);
   <Hero
     callToAction={{
       text: 'Watch me on YouTube',
-      href: 'https://www.youtube.com/@DevLeonardo',
+      href: youTubeChannelUrlSubscribe,
       icon: 'tabler:brand-youtube',
     }}
-    callToAction2={{ text: 'Read my blog', href: getBlogPermalink() }}
+    callToAction2={{ text: 'Connect with me', href: linkedinUrl, icon: 'tabler:brand-linkedin' }}
   >
     <Fragment slot="title">
       Hello! <span class="text-accent dark:text-white highlight">Leonardo</span> here :)
     </Fragment>
 
     <Fragment slot="subtitle">
-      GitHub Star & Passionate Frontend Developer always looking for new challenges.<br />
-      I contribute to Open Source projects, write technical articles and publish videos on YouTube to share what I learn.
+      π-shaped <b>Frontend Developer</b>, <b>Open Source</b> contributor and <b>educator</b>.<br />
+      Awarded <a
+        class="font-bold hover:text-primary dark:hover:text-blue-700 transition ease-in duration-200"
+        href="https://stars.github.com/profiles/balastrong/"
+        target="_blank">GitHub Star ⭐️</a
+      > since 2023 and <a
+        class="font-bold hover:text-primary dark:hover:text-blue-700 transition ease-in duration-200"
+        href="https://mvp.microsoft.com/en-US/mvp/profile/51d820c5-949f-4961-aec5-09e34035cb24"
+        target="_blank">Microsoft MVP 🔷</a
+      > since 2024.
     </Fragment>
   </Hero>
 
