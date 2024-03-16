@@ -7,14 +7,14 @@ import ToBlogLink from '~/components/blog/ToBlogLink.astro';
 import { TopProgress } from '~/components/common/TopProgress';
 import { OverlayCallToAction } from '~/components/widgets/OverlayCallToAction';
 import Layout from '~/layouts/PageLayout.astro';
-import { Post } from '~/types';
+import { type Post } from '~/types';
 import { fetchPosts, findPostsInSeries, findSimilarPosts } from '~/utils/blog';
 import { findImage } from '~/utils/images';
 import { getCanonical, getPermalink } from '~/utils/permalinks';
 
 export async function getStaticPaths() {
   if (BLOG?.disabled || BLOG?.post?.disabled) return [];
-  return (await fetchPosts()).map((post) => {
+  return (await fetchPosts()).flatMap((post) => {
     const similarPosts = findSimilarPosts(post);
     const postsInSeries = findPostsInSeries(post.series);
     return {
