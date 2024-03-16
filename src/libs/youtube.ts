@@ -1,4 +1,4 @@
-import { YouTubeVideo } from '~/types';
+import { type YouTubeVideo } from '~/types';
 
 const CHANNEL_ID = 'UC-KqnO3ez7vF-kyIQ_22rdA';
 

@@ -1,4 +1,4 @@
-import { Post } from '~/types';
+import { type Post } from '~/types';
 
 const load = async function () {
   let images: Record<string, () => Promise<unknown>> | undefined = undefined;

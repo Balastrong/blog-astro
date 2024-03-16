@@ -1,5 +1,5 @@
 import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
-import { GitHubRepo } from './types';
+import { type GitHubRepo } from './types';
 
 export const youTubeChannelUrl = 'https://www.youtube.com/@DevLeonardo';
 export const youTubeChannelUrlSubscribe = youTubeChannelUrl + '?sub_confirmation=1';
