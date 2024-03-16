@@ -1,5 +1,4 @@
 ---
-import { getImage } from 'astro:assets';
 import { GoogleAnalytics } from '@astrolib/analytics';
 import { AstroSeo } from '@astrolib/seo';
 
@@ -9,22 +8,12 @@ import { getRelativeUrlByFilePath } from '~/utils/directories';
 import { getAsset, getCanonical } from '~/utils/permalinks';
 
 import CustomStyles from '~/components/CustomStyles.astro';
-import { ViewTransitions } from 'astro:transitions';
 
 export type Props = MetaSEO & {
   dontUseTitleTemplate?: boolean;
 };
 
-const defaultImage = SITE.defaultImage
-  ? (
-      await getImage({
-        src: SITE.defaultImage,
-        alt: 'Default image',
-        width: 1200,
-        height: 628,
-      })
-    ).src
-  : '';
+const defaultImage = SITE.defaultImage;
 
 const {
   title = SITE.name,
@@ -96,4 +85,3 @@ const image =
 
 <link rel="shortcut icon" href={getAsset('/favicon.ico')} />
 
-<ViewTransitions />
