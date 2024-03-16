@@ -14,7 +14,7 @@ import { getCanonical, getPermalink } from '~/utils/permalinks';
 
 export async function getStaticPaths() {
   if (BLOG?.disabled || BLOG?.post?.disabled) return [];
-  return (await fetchPosts()).map((post) => {
+  return (await fetchPosts()).flatMap((post) => {
     const similarPosts = findSimilarPosts(post);
     const postsInSeries = findPostsInSeries(post.series);
     return {

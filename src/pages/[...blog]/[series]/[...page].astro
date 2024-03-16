@@ -18,7 +18,7 @@ export async function getStaticPaths({ paginate }) {
     typeof post.series === 'string' && series.add(post.series.toLowerCase());
   });
 
-  return Array.from(series).map((series: string) =>
+  return Array.from(series).flatMap((series: string) =>
     paginate(
       posts.filter((post) => typeof post.series === 'string' && series === post.series.toLowerCase()),
       {
