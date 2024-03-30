@@ -67,7 +67,7 @@ export async function categorizeVideo(videos: YouTubeVideo[], defaults?: { longC
 }
 
 export function getThumbnailUrl(video: YouTubeVideo) {
-  return video.snippet.thumbnails.high.url ?? video.snippet.thumbnails.default.url;
+  return `https://i3.ytimg.com/vi/${video.id.videoId}/maxresdefault.jpg`;
 }
 
 export function getShortThumbnailUrl(video: YouTubeVideo) {
@@ -127,7 +127,7 @@ const DUMMY_VIDEOS: YouTubeVideo[] = [
     snippet: {
       publishedAt: '2023-04-27T14:43:27Z',
       channelId: 'UC-KqnO3ez7vF-kyIQ_22rdA',
-      title: 'I quit my developer job',
+      title: '&amp; I quit my developer job',
       description: 'Full video: https://youtu.be/R0hPCgPvFuc.',
       thumbnails: {
         default: {

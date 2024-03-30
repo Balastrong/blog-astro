@@ -14,7 +14,7 @@ const { video } = Astro.props;
 
 const thumbnail = getThumbnailUrl(video);
 const videoUrl = getVideoUrl(video);
-const videoTitle = video.snippet.title;
+const videoTitle = video.snippet.title.replaceAll('&#39;', "'");
 const videoDescription = video.snippet.description;
 ---
 
