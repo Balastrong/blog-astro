@@ -1,0 +1,89 @@
+---
+title: "Copilot Workspace - GitHub's latest innovation"
+publishDate: 2024-04-29
+image: ./_cover.png
+description: "Here's another levelup in the AI-assisted development process: Copilot Workspace"
+tags:
+  - github
+  - copilot
+  - ai
+---
+
+import YouTube from '~/components/widgets/YouTube.astro';
+import Image from '~/components/widgets/Image.astro';
+
+GitHub just announced [Copilot Workspace](https://github.blog/2024-04-29-github-copilot-workspace/) a new integrated AI feature with Copilot being your companion through the entire development process, not only with code.
+
+It works in 4 steps:
+
+import steps from './_steps.png';
+
+<Image src={steps} alt="Copilot Workspace steps" />
+
+I recorded a short demo to see it in action, enjoy:
+
+<YouTube id="FARf9emEPjI" />
+
+## 1. Issue/Task
+
+_Everything begins with an open issue (or even a simple prompt)_
+
+Copilot can read the selected issue and all the comments, getting knowledge and context of the user's needs.
+
+import issue from './_1issue.png';
+
+<Image src={issue} alt="Issue/Task" />
+
+## 2. Specification
+
+_A summary of the proposed changes, and how they relate to the current behavior_
+
+The AI identifies the exact scope and tries to compare the current state (as is) with the desired outcome (to be).
+
+A list with bullet points is generated to even further define the scope and you, the developer, can edit and improve to fix misunderstandings or cover edge cases.
+
+import spec from './_2spec.png';
+
+<Image src={spec} alt="Specification" />
+
+## 3. Plan
+
+_A summary of the file changes that are needed to complete the current task_
+
+The plan is made of a list of files that can be created, modified, deleted or renamed. For each file Copilot describes the actions it’s going to take.
+
+Once again you can revise and touch up the plan before moving on to the next part, the actual coding.
+
+import plan from './_3plan.png';
+
+<Image src={plan} alt="Plan" />
+
+## 4. Implementation
+
+_A list of files that have changed, and the tools needed to validate them_
+
+For each file listed in the Plan, Copilot writes the proposed changes and shows them in a handy diff editor, which as the name suggests, is editable!
+
+From here you can do the final touches to the code hit the Create pull request button, but more often than not you might want to run the app before creating the PR and Codespaces is the answer!
+
+There’s a button to spin a Codespaces container where you can run your app, validate the changes and eventually create the pull request.
+
+import diff from './_4diff.png';
+
+<Image src={diff} alt="Diff editor" />
+
+import impl from './_4impl.png';
+
+<Image src={impl} alt="Implementation" />
+
+## That's it!
+
+The entire process runs really smoothly with an intuitive UI and what I like the most is that you can always go back and forth between the steps, edit, and improve the generated content.
+
+Coding with an AI assistant is great but I don't think we're yet at the point where we can just sit back and watch the magic happen. It's still like a pair programming session and being able to edit the specification (step 2) and the plan (step 3) even before generating the code makes me feel way more in control, increasing the chances of a successful implementation.
+
+The innovation coming from the [GitHub Next](https://githubnext.com/) team is unbelievable!
+
+---
+
+Do you want to see it in action? You can watch a demo I recorded on YouTube: [https://youtu.be/FARf9emEPjI](https://youtu.be/FARf9emEPjI)
