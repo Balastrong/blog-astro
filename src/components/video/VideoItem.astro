@@ -2,20 +2,20 @@
 import { Picture } from 'astro:assets';
 
 import { BLOG } from '~/config.mjs';
-import type { YouTubeVideo } from '~/types';
+import type { YouTubePlaylistItemSnippet } from '~/types';
 
 import { getThumbnailUrl, getVideoUrl } from '~/libs/youtube';
 
 export type Props = {
-  video: YouTubeVideo;
+  video: YouTubePlaylistItemSnippet;
 };
 
 const { video } = Astro.props;
 
 const thumbnail = getThumbnailUrl(video);
 const videoUrl = getVideoUrl(video);
-const videoTitle = video.snippet.title.replaceAll('&amp;', '&');
-const videoDescription = video.snippet.description;
+const videoTitle = video.title.replaceAll('&amp;', '&');
+const videoDescription = video.description;
 ---
 
 <article class="mb-6 transition">
@@ -53,5 +53,7 @@ const videoDescription = video.snippet.description;
       )
     }
   </h3>
-  <p class="text-muted dark:text-slate-400 text-lg">{videoDescription}</p>
+  <p class="text-muted dark:text-slate-400 text-lg">
+    {videoDescription.slice(0, 100)}{videoDescription.length > 100 ? '...' : ''}
+  </p>
 </article>

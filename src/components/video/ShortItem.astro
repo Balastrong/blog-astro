@@ -2,19 +2,19 @@
 import { Picture } from 'astro:assets';
 
 import { BLOG } from '~/config.mjs';
-import type { YouTubeVideo } from '~/types';
+import type { YouTubePlaylistItemSnippet } from '~/types';
 
 import { getShortThumbnailUrl, getVideoUrl } from '~/libs/youtube';
 
 export type Props = {
-  video: YouTubeVideo;
+  video: YouTubePlaylistItemSnippet;
 };
 
 const { video } = Astro.props;
 
 const thumbnail = getShortThumbnailUrl(video);
 const videoUrl = getVideoUrl(video);
-const videoTitle = video.snippet.title;
+const videoTitle = video.title;
 ---
 
 <article class="mb-6 transition">
@@ -30,7 +30,6 @@ const videoTitle = video.snippet.title;
             height={400}
             sizes="(max-width: 448px) 224px, 448px"
             alt={videoTitle}
-            aspectRatio="9:16"
             loading="lazy"
             decoding="async"
           />

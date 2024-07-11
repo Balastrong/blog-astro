@@ -8,7 +8,7 @@ import VideoItem from '~/components/video/VideoItem.astro';
 import Hero from '~/components/widgets/Hero.astro';
 import Latest from '~/components/widgets/Latest.astro';
 import { linkedinUrl, youTubeChannelUrl, youTubeChannelUrlSubscribe } from '~/data';
-import { categorizeVideo, getVideos } from '~/libs/youtube';
+import { getVideos } from '~/libs/youtube';
 import { findLatestPosts, getPostsCount } from '~/utils/blog';
 import { getBlogPermalink } from '~/utils/permalinks';
 
@@ -21,8 +21,7 @@ const meta = {
 const latestPosts = await findLatestPosts({ count: 4 });
 const postsCount = await getPostsCount();
 
-const videos = await getVideos();
-const { shortVideos, longVideos } = await categorizeVideo(videos);
+const { shortVideos, longVideos } = await getVideos();
 ---
 
 <Layout {meta}>

@@ -195,3 +195,24 @@ export type YouTubeVideo = {
     publishTime: string;
   };
 };
+
+export type YouTubePlaylistItemSnippet = {
+  title: string;
+  description: string;
+  channelId?: string | null;
+  channelTitle?: string | null;
+  playlistId?: string | null;
+  position?: number | null;
+  publishedAt?: string | null;
+  resourceId?: {
+    kind: string;
+    videoId: string;
+  };
+  thumbnails?: {
+    [key: string]: {
+      url: string;
+      width: number;
+      height: number;
+    };
+  };
+};
