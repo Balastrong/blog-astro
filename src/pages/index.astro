@@ -51,15 +51,6 @@ const { shortVideos, longVideos } = await getVideos();
     </Fragment>
   </Hero>
 
-  <Latest
-    title="Latest articles"
-    titleSide="center"
-    subtitleLink={getBlogPermalink()}
-    subtitleText={`Read all my articles (${postsCount})`}
-  >
-    <PostGrid posts={latestPosts} />
-  </Latest>
-
   <div class="relative">
     <div class="absolute -top-20" id="video"></div>
   </div>
@@ -73,6 +64,15 @@ const { shortVideos, longVideos } = await getVideos();
     <div class="grid gap-6 row-gap-5 md:grid-cols-3 -mb-6">
       {longVideos.map((video) => <VideoItem video={video} />)}
     </div>
+  </Latest>
+
+  <Latest
+    title="Latest articles"
+    titleSide="center"
+    subtitleLink={getBlogPermalink()}
+    subtitleText={`Read all my articles (${postsCount})`}
+  >
+    <PostGrid posts={latestPosts} />
   </Latest>
 
   <div class="overflow-hidden">
