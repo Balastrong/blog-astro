@@ -1,0 +1,65 @@
+---
+import { Icon } from 'astro-icon';
+import { type TutorialChapter } from '~/types';
+
+export type Props = {
+  chapterNumber: number;
+  chapter: TutorialChapter;
+  color: string;
+  textColor: string;
+};
+
+const { chapterNumber, chapter, color, textColor } = Astro.props;
+---
+
+<div
+  style={{
+    borderColor: color,
+  }}
+  class="bg-white dark:bg-slate-800 rounded-lg shadow-xl overflow-hidden border border-t-[0.5rem] p-4 grid grid-rows-subgrid row-span-3 gap-2"
+>
+  <h3 class="text-lg font-bold">
+    <span style={{ color: color }}>{chapterNumber}.</span>
+    {chapter.title}
+  </h3>
+  <div>
+    {
+      chapter.video && (
+        <a
+          href={chapter.video}
+          style={{ backgroundColor: color, color: textColor }}
+          class="btn border-none hover:bg-black/10 px-3 py-1.5 rounded text-sm flex items-center justify-center gap-1"
+          target="_blank"
+        >
+          <Icon name="tabler:player-play" class="w-4 h-4" /> Watch Video
+        </a>
+      )
+    }
+  </div>
+  <div class="flex justify-center gap-3">
+    {
+      chapter.code && (
+        <a
+          href={chapter.code}
+          style={{ color: color }}
+          class=" hover:text-blue-600 text-sm flex items-center gap-1"
+          target="_blank"
+        >
+          <Icon name="tabler:code" class="w-3 h-3" /> Code
+        </a>
+      )
+    }
+    {
+      chapter.article && (
+        <a
+          href={chapter.article}
+          style={{ color: color }}
+          class=" hover:text-blue-600 text-sm flex items-center gap-1"
+          target="_blank"
+        >
+          <Icon name="tabler:file-text" class="w-3 h-3" /> Article
+        </a>
+      )
+    }
+  </div>
+</div>

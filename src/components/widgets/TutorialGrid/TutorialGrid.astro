@@ -1,0 +1,16 @@
+---
+import type { Tutorial } from '~/types';
+
+export type Props = {
+  tutorial: Tutorial;
+};
+
+const { tutorial } = Astro.props;
+---
+
+<div class="py-4 pt-8 sm:py-6">
+  <h3 style={{ color: tutorial.color }} class="text-4xl font-bold mb-4 text-center">{tutorial.title}</h3>
+  <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <slot />
+  </div>
+</div>

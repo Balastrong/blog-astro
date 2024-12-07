@@ -1,0 +1,58 @@
+---
+import { SITE } from '~/config.mjs';
+import Layout from '~/layouts/PageLayout.astro';
+import { tanStackTutorials } from '~/data';
+import TutorialGrid from '~/components/widgets/TutorialGrid/TutorialGrid.astro';
+import TutorialCard from '~/components/widgets/TutorialGrid/TutorialCard.astro';
+
+const meta = {
+  title: SITE.title + ' | TanStack Tutorials',
+  description: SITE.description,
+  dontUseTitleTemplate: true,
+};
+---
+
+<Layout {meta}>
+  <section class="relative">
+    <div class="absolute inset-0 bg-blue-50 dark:bg-slate-800 pointer-events-none mb-32" aria-hidden="true"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 -mb-12">
+      <div class="py-4 pt-8 sm:py-6 lg:py-8 lg:pt-12">
+        {
+          (
+            <div class="mb-8 md:mx-auto text-center max-w-3xl">
+              <p class="text-base text-primary dark:text-blue-200 font-semibold tracking-wide uppercase">Tutorials</p>
+              <h2 class="text-4xl md:text-5xl font-bold leading-tighter tracking-tighter mb-4 font-heading">
+                TanStack
+              </h2>
+              <p class="max-w-3xl mx-auto sm:text-center text-xl text-muted dark:text-slate-400">
+                High-quality open-source software for web developers.
+              </p>
+            </div>
+          )
+        }
+      </div>
+    </div>
+    <div
+      class="relative mx-auto px-6 sm:px-6 max-w-3xl prose prose-lg lg:prose-xl dark:prose-invert dark:prose-headings:text-slate-300 prose-md prose-headings:font-heading prose-headings:leading-tighter prose-headings:tracking-tighter prose-headings:font-bold prose-a:text-primary dark:prose-a:text-blue-400 prose-img:rounded-md prose-img:shadow-lg mt-8"
+    >
+      <p>webdev looking for libs - tanstack - official doc is great - here are some tutorials</p>
+      <p>buttons for Form, Start, Router</p>
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
+      {
+        tanStackTutorials.map((tutorial) => (
+          <TutorialGrid tutorial={tutorial}>
+            {tutorial.chapters.map((chapter, index) => (
+              <TutorialCard
+                chapterNumber={index + 1}
+                chapter={chapter}
+                color={tutorial.color}
+                textColor={tutorial.textColor}
+              />
+            ))}
+          </TutorialGrid>
+        ))
+      }
+    </div>
+  </section>
+</Layout>

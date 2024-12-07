@@ -216,3 +216,17 @@ export type YouTubePlaylistItemSnippet = {
     };
   };
 };
+
+export type Tutorial = {
+  title: string;
+  color: string;
+  textColor: string;
+  chapters: TutorialChapter[];
+};
+
+export type TutorialChapter = {
+  title: string;
+  article?: string;
+  video?: string;
+  code?: string;
+};

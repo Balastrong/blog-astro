@@ -1,5 +1,5 @@
 import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
-import { type GitHubRepo } from './types';
+import { type GitHubRepo, type Tutorial } from './types';
 
 export const youTubeChannelUrl = 'https://www.youtube.com/@DevLeonardo';
 export const youTubeChannelUrlSubscribe = youTubeChannelUrl + '?sub_confirmation=1';
@@ -11,10 +11,6 @@ export const headerData = {
     {
       text: 'Blog',
       href: getBlogPermalink(),
-    },
-    {
-      text: 'Video',
-      href: getPermalink('#video'),
     },
     {
       text: 'Open Source',
@@ -32,6 +28,10 @@ export const headerData = {
           href: getPermalink('/community-projects'),
         },
       ],
+    },
+    {
+      text: 'TanStack',
+      href: getPermalink('/tanstack'),
     },
   ],
   actions: [{ type: 'button', text: 'YouTube', href: youTubeChannelUrlSubscribe }],
@@ -81,6 +81,18 @@ export const openSourceProjects: GitHubRepo[] = [
     owner: 'Microsoft',
     repo: 'vscode-js-debug',
   },
+  {
+    owner: 'TanStack',
+    repo: 'router',
+  },
+  {
+    owner: 'TanStack',
+    repo: 'form',
+  },
+  {
+    owner: 'TanStack',
+    repo: 'tanstack.com',
+  },
 ];
 
 export const myProjects: GitHubRepo[] = [
@@ -94,12 +106,124 @@ export const myProjects: GitHubRepo[] = [
   repo,
 }));
 
-export const communityProjects: GitHubRepo[] = ['github-stats', 'billsplit'].map((repo) => ({
-  owner: 'DevLeonardoCommunity',
-  repo,
-}));
+export const communityProjects: GitHubRepo[] = [
+  { owner: 'Balastrong', repo: 'myntenance' },
+  { owner: 'DevLeonardoCommunity', repo: 'github-stats' },
+  { owner: 'DevLeonardoCommunity', repo: 'billsplit' },
+];
 
 export const seriesNames = {
   'copilot-x': 'Copilot X',
   'tanstack-router': 'TanStack Router',
 };
+
+export const tanStackTutorials: Tutorial[] = [
+  {
+    title: 'TanStack Router',
+    color: 'green',
+    textColor: '#fff',
+    chapters: [
+      {
+        title: 'Form Setup',
+        video: 'https://www.youtube.com/watch?v=3JZge5fZDcY',
+        code: 'github.com',
+        article: 'dev.to',
+      },
+      {
+        title: 'Form Validation and other stuff',
+        video: 'https://www.youtube.com/watch?v=3JZge5fZDcY',
+        code: 'github.com',
+      },
+      {
+        title: 'Form Submission',
+        video: 'https://www.youtube.com/watch?v=3JZge5fZDcY',
+        code: 'github.com',
+        article: 'dev.to',
+      },
+      {
+        title: 'Form Submission',
+        video: 'https://www.youtube.com/watch?v=3JZge5fZDcY',
+        code: 'github.com',
+        article: 'dev.to',
+      },
+      {
+        title: 'Form Submission',
+        video: 'https://www.youtube.com/watch?v=3JZge5fZDcY',
+        code: 'github.com',
+        article: 'dev.to',
+      },
+      {
+        title: 'Form Submission',
+        video: 'https://www.youtube.com/watch?v=3JZge5fZDcY',
+        code: 'github.com',
+        article: 'dev.to',
+      },
+      {
+        title: 'Form Submission',
+        video: 'https://www.youtube.com/watch?v=3JZge5fZDcY',
+        code: 'github.com',
+        article: 'dev.to',
+      },
+      {
+        title: 'Form Submission',
+        video: 'https://www.youtube.com/watch?v=3JZge5fZDcY',
+        code: 'github.com',
+        article: 'dev.to',
+      },
+    ],
+  },
+  {
+    title: 'TanStack Form',
+    color: '#E5AE07',
+    textColor: '#fff',
+    chapters: [
+      {
+        title: 'Form Setup',
+        video: 'https://www.youtube.com/watch?v=3JZge5fZDcY',
+        code: 'github.com',
+        article: 'dev.to',
+      },
+      {
+        title: 'Form Validation and other stuff',
+        video: 'https://www.youtube.com/watch?v=3JZge5fZDcY',
+        code: 'github.com',
+      },
+      {
+        title: 'Form Submission',
+        video: 'https://www.youtube.com/watch?v=3JZge5fZDcY',
+        code: 'github.com',
+        article: 'dev.to',
+      },
+      {
+        title: 'Form Submission',
+        video: 'https://www.youtube.com/watch?v=3JZge5fZDcY',
+        code: 'github.com',
+        article: 'dev.to',
+      },
+      {
+        title: 'Form Submission',
+        video: 'https://www.youtube.com/watch?v=3JZge5fZDcY',
+        code: 'github.com',
+        article: 'dev.to',
+      },
+      {
+        title: 'Form Submission',
+        video: 'https://www.youtube.com/watch?v=3JZge5fZDcY',
+        code: 'github.com',
+        article: 'dev.to',
+      },
+      {
+        title: 'Form Submission',
+        video: 'https://www.youtube.com/watch?v=3JZge5fZDcY',
+        code: 'github.com',
+        article: 'dev.to',
+      },
+      {
+        title: 'Form Submission',
+        video: 'https://www.youtube.com/watch?v=3JZge5fZDcY',
+        code: 'github.com',
+        article: 'dev.to',
+      },
+    ],
+  },
+];
