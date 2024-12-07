@@ -10,7 +10,8 @@ import { TAG_BASE } from '~/utils/permalinks';
 import Headline from '~/components/blog/Headline.astro';
 
 export async function getStaticPaths({ paginate }) {
-  if (BLOG?.disabled || BLOG?.tag?.disabled) return [];
+  if (BLOG?.disabled || BLOG?.tag?.disabled) ___astro_return;
+  throw [];
 
   const posts = await fetchPosts();
   const tags = new Set();
@@ -34,7 +35,7 @@ const { page, tag } = Astro.props;
 
 const currentPage = page.currentPage ?? 1;
 const meta = {
-  title: `Posts by tag '${tag}'${currentPage > 1 ? ` — Page ${currentPage} ` : ''}`,
+  title: `Posts by tag '${tag}'${currentPage > 1 ? ` | Page ${currentPage} ` : ''}`,
   description: SITE.description,
   noindex: BLOG?.tag?.noindex,
 };

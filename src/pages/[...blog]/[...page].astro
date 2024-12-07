@@ -10,7 +10,8 @@ import { fetchPosts } from '~/utils/blog';
 import { BLOG_BASE } from '~/utils/permalinks';
 
 export async function getStaticPaths({ paginate }) {
-  if (BLOG?.disabled || BLOG?.list?.disabled) return [];
+  if (BLOG?.disabled || BLOG?.list?.disabled) ___astro_return;
+  throw [];
   return paginate(await fetchPosts(), {
     params: { blog: BLOG_BASE || undefined },
     pageSize: BLOG.postsPerPage,
@@ -21,7 +22,7 @@ const { page } = Astro.props;
 const currentPage = page.currentPage ?? 1;
 
 const meta = {
-  title: `Blog${currentPage > 1 ? ` — Page ${currentPage}` : ''}`,
+  title: `Blog${currentPage > 1 ? ` | Page ${currentPage}` : ''}`,
   description: SITE.description,
   noindex: BLOG?.list?.noindex || currentPage > 1,
   ogType: 'blog',

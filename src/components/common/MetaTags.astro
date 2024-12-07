@@ -17,7 +17,7 @@ const defaultImage = SITE.defaultImage;
 
 const {
   title = SITE.name,
-  description = '',
+  description = SITE.description,
   image: _image = defaultImage,
 
   canonical = getCanonical(String(Astro.url.pathname)),
@@ -44,7 +44,7 @@ const image =
 
 <AstroSeo
   title={title}
-  titleTemplate={dontUseTitleTemplate ? '%s' : `%s — ${SITE.name}`}
+  titleTemplate={dontUseTitleTemplate ? '%s' : `%s | ${SITE.name}`}
   description={description}
   canonical={String(canonical)}
   noindex={noindex}
@@ -84,4 +84,3 @@ const image =
 }
 
 <link rel="shortcut icon" href={getAsset('/favicon.ico')} />
-

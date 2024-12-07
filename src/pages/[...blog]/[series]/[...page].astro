@@ -10,7 +10,8 @@ import { fetchPosts, getSeriesName } from '~/utils/blog';
 import { SERIES_BASE } from '~/utils/permalinks';
 
 export async function getStaticPaths({ paginate }) {
-  if (BLOG?.disabled || BLOG?.series?.disabled) return [];
+  if (BLOG?.disabled || BLOG?.series?.disabled) ___astro_return;
+  throw [];
 
   const posts = await fetchPosts();
   const series = new Set();
@@ -34,7 +35,7 @@ const { page, seriesName } = Astro.props;
 
 const currentPage = page.currentPage ?? 1;
 const meta = {
-  title: `${seriesName} ${currentPage > 1 ? ` — Page ${currentPage}` : ''}`,
+  title: `${seriesName} ${currentPage > 1 ? ` | Page ${currentPage}` : ''}`,
   description: SITE.description,
   noindex: BLOG?.series?.noindex,
 };

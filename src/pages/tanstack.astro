@@ -1,14 +1,12 @@
 ---
-import { SITE } from '~/config.mjs';
 import Layout from '~/layouts/PageLayout.astro';
 import { tanStackTutorials } from '~/data';
 import TutorialGrid from '~/components/widgets/TutorialGrid/TutorialGrid.astro';
 import TutorialCard from '~/components/widgets/TutorialGrid/TutorialCard.astro';
 
 const meta = {
-  title: 'TanStack Tutorials | ' + SITE.title,
-  description: 'TanStack Tutorials with practical examples on Start, Router, Form, Table and Query.',
-  dontUseTitleTemplate: true,
+  title: 'TanStack Tutorial',
+  description: 'A collection of TanStack Tutorials with practical examples on Start, Router, Form, Table and Query.',
 };
 
 const tutorialsCount = tanStackTutorials.reduce((acc, tutorial) => acc + tutorial.chapters.length, 0);
