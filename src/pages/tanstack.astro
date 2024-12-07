@@ -10,6 +10,8 @@ const meta = {
   description: SITE.description,
   dontUseTitleTemplate: true,
 };
+
+const tutorialsCount = tanStackTutorials.reduce((acc, tutorial) => acc + tutorial.chapters.length, 0);
 ---
 
 <Layout {meta}>
@@ -21,14 +23,28 @@ const meta = {
           <p class="text-base text-primary dark:text-blue-200 font-semibold tracking-wide uppercase">Tutorials</p>
           <h2 class="text-4xl md:text-5xl font-bold leading-tighter tracking-tighter mb-4 font-heading">TanStack</h2>
           <p class="max-w-3xl mx-auto sm:text-center text-xl text-muted dark:text-slate-400">
-            High-quality open-source software for web developers.
+            High-quality open-source software for web developers
           </p>
         </div>
       </div>
       <div
-        class="mx-auto px-6 sm:px-6 prose prose-lg lg:prose-xl dark:prose-invert dark:prose-headings:text-slate-300 prose-md prose-headings:font-heading prose-headings:leading-tighter prose-headings:tracking-tighter prose-headings:font-bold prose-a:text-primary dark:prose-a:text-blue-400 prose-img:rounded-md prose-img:shadow-lg"
+        class="max-w-full prose dark:prose-invert prose-a:text-primary dark:prose-a:text-blue-400 prose-p:mt-0 prose-p:mb-3"
       >
-        <p>webdev looking for libs - tanstack - official doc is great - here are some tutorials</p>
+        <p>
+          In this page you can find an overview of the <strong>{tutorialsCount}</strong> tutorials I created on various TanStack
+          libraries.
+        </p>
+        <p>
+          The best way to get started remains the
+          <a href="https://tanstack.com/" target="_blank">official documentation</a>, what you can find below is a
+          collection of <i>step by step tutorials</i> where we'll build together some
+          <strong>practical examples</strong>.
+        </p>
+        <p>
+          Each video has a link to a repository with the code where usually each branch corresponds to a video/chapter.
+          Some videos also have the article version but I'm too lazy to write them all, if you create an article based
+          on my video I'll be happy to link it here.<br />Enjoy!
+        </p>
       </div>
       <div class="flex gap-2 flex-row flex-wrap">
         <div class="text-lg font-medium mx-auto min-[500px]:mx-0">Jump to:</div>
