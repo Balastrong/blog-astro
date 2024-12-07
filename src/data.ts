@@ -117,12 +117,12 @@ export const seriesNames = {
   'tanstack-router': 'TanStack Router',
 };
 
-// TODO: Multi-library?
 export const tanStackTutorials: Tutorial[] = [
   {
     title: 'TanStack Start',
     color: '#12B0CE',
     textColor: '#fff',
+    playlistUrl: 'https://www.youtube.com/playlist?list=PLOQjd5dsGSxIEKFg4dnSQ4zQkmTktfszp',
     chapters: [
       {
         title: 'Project Setup',
@@ -139,6 +139,7 @@ export const tanStackTutorials: Tutorial[] = [
     title: 'TanStack Router',
     color: '#1CBA7D',
     textColor: '#fff',
+    playlistUrl: 'https://www.youtube.com/playlist?list=PLOQjd5dsGSxJilh0lBofeY8Qib98kzmF5',
     chapters: [
       {
         title: 'Setup & Navigation',
@@ -191,6 +192,7 @@ export const tanStackTutorials: Tutorial[] = [
     title: 'TanStack Form',
     color: '#E5AE07',
     textColor: '#fff',
+    playlistUrl: 'https://www.youtube.com/playlist?list=PLOQjd5dsGSxInTKUWTxyqSKwZCjDIUs0Y',
     chapters: [
       {
         title: 'Basic Form Validation',

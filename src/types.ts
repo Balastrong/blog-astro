@@ -221,6 +221,7 @@ export type Tutorial = {
   title: string;
   color: string;
   textColor: string;
+  playlistUrl?: string;
   chapters: TutorialChapter[];
 };
 
