@@ -27,7 +27,7 @@
     "@typescript-eslint/parser": "^5.62.0",
     "astro": "^4.5.5",
     "astro-compress": "^2.2.15",
-    "astro-icon": "^0.8.2",
+    "astro-icon": "^1.1.4",
     "eslint": "^8.57.0",
     "eslint-plugin-astro": "^0.26.2",
     "eslint-plugin-jsx-a11y": "^6.8.0",
@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "@astrojs/react": "^3.1.0",
+    "@iconify-json/tabler": "^1.2.10",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "classnames": "^2.5.1",

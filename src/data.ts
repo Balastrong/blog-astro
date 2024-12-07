@@ -5,6 +5,7 @@ export const youTubeChannelUrl = 'https://www.youtube.com/@DevLeonardo';
 export const youTubeChannelUrlSubscribe = youTubeChannelUrl + '?sub_confirmation=1';
 export const twitterUrl = 'https://twitter.com/balastrong';
 export const linkedinUrl = 'https://www.linkedin.com/in/leonardo-montini/';
+export const blueskyUrl = 'https://bsky.app/profile/leonardomontini.dev';
 
 export const headerData = {
   links: [
@@ -39,11 +40,12 @@ export const headerData = {
 
 export const footerData = {
   socialLinks: [
-    { ariaLabel: 'Twitter', icon: 'tabler:brand-twitter', href: twitterUrl },
     { ariaLabel: 'YouTube', icon: 'tabler:brand-youtube', href: youTubeChannelUrlSubscribe },
+    { ariaLabel: 'Bluesky', icon: 'tabler:brand-bluesky', href: blueskyUrl },
     { ariaLabel: 'Linkedin', icon: 'tabler:brand-linkedin', href: linkedinUrl },
     { ariaLabel: 'Discord', icon: 'tabler:brand-discord', href: 'https://discord.gg/bqwyEa6We6' },
     { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com/Balastrong' },
+    { ariaLabel: 'Twitter', icon: 'tabler:brand-twitter', href: twitterUrl },
     { ariaLabel: 'RSS', icon: 'tabler:rss', href: getAsset('/rss.xml') },
   ],
 };
