@@ -10,8 +10,7 @@ import { fetchPosts, getSeriesName } from '~/utils/blog';
 import { SERIES_BASE } from '~/utils/permalinks';
 
 export async function getStaticPaths({ paginate }) {
-  if (BLOG?.disabled || BLOG?.series?.disabled) ___astro_return;
-  throw [];
+  if (BLOG?.disabled || BLOG?.series?.disabled) return [];
 
   const posts = await fetchPosts();
   const series = new Set();
