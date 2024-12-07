@@ -15,43 +15,50 @@ const meta = {
 <Layout {meta}>
   <section class="relative">
     <div class="absolute inset-0 bg-blue-50 dark:bg-slate-800 pointer-events-none mb-32" aria-hidden="true"></div>
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 -mb-12">
-      <div class="py-4 pt-8 sm:py-6 lg:py-8 lg:pt-12">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 mb-12 flex flex-col gap-4">
+      <div class="pt-8 sm:pt-6 lg:pt-12">
+        <div class="mb-8 md:mx-auto text-center max-w-3xl">
+          <p class="text-base text-primary dark:text-blue-200 font-semibold tracking-wide uppercase">Tutorials</p>
+          <h2 class="text-4xl md:text-5xl font-bold leading-tighter tracking-tighter mb-4 font-heading">TanStack</h2>
+          <p class="max-w-3xl mx-auto sm:text-center text-xl text-muted dark:text-slate-400">
+            High-quality open-source software for web developers.
+          </p>
+        </div>
+      </div>
+      <div
+        class="mx-auto px-6 sm:px-6 prose prose-lg lg:prose-xl dark:prose-invert dark:prose-headings:text-slate-300 prose-md prose-headings:font-heading prose-headings:leading-tighter prose-headings:tracking-tighter prose-headings:font-bold prose-a:text-primary dark:prose-a:text-blue-400 prose-img:rounded-md prose-img:shadow-lg"
+      >
+        <p>webdev looking for libs - tanstack - official doc is great - here are some tutorials</p>
+      </div>
+      <div class="flex gap-2 flex-row flex-wrap">
+        <div class="text-lg font-medium mx-auto min-[500px]:mx-0">Jump to:</div>
         {
-          (
-            <div class="mb-8 md:mx-auto text-center max-w-3xl">
-              <p class="text-base text-primary dark:text-blue-200 font-semibold tracking-wide uppercase">Tutorials</p>
-              <h2 class="text-4xl md:text-5xl font-bold leading-tighter tracking-tighter mb-4 font-heading">
-                TanStack
-              </h2>
-              <p class="max-w-3xl mx-auto sm:text-center text-xl text-muted dark:text-slate-400">
-                High-quality open-source software for web developers.
-              </p>
+          tanStackTutorials.map((tutorial) => (
+            <div
+              style={{ backgroundColor: tutorial.color, color: tutorial.textColor }}
+              class={`w-full min-[500px]:w-fit px-3 py-1 rounded-full font-semibold hover:opacity-90 transition-opacity text-center`}
+            >
+              <a href={`#${tutorial.key}`}>{tutorial.title.replace('TanStack ', '')}</a>
             </div>
-          )
+          ))
         }
       </div>
-    </div>
-    <div
-      class="relative mx-auto px-6 sm:px-6 max-w-3xl prose prose-lg lg:prose-xl dark:prose-invert dark:prose-headings:text-slate-300 prose-md prose-headings:font-heading prose-headings:leading-tighter prose-headings:tracking-tighter prose-headings:font-bold prose-a:text-primary dark:prose-a:text-blue-400 prose-img:rounded-md prose-img:shadow-lg mt-8"
-    >
-      <p>webdev looking for libs - tanstack - official doc is great - here are some tutorials</p>
-    </div>
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
-      {
-        tanStackTutorials.map((tutorial) => (
-          <TutorialGrid tutorial={tutorial}>
-            {tutorial.chapters.map((chapter, index) => (
-              <TutorialCard
-                chapterNumber={index + 1}
-                chapter={chapter}
-                color={tutorial.color}
-                textColor={tutorial.textColor}
-              />
-            ))}
-          </TutorialGrid>
-        ))
-      }
+      <div class="flex flex-col gap-8">
+        {
+          tanStackTutorials.map((tutorial) => (
+            <TutorialGrid tutorial={tutorial}>
+              {tutorial.chapters.map((chapter, index) => (
+                <TutorialCard
+                  chapterNumber={index + 1}
+                  chapter={chapter}
+                  color={tutorial.color}
+                  textColor={tutorial.textColor}
+                />
+              ))}
+            </TutorialGrid>
+          ))
+        }
+      </div>
     </div>
   </section>
 </Layout>

@@ -218,6 +218,7 @@ export type YouTubePlaylistItemSnippet = {
 };
 
 export type Tutorial = {
+  key: string;
   title: string;
   color: string;
   textColor: string;

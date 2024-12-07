@@ -119,6 +119,7 @@ export const seriesNames = {
 
 export const tanStackTutorials: Tutorial[] = [
   {
+    key: 'start',
     title: 'TanStack Start',
     color: '#12B0CE',
     textColor: '#fff',
@@ -136,6 +137,7 @@ export const tanStackTutorials: Tutorial[] = [
     ],
   },
   {
+    key: 'router',
     title: 'TanStack Router',
     color: '#1CBA7D',
     textColor: '#fff',
@@ -189,6 +191,7 @@ export const tanStackTutorials: Tutorial[] = [
     ],
   },
   {
+    key: 'form',
     title: 'TanStack Form',
     color: '#E5AE07',
     textColor: '#fff',
@@ -230,9 +233,11 @@ export const tanStackTutorials: Tutorial[] = [
     ],
   },
   {
+    key: 'ecosystem',
     title: 'TanStack Ecosystem',
     color: 'black',
     textColor: '#fff',
+    playlistUrl: 'https://www.youtube.com/playlist?list=PLOQjd5dsGSxKaQ-2Wf3Mwp4PTu7NXYIM6',
     chapters: [
       {
         title: 'Backend Pagination, Filter & Sort with Table + Query + Router',
