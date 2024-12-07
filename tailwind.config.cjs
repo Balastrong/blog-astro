@@ -1,6 +1,7 @@
 const plugin = require('tailwindcss/plugin');
 const defaultTheme = require('tailwindcss/defaultTheme');
 
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: {
     files: ['./src/**/*.{astro,html,js,jsx,md,svelte,ts,tsx,vue}'],
@@ -41,5 +42,12 @@ module.exports = {
     }),
   ],
   darkMode: 'class',
-  safelist: ['!duration-[0ms]', '!delay-[0ms]', 'html.js :where([class*="taos:"]:not(.taos-init))'],
+  safelist: [
+    '!duration-[0ms]',
+    '!delay-[0ms]',
+    'html.js :where([class*="taos:"]:not(.taos-init))',
+    {
+      pattern: /^(bg|text|border)-(cyan|emerald|yellow|zinc)-(500|600)$/,
+    },
+  ],
 };

@@ -6,8 +6,8 @@ import TutorialGrid from '~/components/widgets/TutorialGrid/TutorialGrid.astro';
 import TutorialCard from '~/components/widgets/TutorialGrid/TutorialCard.astro';
 
 const meta = {
-  title: SITE.title + ' | TanStack Tutorials',
-  description: SITE.description,
+  title: 'TanStack Tutorials | ' + SITE.title,
+  description: 'TanStack Tutorials with practical examples on Start, Router, Form, Table and Query.',
   dontUseTitleTemplate: true,
 };
 
@@ -31,31 +31,38 @@ const tutorialsCount = tanStackTutorials.reduce((acc, tutorial) => acc + tutoria
         class="max-w-full prose dark:prose-invert prose-a:text-primary dark:prose-a:text-blue-400 prose-p:mt-0 prose-p:mb-3"
       >
         <p>
-          In this page you can find an overview of the <strong>{tutorialsCount}</strong> tutorials I created on various TanStack
-          libraries.
+          On this page you'll find an overview of the <strong>{tutorialsCount}</strong> tutorials I've created covering various
+          TanStack libraries.
         </p>
         <p>
-          The best way to get started remains the
-          <a href="https://tanstack.com/" target="_blank">official documentation</a>, what you can find below is a
-          collection of <i>step by step tutorials</i> where we'll build together some
-          <strong>practical examples</strong>.
+          While the
+          <a href="https://tanstack.com/" target="_blank">official documentation</a> is the best starting point, this collection
+          offers <i>step by step tutorials</i> where we work together to build <strong>practical examples</strong>.
         </p>
         <p>
-          Each video has a link to a repository with the code where usually each branch corresponds to a video/chapter.
-          Some videos also have the article version but I'm too lazy to write them all, if you create an article based
-          on my video I'll be happy to link it here.<br />Enjoy!
+          Each video includes a link to a repository containing the code, where
+          <i>each branch typically corresponds to a specific video/chapter</i>. Some videos also have an article
+          version, though I haven't written them all. If you create an article based on one of my videos, I'd be
+          <strong>happy to link it here</strong>.
         </p>
+        <p>Enjoy!</p>
       </div>
-      <div class="flex gap-2 flex-row flex-wrap">
-        <div class="text-lg font-medium mx-auto min-[500px]:mx-0">Jump to:</div>
+      <div class="flex gap-2 flex-row flex-wrap items-center">
+        <div class="font-medium mx-auto min-[500px]:mx-0">
+          Jump to<span class="hidden min-[500px]:inline-block">:</span>
+        </div>
         {
           tanStackTutorials.map((tutorial) => (
-            <div
-              style={{ backgroundColor: tutorial.color, color: tutorial.textColor }}
-              class={`w-full min-[500px]:w-fit px-3 py-1 rounded-full font-semibold hover:opacity-90 transition-opacity text-center`}
-            >
-              <a href={`#${tutorial.key}`}>{tutorial.title.replace('TanStack ', '')}</a>
-            </div>
+            <a href={`#${tutorial.key}`} class="w-full min-[500px]:w-fit">
+              <div
+                class:list={[
+                  'text-white px-3 py-1 rounded-full font-semibold hover:bg-opacity-85 transition ease-in duration-200 text-center',
+                  `bg-${tutorial.mainColor}`,
+                ]}
+              >
+                {tutorial.title.replace('TanStack ', '')}
+              </div>
+            </a>
           ))
         }
       </div>
@@ -64,12 +71,7 @@ const tutorialsCount = tanStackTutorials.reduce((acc, tutorial) => acc + tutoria
           tanStackTutorials.map((tutorial) => (
             <TutorialGrid tutorial={tutorial}>
               {tutorial.chapters.map((chapter, index) => (
-                <TutorialCard
-                  chapterNumber={index + 1}
-                  chapter={chapter}
-                  color={tutorial.color}
-                  textColor={tutorial.textColor}
-                />
+                <TutorialCard chapterNumber={index + 1} chapter={chapter} mainColor={tutorial.mainColor} />
               ))}
             </TutorialGrid>
           ))
