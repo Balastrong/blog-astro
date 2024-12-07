@@ -26,11 +26,11 @@ const { shortVideos, longVideos } = await getVideos();
 <Layout {meta}>
   <Hero
     callToAction={{
-      text: 'Watch me on YouTube',
+      text: 'Join me on YouTube',
       href: youTubeChannelUrlSubscribe,
       icon: 'tabler:brand-youtube',
     }}
-    callToAction2={{ text: 'Connect with me', href: linkedinUrl, icon: 'tabler:brand-linkedin' }}
+    callToAction2={{ text: 'Connect on Linkedin', href: linkedinUrl, icon: 'tabler:brand-linkedin' }}
   >
     <Fragment slot="title">
       Hello! <span class="text-accent dark:text-white highlight">Leonardo</span> here :)
@@ -47,6 +47,10 @@ const { shortVideos, longVideos } = await getVideos();
         href="https://mvp.microsoft.com/en-US/mvp/profile/51d820c5-949f-4961-aec5-09e34035cb24"
         target="_blank">Microsoft MVP 🔷</a
       > since 2024.
+      <br />
+      <span class="leading-[2] italic"
+        >"Learning <strong>Web Development</strong> through <strong>Open Source</strong>"</span
+      >
     </Fragment>
   </Hero>
 
