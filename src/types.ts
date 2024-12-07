@@ -1,3 +1,5 @@
+import type { ImageMetadata } from 'astro';
+
 export type Post = {
   id: string;
   slug: string;
@@ -31,13 +33,12 @@ export type Post = {
 export type MetaSEO = {
   title?: string;
   description?: string;
-  image?: string;
+  image?: string | ImageMetadata;
 
   canonical?: string | URL;
   noindex?: boolean;
   nofollow?: boolean;
 
-  ogTitle?: string;
   ogType?: string;
 };
 
@@ -215,4 +216,19 @@ export type YouTubePlaylistItemSnippet = {
       height: number;
     };
   };
+};
+
+export type Tutorial = {
+  key: string;
+  title: string;
+  mainColor: string;
+  playlistUrl?: string;
+  chapters: TutorialChapter[];
+};
+
+export type TutorialChapter = {
+  title: string;
+  article?: string;
+  video?: string;
+  code?: string;
 };

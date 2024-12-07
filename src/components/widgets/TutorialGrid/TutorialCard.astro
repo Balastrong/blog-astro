@@ -1,0 +1,72 @@
+---
+import { Icon } from 'astro-icon/components';
+import { type TutorialChapter } from '~/types';
+
+export type Props = {
+  chapterNumber: number;
+  chapter: TutorialChapter;
+  mainColor: string;
+};
+
+const { chapterNumber, chapter, mainColor } = Astro.props;
+---
+
+<div
+  class:list={[
+    'bg-light dark:bg-dark rounded-lg shadow-xl overflow-hidden border border-t-[0.5rem] p-4 grid grid-rows-subgrid row-span-3 gap-2',
+    `border-${mainColor}`,
+  ]}
+>
+  <h3 class="text-lg font-bold">
+    <span class:list={[`text-${mainColor}`]}>{chapterNumber}.</span>
+    {chapter.title}
+  </h3>
+  <div>
+    {
+      chapter.video && (
+        <a
+          href={chapter.video}
+          class:list={[
+            'block transition ease-in duration-200 border-none hover:bg-opacity-85 px-3 py-1.5 rounded text-sm w-full',
+            `bg-${mainColor}`,
+          ]}
+          target="_blank"
+        >
+          <span class="text-white flex items-center justify-center gap-1 font-semibold">
+            <Icon name="tabler:player-play" class="w-4 h-4" /> Watch Video
+          </span>
+        </a>
+      )
+    }
+  </div>
+  <div class="flex justify-center gap-5">
+    {
+      chapter.code && (
+        <a
+          href={chapter.code}
+          class:list={[
+            'text-sm transition ease-in duration-200 flex items-center gap-1 hover:opacity-85',
+            `text-${mainColor}`,
+          ]}
+          target="_blank"
+        >
+          <Icon name="tabler:code" class="w-3 h-3" /> Code
+        </a>
+      )
+    }
+    {
+      chapter.article && (
+        <a
+          href={chapter.article}
+          class:list={[
+            'text-sm transition ease-in duration-200 flex items-center gap-1 hover:opacity-85',
+            `text-${mainColor}`,
+          ]}
+          target="_blank"
+        >
+          <Icon name="tabler:file-text" class="w-3 h-3" /> Article
+        </a>
+      )
+    }
+  </div>
+</div>

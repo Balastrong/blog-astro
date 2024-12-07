@@ -1,0 +1,82 @@
+---
+import TutorialCard from '~/components/widgets/TutorialGrid/TutorialCard.astro';
+import TutorialGrid from '~/components/widgets/TutorialGrid/TutorialGrid.astro';
+import { tanStackTutorials } from '~/data';
+import Layout from '~/layouts/PageLayout.astro';
+import tanstackBanner from 'src/assets/images/banner-tanstack.png';
+
+const meta = {
+  title: 'TanStack Tutorial',
+  description: 'A collection of TanStack Tutorials with practical examples on Start, Router, Form, Table and Query.',
+  image: tanstackBanner,
+};
+
+const tutorialsCount = tanStackTutorials.reduce((acc, tutorial) => acc + tutorial.chapters.length, 0);
+---
+
+<Layout {meta}>
+  <section class="relative">
+    <div class="absolute inset-0 bg-blue-50 dark:bg-slate-800 pointer-events-none mb-32" aria-hidden="true"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 mb-12 flex flex-col gap-4">
+      <div class="pt-8 sm:pt-6 lg:pt-12">
+        <div class="mb-8 md:mx-auto text-center max-w-3xl">
+          <p class="text-base text-primary dark:text-blue-200 font-semibold tracking-wide uppercase">Tutorials</p>
+          <h2 class="text-5xl md:text-6xl font-bold leading-tighter tracking-tighter mb-4 font-heading">TanStack</h2>
+          <p class="max-w-3xl mx-auto sm:text-center text-xl text-muted dark:text-slate-400">
+            High-quality open-source software for web developers
+          </p>
+        </div>
+      </div>
+      <div
+        class="max-w-full prose dark:prose-invert prose-a:text-primary dark:prose-a:text-blue-400 prose-p:mt-0 prose-p:mb-3"
+      >
+        <p>
+          On this page you'll find an overview of the <strong>{tutorialsCount}</strong> tutorials I've created covering various
+          TanStack libraries.
+        </p>
+        <p>
+          While the
+          <a href="https://tanstack.com/" target="_blank">official documentation</a> is the best starting point, this collection
+          offers <i>step by step tutorials</i> where we work together to build <strong>practical examples</strong>.
+        </p>
+        <p>
+          Each video includes a link to a repository containing the code, where
+          <i>each branch typically corresponds to a specific video/chapter</i>. Some videos also have an article
+          version, though I haven't written them all. If you create an article based on one of my videos, I'd be
+          <strong>happy to link it here</strong>.
+        </p>
+        <p>Enjoy!</p>
+      </div>
+      <div class="flex gap-2 flex-row flex-wrap items-center">
+        <div class="font-medium mx-auto min-[500px]:mx-0">
+          Jump to<span class="hidden min-[500px]:inline-block">:</span>
+        </div>
+        {
+          tanStackTutorials.map((tutorial) => (
+            <a href={`#${tutorial.key}`} class="w-full min-[500px]:w-fit">
+              <div
+                class:list={[
+                  'text-white px-3 py-1 rounded-full font-semibold hover:bg-opacity-85 transition ease-in duration-200 text-center',
+                  `bg-${tutorial.mainColor}`,
+                ]}
+              >
+                {tutorial.title.replace('TanStack ', '')}
+              </div>
+            </a>
+          ))
+        }
+      </div>
+      <div class="flex flex-col gap-8">
+        {
+          tanStackTutorials.map((tutorial) => (
+            <TutorialGrid tutorial={tutorial}>
+              {tutorial.chapters.map((chapter, index) => (
+                <TutorialCard chapterNumber={index + 1} chapter={chapter} mainColor={tutorial.mainColor} />
+              ))}
+            </TutorialGrid>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Layout>

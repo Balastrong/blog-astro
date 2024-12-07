@@ -1,4 +1,4 @@
-import defaultImage from './assets/images/propic_blue.jpg';
+import defaultImage from './assets/images/banner.png';
 
 const CONFIG = {
   name: 'Leonardo Montini',
@@ -10,7 +10,7 @@ const CONFIG = {
   title: 'Leonardo Montini',
   description:
     "Technical content on Open Source, Web Development, GitHub and Visual Studio Code. I'm Leonardo Montini and that's what I like to talk about, let's get in touch!",
-  defaultImage: defaultImage,
+  defaultImage,
 
   defaultTheme: 'system', // Values: "system" | "light" | "dark" | "light:only" | "dark:only"
 

@@ -13,8 +13,7 @@ import { findLatestPosts, getPostsCount } from '~/utils/blog';
 import { getBlogPermalink } from '~/utils/permalinks';
 
 const meta = {
-  title: SITE.title + ' | Web Developer, Open Source enthusiast and Content Creator',
-  description: SITE.description,
+  title: SITE.title + ' | Web Developer, Open Source maintainer and Content Creator',
   dontUseTitleTemplate: true,
 };
 
@@ -27,18 +26,18 @@ const { shortVideos, longVideos } = await getVideos();
 <Layout {meta}>
   <Hero
     callToAction={{
-      text: 'Watch me on YouTube',
+      text: 'Join me on YouTube',
       href: youTubeChannelUrlSubscribe,
       icon: 'tabler:brand-youtube',
     }}
-    callToAction2={{ text: 'Connect with me', href: linkedinUrl, icon: 'tabler:brand-linkedin' }}
+    callToAction2={{ text: 'Connect on Linkedin', href: linkedinUrl, icon: 'tabler:brand-linkedin' }}
   >
     <Fragment slot="title">
       Hello! <span class="text-accent dark:text-white highlight">Leonardo</span> here :)
     </Fragment>
 
     <Fragment slot="subtitle">
-      π-shaped <b>Frontend Developer</b>, <b>Open Source</b> contributor and <b>educator</b>.<br />
+      π-shaped <b>Frontend Developer</b>, <b>Open Source</b> maintainer and <b>educator</b>.<br />
       Awarded <a
         class="font-bold hover:text-primary dark:hover:text-blue-700 transition ease-in duration-200"
         href="https://stars.github.com/profiles/balastrong/"
@@ -48,6 +47,10 @@ const { shortVideos, longVideos } = await getVideos();
         href="https://mvp.microsoft.com/en-US/mvp/profile/51d820c5-949f-4961-aec5-09e34035cb24"
         target="_blank">Microsoft MVP 🔷</a
       > since 2024.
+      <br />
+      <span class="leading-[2] italic"
+        >"Learning <strong>Web Development</strong> through <strong>Open Source</strong>"</span
+      >
     </Fragment>
   </Hero>
 
