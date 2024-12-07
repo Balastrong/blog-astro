@@ -12,7 +12,7 @@
   }
 
   .bg-light {
-    background-color: var(--aw-color-bg-page);
+    @apply bg-white;
   }
 
   .bg-dark {

@@ -49,5 +49,8 @@ module.exports = {
     {
       pattern: /^(bg|text|border)-(cyan|emerald|yellow|zinc)-(500|600)$/,
     },
+    {
+      pattern: /^(from|to)-(cyan|emerald|yellow|zinc)-(500|500\/30|500\/15)$/,
+    },
   ],
 };
