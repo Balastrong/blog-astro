@@ -24,11 +24,12 @@ const {
   noindex = false,
   nofollow = false,
 
-  ogTitle = title,
   ogType = 'website',
 
   dontUseTitleTemplate = false,
 } = Astro.props;
+
+const pageTitle = `${title}${dontUseTitleTemplate ? '' : ` | ${SITE.name}`}`;
 
 const image =
   typeof _image === 'string'
@@ -43,26 +44,26 @@ const image =
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <AstroSeo
-  title={title}
-  titleTemplate={dontUseTitleTemplate ? '%s' : `%s | ${SITE.name}`}
+  title={pageTitle}
+  titleTemplate={'%s'}
   description={description}
   canonical={String(canonical)}
   noindex={noindex}
   nofollow={nofollow}
   openGraph={{
     url: String(canonical),
-    title: ogTitle,
+    title: pageTitle,
     description: description,
     type: ogType,
     images: image
       ? [
           {
             url: image.toString(),
-            alt: ogTitle,
+            alt: pageTitle,
           },
         ]
       : undefined,
-    // site_name: 'SiteName',
+    site_name: pageTitle,
   }}
   twitter={{
     handle: '@balastrong',

@@ -37,7 +37,6 @@ export type MetaSEO = {
   noindex?: boolean;
   nofollow?: boolean;
 
-  ogTitle?: string;
   ogType?: string;
 };
 

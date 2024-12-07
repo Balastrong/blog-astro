@@ -52,8 +52,8 @@ importers:
         specifier: ^0.5.0
         version: 0.5.0(astro@4.5.5(@types/node@20.11.28)(lightningcss@1.24.1)(terser@5.29.2)(typescript@5.4.2))
       '@astrolib/seo':
-        specifier: 1.0.0-beta.5
-        version: 1.0.0-beta.5(astro@4.5.5(@types/node@20.11.28)(lightningcss@1.24.1)(terser@5.29.2)(typescript@5.4.2))
+        specifier: 1.0.0-beta.8
+        version: 1.0.0-beta.8(astro@4.5.5(@types/node@20.11.28)(lightningcss@1.24.1)(terser@5.29.2)(typescript@5.4.2))
       '@fontsource/inter':
         specifier: ^4.5.15
         version: 4.5.15
@@ -204,10 +204,10 @@ packages:
     peerDependencies:
       astro: ^1.2.1 || ^2.0.0 || ^3.0.0-beta.0 || ^3.0.0 || ^4.0.0
 
-  '@astrolib/seo@1.0.0-beta.5':
-    resolution: {integrity: sha512-poBnSB9TzkmOyf+PoMR642zVLSoVVZbUIKnYDHXHrKi/upkaegNiaBdVRsyqaQC93SIxxyagQrIbLRtnSJT4Xg==}
+  '@astrolib/seo@1.0.0-beta.8':
+    resolution: {integrity: sha512-SpNycspjcjnz6um4Vph0k+SAKgUib7/8qJRCaaahJD1UfLuXKK7E+bmKbnv8QPBTRPZkQW6zFVaZRl5VvnyDfg==}
     peerDependencies:
-      astro: ^1.2.1 || ^2.0.0 || ^3.0.0-beta.0 || ^3.0.0 || ^4.0.0
+      astro: ^1.2.1 || ^2.0.0 || ^3.0.0-beta.0 || ^3.0.0 || ^4.0.0 || ^5.0.0-beta.0 || ^5.0.0
 
   '@babel/code-frame@7.23.5':
     resolution: {integrity: sha512-CgH3s1a96LipHCmSUmYFPwY7MNx8C3avkq7i4Wl3cfa662ldtUe4VM1TPXX70pfmrlWTb6jLqTYrZyT2ZTJBgA==}
@@ -4137,7 +4137,7 @@ snapshots:
     dependencies:
       astro: 4.5.5(@types/node@20.11.28)(lightningcss@1.24.1)(terser@5.29.2)(typescript@5.4.2)
 
-  '@astrolib/seo@1.0.0-beta.5(astro@4.5.5(@types/node@20.11.28)(lightningcss@1.24.1)(terser@5.29.2)(typescript@5.4.2))':
+  '@astrolib/seo@1.0.0-beta.8(astro@4.5.5(@types/node@20.11.28)(lightningcss@1.24.1)(terser@5.29.2)(typescript@5.4.2))':
     dependencies:
       astro: 4.5.5(@types/node@20.11.28)(lightningcss@1.24.1)(terser@5.29.2)(typescript@5.4.2)
 
