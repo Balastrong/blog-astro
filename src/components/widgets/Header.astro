@@ -69,14 +69,14 @@ const {
             <li class={links?.length ? 'dropdown' : ''}>
               {links?.length ? (
                 <>
-                  <button class="font-medium hover:text-gray-900 dark:hover:text-white px-4 py-3 flex items-center transition duration-150 ease-in-out">
-                    {text} <Icon name="tabler:chevron-down" class="w-3.5 h-3.5 ml-0.5 hidden md:inline" />
+                  <button class="font-medium w-full justify-center hover:text-gray-900 dark:hover:text-white px-4 py-3 flex items-center transition duration-150 ease-in-out">
+                    {text} <Icon name="tabler:chevron-down" class="w-3.5 h-3.5 ml-0.5 md:inline" />
                   </button>
-                  <ul class="dropdown-menu md:backdrop-blur-md dark:md:bg-dark rounded md:absolute pl-4 md:pl-0 md:hidden font-medium md:bg-white/90 md:min-w-[200px] drop-shadow-xl">
+                  <ul class="dropdown-menu md:backdrop-blur-md dark:md:bg-dark rounded-lg md:absolute md:pl-0 md:hidden font-medium md:bg-white/90 md:min-w-[200px] drop-shadow-2xl md:shadow-lg bg-gray-50 dark:bg-gray-800 my-2 md:mt-2 md:z-50">
                     {links.map(({ text: text2, href: href2 }) => (
-                      <li>
+                      <li class="text-center">
                         <a
-                          class="first:rounded-t last:rounded-b md:hover:bg-gray-200 dark:hover:bg-gray-700 py-2 px-5 block whitespace-no-wrap"
+                          class="first:rounded-t last:rounded-b md:hover:bg-gray-200 dark:hover:bg-gray-700 py-2 px-5 block whitespace-no-wrap border-b border-gray-200 dark:border-gray-700 last:border-0"
                           href={href2}
                         >
                           {text2}
