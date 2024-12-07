@@ -127,6 +127,70 @@ export type GitHubRepository = {
   subscribers_count: number;
 };
 
+export type GitHubPullRequest = {
+  url: string;
+  id: number;
+  node_id: string;
+  html_url: string;
+  diff_url: string;
+  patch_url: string;
+  issue_url: string;
+  commits_url: string;
+  review_comments_url: string;
+  review_comment_url: string;
+  comments_url: string;
+  statuses_url: string;
+  number: number;
+  state: string;
+  locked: boolean;
+  title: string;
+  user: Owner;
+  body: string;
+  labels: Label[];
+  milestone: Milestone;
+  active_lock_reason: string;
+  created_at: string;
+  updated_at: string;
+  closed_at: string;
+  merged_at: string;
+  merge_commit_sha: string;
+  assignee: Owner;
+  assignees: Owner[];
+  requested_reviewers: Owner[];
+  // requested_teams: Team[];
+  // head: Branch;
+  // base: Branch;
+};
+
+export type Label = {
+  id: number;
+  node_id: string;
+  url: string;
+  name: string;
+  description: string;
+  color: string;
+  default: boolean;
+};
+
+export type Milestone = {
+  url: string;
+  html_url: string;
+  labels_url: string;
+  id: number;
+  node_id: string;
+  number: number;
+  state: string;
+  title: string;
+  description: string;
+  creator: Owner;
+  open_issues: number;
+  closed_issues: number;
+  created_at: string;
+  updated_at: string;
+  closed_at: string;
+  due_on: string;
+};
+
 export type Owner = {
   login: string;
   id: number;

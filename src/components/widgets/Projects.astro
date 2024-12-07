@@ -1,7 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { type GitHubRepo, type GitHubRepository } from '~/types';
 import { getRepoData } from '~/libs/github';
+import { type GitHubRepo } from '~/types';
 
 export type Props = {
   title?: string;
@@ -17,12 +17,12 @@ const {
   repositories = [],
 } = Astro.props;
 
-const promises = repositories?.map(async ({ owner, repo }) => (await getRepoData(owner, repo))?.json());
+const promises = repositories?.map(async ({ owner, repo }) => await getRepoData(owner, repo));
 
 const items = (await Promise.allSettled(promises))
   .filter((res) => res.status === 'fulfilled')
-  .map((res: any) => res.value as GitHubRepository)
-  .sort((a, b) => b.stargazers_count - a.stargazers_count);
+  .map((res) => res.value)
+  .sort((a, b) => b.repoData.stargazers_count - a.repoData.stargazers_count);
 ---
 
 <section class="relative">
@@ -53,25 +53,46 @@ const items = (await Promise.allSettled(promises))
       }
       <div class={`grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-12 dark:text-white items-stretch`}>
         {
-          items.map(({ name, owner: { login, avatar_url, type }, description, stargazers_count, html_url }) => (
-            <div class="relative flex flex-col p-6 bg-white dark:bg-slate-900 rounded-xl shadow-lg hover:shadow-md transition border border-transparent dark:border-slate-800">
-              <div class="flex items-start gap-2">
-                <img
-                  src={avatar_url}
-                  alt={login}
-                  class={`w-8 h-8 ${type === 'Organization' ? 'rounded-lg' : 'rounded-full'}`}
-                />
-                <a href={html_url} target="_blank" rel="noopener noreferrer">
-                  <span class="text-x">{login}</span> / <span class="text-xl font-bold">{name}</span>
-                </a>
-                <div class="flex gap-2 ml-auto items-center">
-                  {stargazers_count?.toLocaleString()}
-                  <Icon name="tabler:star" class="w-5 h-5" />
+          items.map(
+            ({
+              repoData: {
+                name,
+                owner: { login, avatar_url, type },
+                description,
+                stargazers_count,
+                html_url,
+              },
+              pullRequests,
+            }) => (
+              <div class="relative flex flex-col p-6 bg-white dark:bg-slate-900 rounded-xl shadow-lg hover:shadow-md transition border border-transparent dark:border-slate-800">
+                <div class="flex items-start gap-2">
+                  <img
+                    src={avatar_url}
+                    alt={login}
+                    class={`w-8 h-8 ${type === 'Organization' ? 'rounded-lg' : 'rounded-full'}`}
+                  />
+                  <a href={html_url} target="_blank" rel="noopener noreferrer">
+                    <span class="text-x">{login}</span> / <span class="text-xl font-bold">{name}</span>
+                  </a>
+                  <div class="flex gap-2 ml-auto items-center">
+                    {stargazers_count?.toLocaleString()}
+                    <Icon name="tabler:star" class="w-5 h-5" />
+                  </div>
                 </div>
+                {description && <p class="text-muted dark:text-gray-400 text-md mt-4" set:html={description} />}
+
+                {pullRequests.total_count > 0 ? (
+                  <a
+                    href={`${html_url}/pulls?q=is%3Apr+is%3Aclosed+author%3ABalastrong`}
+                    class="pt-4 mt-auto text-sm font-semibold text-primary dark:text-blue-200 hover:underline"
+                    target="_blank"
+                  >
+                    {pullRequests.total_count} Pull Requests
+                  </a>
+                ) : null}
               </div>
-              {description && <p class="text-muted dark:text-gray-400 text-md mt-4" set:html={description} />}
-            </div>
-          ))
+            )
+          )
         }
       </div>
     </div>

@@ -60,7 +60,7 @@ export const openSourceProjects: GitHubRepo[] = [
     repo: 'qwik-ui',
   },
   {
-    owner: 'BuilderIO',
+    owner: 'QwikDev',
     repo: 'qwik',
   },
   {
@@ -72,8 +72,8 @@ export const openSourceProjects: GitHubRepo[] = [
     repo: 'zod',
   },
   {
-    owner: 'Schrodinger-Hat',
-    repo: 'osday-2023',
+    owner: 'Schroedinger-Hat',
+    repo: 'osday',
   },
   {
     owner: 'oramasearch',
@@ -89,11 +89,19 @@ export const openSourceProjects: GitHubRepo[] = [
   },
   {
     owner: 'TanStack',
+    repo: 'table',
+  },
+  {
+    owner: 'TanStack',
     repo: 'form',
   },
   {
     owner: 'TanStack',
     repo: 'tanstack.com',
+  },
+  {
+    owner: 'spartan-ng',
+    repo: 'spartan',
   },
 ];
 
@@ -103,6 +111,7 @@ export const myProjects: GitHubRepo[] = [
   'trello-card-numbers-plus',
   'wrand',
   'blog-astro',
+  'kickstart',
 ].map((repo) => ({
   owner: 'Balastrong',
   repo,
