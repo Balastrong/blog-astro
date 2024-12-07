@@ -1,12 +1,14 @@
 ---
-import Layout from '~/layouts/PageLayout.astro';
-import { tanStackTutorials } from '~/data';
-import TutorialGrid from '~/components/widgets/TutorialGrid/TutorialGrid.astro';
 import TutorialCard from '~/components/widgets/TutorialGrid/TutorialCard.astro';
+import TutorialGrid from '~/components/widgets/TutorialGrid/TutorialGrid.astro';
+import { tanStackTutorials } from '~/data';
+import Layout from '~/layouts/PageLayout.astro';
+import tanstackBanner from 'src/assets/images/banner-tanstack.png';
 
 const meta = {
   title: 'TanStack Tutorial',
   description: 'A collection of TanStack Tutorials with practical examples on Start, Router, Form, Table and Query.',
+  image: tanstackBanner,
 };
 
 const tutorialsCount = tanStackTutorials.reduce((acc, tutorial) => acc + tutorial.chapters.length, 0);
