@@ -11,9 +11,9 @@ const { tutorial } = Astro.props;
 <div>
   <div class="flex flex-col gap-2 mb-4 text-center">
     <div id={tutorial.key} class="invisible h-0 -translate-y-[6rem]"></div>
-    <h3 class={`text-4xl font-bold text-${tutorial.mainColor}`}>
+    <h2 class={`text-4xl font-bold text-${tutorial.mainColor}`}>
       {tutorial.title}
-    </h3>
+    </h2>
     {
       tutorial.playlistUrl && (
         <a href={tutorial.playlistUrl} target={'_blank'} class="hover:opacity-85">
