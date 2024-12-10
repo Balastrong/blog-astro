@@ -1,0 +1,38 @@
+---
+import { tanStackTutorials } from '~/data';
+import { Picture } from 'astro:assets';
+import tanstack from 'src/assets/images/tanstack.png';
+
+const tutorialsCount = tanStackTutorials.reduce((acc, tutorial) => acc + tutorial.chapters.length, 0);
+
+export type Ptops = {
+  libraryName?: string;
+};
+
+const { libraryName = 'this' } = Astro.props;
+---
+
+<div
+  class="flex flex-row items-center gap-4 p-4 rounded-lg max-w-xl mx-auto my-4 bg-slate-100 dark:bg-slate-800 not-prose"
+>
+  <div class="w-1/4">
+    <a href="/tanstack" title="Learn more about TanStack" rel="noopener">
+      <Picture class="w-full h-auto rounded-md" src={tanstack} alt="TanStack Logo" width="100" height="100" />
+    </a>
+  </div>
+  <div class="w-3/4">
+    <strong class="text-lg">Learn More About TanStack</strong>
+    <p class="text-base">
+      Discover all <strong>{tutorialsCount} tutorials</strong> I've created on {libraryName} and other TanStack libraries
+      for web developers
+    </p>
+    <a
+      href="/tanstack"
+      class="inline-block mt-2 px-4 py-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-md transition-colors"
+      title="Learn more about TanStack!"
+      rel="noopener"
+    >
+      Browse Tutorials
+    </a>
+  </div>
+</div>

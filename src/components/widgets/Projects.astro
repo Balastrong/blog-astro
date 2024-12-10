@@ -81,7 +81,7 @@ const items = (await Promise.allSettled(promises))
                     <Icon name="tabler:star" class="w-5 h-5" />
                   </div>
                 </div>
-                {description && <p class="text-muted dark:text-gray-400 text-md mt-4" set:html={description} />}
+                {description && <p class="text-muted dark:text-gray-400 mt-4" set:html={description} />}
 
                 {pullRequests.total_count > 0 ? (
                   <a

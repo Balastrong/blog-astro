@@ -62,7 +62,7 @@ const {
       aria-label="Main navigation"
     >
       <ul
-        class="flex flex-col items-center pt-8 md:pt-0 md:flex-row md:self-center w-full md:w-auto text-2xl md:text-base lg:text-lg"
+        class="flex flex-col items-center pt-8 md:pt-0 md:flex-row md:self-center w-full md:w-auto text-2xl md:text-base lg:text-base"
       >
         {
           links.map(({ text, href, links: subLinks }) => (
@@ -74,7 +74,7 @@ const {
                   </button>
                   <ul class="dropdown-menu md:backdrop-blur-md rounded-lg md:absolute md:pl-0 md:hidden font-medium md:min-w-[200px] bg-white dark:bg-dark">
                     {subLinks.map(({ text: text2, href: href2 }) => (
-                      <li class="text-center text-lg md:text-base lg:text-lg">
+                      <li class="text-center text-lg md:text-base">
                         <a
                           class="first:rounded-t last:rounded-b py-2 px-5 hover:text-gray-900 dark:hover:text-white block whitespace-no-wrap border-b border-gray-200 dark:border-gray-700 last:border-0"
                           href={href2}
