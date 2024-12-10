@@ -4,12 +4,14 @@ import TutorialGrid from '~/components/widgets/TutorialGrid/TutorialGrid.astro';
 import { tanStackTutorials } from '~/data';
 import Layout from '~/layouts/PageLayout.astro';
 import tanstackBanner from 'src/assets/images/banner-tanstack.png';
+import type { MetaSEO } from '~/types';
 
-const meta = {
+const meta: MetaSEO = {
   title: 'TanStack Tutorial for Start, Router, Form, Table & more',
   description:
     'A free collection of step by step tutorials, with practical examples and code, on TanStack Start, Router, Form, Table and Query.',
   image: tanstackBanner,
+  author: 'Leonardo Montini',
 };
 
 const tutorialsCount = tanStackTutorials.reduce((acc, tutorial) => acc + tutorial.chapters.length, 0);

@@ -34,6 +34,7 @@ export type MetaSEO = {
   title?: string;
   description?: string;
   image?: string | ImageMetadata;
+  author?: string;
 
   canonical?: string | URL;
   noindex?: boolean;

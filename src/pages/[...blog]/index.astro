@@ -5,7 +5,7 @@ import ToBlogLink from '~/components/blog/ToBlogLink.astro';
 import { TopProgress } from '~/components/common/TopProgress';
 import { BLOG } from '~/config.mjs';
 import Layout from '~/layouts/PageLayout.astro';
-import { type Post } from '~/types';
+import { type MetaSEO, type Post } from '~/types';
 import { fetchPosts, findPostsInSeries, findSimilarPosts } from '~/utils/blog';
 import { findImage } from '~/utils/images';
 import { getCanonical, getPermalink } from '~/utils/permalinks';
@@ -33,13 +33,14 @@ const { post, similarPosts, postsInSeries } = Astro.props as {
 };
 const url = getCanonical(getPermalink(post.permalink, 'post'));
 
-const meta = {
+const meta: MetaSEO = {
   title: post.title,
   description: post.description,
   canonical: post.canonical || url,
   image: await findImage(post),
   noindex: BLOG?.post?.noindex,
   ogType: 'article',
+  author: post.author ?? 'Leonardo Montini',
 };
 ---
 

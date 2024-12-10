@@ -26,6 +26,8 @@ const {
 
   ogType = 'website',
 
+  author,
+
   dontUseTitleTemplate = false,
 } = Astro.props;
 
@@ -67,6 +69,9 @@ const image =
         ]
       : undefined,
     site_name: pageTitle,
+    article: {
+      authors: [author ?? 'Leonardo Montini'],
+    },
   }}
   twitter={{
     handle: '@balastrong',
