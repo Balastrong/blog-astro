@@ -142,7 +142,12 @@ export const tanStackTutorials: Tutorial[] = [
       },
       {
         title: 'Server Function Validators',
+        video: 'https://youtu.be/pARSOmKcQ-c',
         code: 'https://github.com/Balastrong/tanstack-start-demo/tree/02-server-function-validator',
+      },
+      {
+        title: 'Server Function Errors & Responses',
+        soon: true,
       },
     ],
   },
@@ -197,6 +202,10 @@ export const tanStackTutorials: Tutorial[] = [
         video: 'https://youtu.be/yTx7zYpq4ok',
         code: 'https://github.com/Balastrong/tanstack-router-demo/tree/08-route-masking',
       },
+      {
+        title: 'Custom Link Element',
+        soon: true,
+      },
     ],
   },
   {
@@ -237,6 +246,10 @@ export const tanStackTutorials: Tutorial[] = [
         title: 'Side Effects & Listeners',
         video: 'https://youtu.be/A-w2IG7DAso',
         code: 'https://github.com/Balastrong/tanstack-form-demo/tree/06-field-listeners',
+      },
+      {
+        title: 'Standard Schema Validators',
+        soon: true,
       },
     ],
   },

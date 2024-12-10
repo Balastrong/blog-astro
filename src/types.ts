@@ -295,4 +295,5 @@ export type TutorialChapter = {
   article?: string;
   video?: string;
   code?: string;
+  soon?: boolean;
 };
