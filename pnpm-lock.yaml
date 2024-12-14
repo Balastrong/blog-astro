@@ -20,6 +20,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.22
         version: 18.2.22
+      astro-seo-schema:
+        specifier: ^5.0.0
+        version: 5.0.0(astro@4.5.5(@types/node@20.11.28)(lightningcss@1.24.1)(terser@5.29.2)(typescript@5.4.2))(schema-dts@1.1.2(typescript@5.4.2))
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
@@ -29,6 +32,9 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
+      schema-dts:
+        specifier: ^1.1.2
+        version: 1.1.2(typescript@5.4.2)
     devDependencies:
       '@astrojs/mdx':
         specifier: ^2.2.0
@@ -1087,6 +1093,12 @@ packages:
 
   astro-icon@1.1.4:
     resolution: {integrity: sha512-sMLkQaevIQLv38WBzb/RDbsmxhg5+X+KcNmpTi9cE6MLurNWU1MPnlO87d9Vwg4HxTenKpDlYp81A3syXFW/gw==}
+
+  astro-seo-schema@5.0.0:
+    resolution: {integrity: sha512-rbP9BUxvqH4tdgG5VEYDcoAxUhVKv93TdHRQ5zbYUxee1TKAWsNcAG3nqavX83QTTGqU5anvikMcJZXWhGN9wg==}
+    peerDependencies:
+      astro: ^5.0.0
+      schema-dts: ^1.1.0
 
   astro@4.5.5:
     resolution: {integrity: sha512-gZ3jR06dLmY9/SMkKMr+3pRSrUjhuwjnXt+9abFJV3WGwhCnLZbSNsTBrLMsaFHpAS1ReJChcTWyKRCvs/jCIQ==}
@@ -3301,6 +3313,11 @@ packages:
   scheduler@0.23.0:
     resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
 
+  schema-dts@1.1.2:
+    resolution: {integrity: sha512-MpNwH0dZJHinVxk9bT8XUdjKTxMYrA5bLtrrGmFA6PTLwlOKnhi67XoRd6/ty+Djt6ZC0slR57qFhZDNMI6DhQ==}
+    peerDependencies:
+      typescript: '>=4.1.0'
+
   section-matter@1.0.0:
     resolution: {integrity: sha512-vfD3pmTzGpufjScBh50YHKzEu2lxBWhVEHsNGoEXmCmn2hKGfeNLYMzCJpe8cD7gqX7TJluOVpBkAequ6dgMmA==}
     engines: {node: '>=4'}
@@ -5078,6 +5095,11 @@ snapshots:
     transitivePeerDependencies:
       - debug
       - supports-color
+
+  astro-seo-schema@5.0.0(astro@4.5.5(@types/node@20.11.28)(lightningcss@1.24.1)(terser@5.29.2)(typescript@5.4.2))(schema-dts@1.1.2(typescript@5.4.2)):
+    dependencies:
+      astro: 4.5.5(@types/node@20.11.28)(lightningcss@1.24.1)(terser@5.29.2)(typescript@5.4.2)
+      schema-dts: 1.1.2(typescript@5.4.2)
 
   astro@4.5.5(@types/node@20.11.28)(lightningcss@1.24.1)(terser@5.29.2)(typescript@5.4.2):
     dependencies:
@@ -7997,6 +8019,10 @@ snapshots:
   scheduler@0.23.0:
     dependencies:
       loose-envify: 1.4.0
+
+  schema-dts@1.1.2(typescript@5.4.2):
+    dependencies:
+      typescript: 5.4.2
 
   section-matter@1.0.0:
     dependencies:

@@ -1,9 +1,11 @@
 ---
+import { Schema } from 'astro-seo-schema';
+import tanstackBanner from 'src/assets/images/banner-tanstack.png';
 import TutorialCard from '~/components/widgets/TutorialGrid/TutorialCard.astro';
 import TutorialGrid from '~/components/widgets/TutorialGrid/TutorialGrid.astro';
+import { SITE } from '~/config.mjs';
 import { tanStackTutorials } from '~/data';
 import Layout from '~/layouts/PageLayout.astro';
-import tanstackBanner from 'src/assets/images/banner-tanstack.png';
 import type { MetaSEO } from '~/types';
 
 const meta: MetaSEO = {
@@ -16,6 +18,46 @@ const meta: MetaSEO = {
 
 const tutorialsCount = tanStackTutorials.reduce((acc, tutorial) => acc + tutorial.chapters.length, 0);
 ---
+
+<Schema
+  item={{
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: meta.title,
+    headline: meta.title,
+    description: meta.description,
+    image: SITE.origin + tanstackBanner.src,
+    author: {
+      '@type': 'Person',
+      name: 'Leonardo Montini',
+    },
+    itemListElement: tanStackTutorials.map((tutorial, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'CreativeWork',
+        name: `${tutorial.title}: ${tutorial.chapters[0].title}`,
+        url: tutorial.chapters[0].video,
+        potentialAction: {
+          '@type': 'WatchAction',
+          target: tutorial.chapters[0].video,
+        },
+      },
+    })),
+    keywords: [
+      'TanStack',
+      'Start',
+      'Router',
+      'Form',
+      'Table',
+      'Query',
+      'Tutorial',
+      'Practical Examples',
+      'Code',
+      'Guide',
+    ],
+  }}
+/>
 
 <Layout {meta}>
   <section class="relative">
@@ -39,8 +81,10 @@ const tutorialsCount = tanStackTutorials.reduce((acc, tutorial) => acc + tutoria
         </p>
         <p>
           While the
-          <a href="https://tanstack.com/" target="_blank">official documentation</a> is the best starting point, this collection
-          offers <i>step by step tutorials</i> where we work together to build <strong>practical examples</strong>.
+          <a href="https://tanstack.com/" target="_blank" title="TanStack Official Documentation"
+            >official documentation</a
+          > is the best starting point, this collection offers <i>step by step tutorials</i> where we work together to build
+          <strong>practical examples</strong>.
         </p>
         <p>
           Each video includes a link to a repository containing the code, where
@@ -56,7 +100,7 @@ const tutorialsCount = tanStackTutorials.reduce((acc, tutorial) => acc + tutoria
         </div>
         {
           tanStackTutorials.map((tutorial) => (
-            <a href={`#${tutorial.key}`} class="w-full min-[500px]:w-fit">
+            <a href={`#${tutorial.key}`} class="w-full min-[500px]:w-fit" title={`Jump to ${tutorial.title}`}>
               <div
                 class:list={[
                   'text-white px-3 py-1 rounded-full font-semibold hover:bg-opacity-85 transition ease-in duration-200 text-center',

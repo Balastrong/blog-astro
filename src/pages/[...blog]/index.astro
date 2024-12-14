@@ -1,4 +1,5 @@
 ---
+import { Schema } from 'astro-seo-schema';
 import GridItemSmall from '~/components/blog/GridItemSmall.astro';
 import SinglePost from '~/components/blog/SinglePost.astro';
 import ToBlogLink from '~/components/blog/ToBlogLink.astro';
@@ -43,6 +44,29 @@ const meta: MetaSEO = {
   author: post.author ?? 'Leonardo Montini',
 };
 ---
+
+<Schema
+  item={{
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': meta.canonical?.toString(),
+    },
+    headline: meta.title,
+    description: meta.description,
+    datePublished: post.publishDate.toDateString(),
+    author: {
+      '@type': 'Person',
+      name: meta.author,
+    },
+    image: meta.image?.toString(),
+    potentialAction: {
+      '@type': 'ReadAction',
+      target: meta.canonical?.toString(),
+    },
+  }}
+/>
 
 <Layout {meta}>
   <TopProgress client:only />

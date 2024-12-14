@@ -16,7 +16,12 @@ const { tutorial } = Astro.props;
     </h2>
     {
       tutorial.playlistUrl && (
-        <a href={tutorial.playlistUrl} target={'_blank'} class="hover:opacity-85">
+        <a
+          href={tutorial.playlistUrl}
+          target={'_blank'}
+          class="hover:opacity-85"
+          title={`Watch the full playlist (${tutorial.chapters.length})`}
+        >
           Watch the full playlist ({tutorial.chapters.length}) »
         </a>
       )
