@@ -1,0 +1,43 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { NewsletterIssue } from '~/types';
+import { getTransitionName } from '~/utils/blog';
+import { getFormattedDate } from '~/utils/utils';
+
+export type Props = {
+  issue: NewsletterIssue;
+};
+
+const { issue } = Astro.props;
+---
+
+<section class="pt-8 sm:pt-12 mx-auto">
+  <article>
+    <header>
+      <div class="flex justify-between flex-col sm:flex-row max-w-3xl mx-auto mt-0 mb-2 px-4 sm:px-6 sm:items-center">
+        <p>
+          <Icon name="tabler:clock" class="w-4 h-4 inline-block -mt-0.5 dark:text-gray-400" />
+          <time datetime={String(issue.publishDate)}>{getFormattedDate(issue.publishDate)}</time>
+          {issue.readingTime && <> · {issue.readingTime} min read</>}
+        </p>
+      </div>
+      <h1
+        class="px-4 sm:px-6 max-w-3xl mx-auto text-4xl md:text-5xl font-bold leading-tighter tracking-tighter font-heading"
+        transition:name={getTransitionName(issue, 'title')}
+      >
+        {issue.title}
+      </h1>
+      <p
+        class="max-w-3xl mx-auto mt-4 mb-8 px-4 sm:px-6 text-xl md:text-2xl text-muted dark:text-slate-400 text-justify"
+        transition:name={getTransitionName(issue, 'description')}
+      >
+        {issue.description}
+      </p>
+    </header>
+    <div
+      class="mx-auto px-6 sm:px-6 max-w-3xl prose prose-lg lg:prose-xl dark:prose-invert dark:prose-headings:text-slate-300 prose-md prose-headings:font-heading prose-headings:leading-tighter prose-headings:tracking-tighter prose-headings:font-bold prose-a:text-primary dark:prose-a:text-blue-400 prose-img:rounded-md prose-img:shadow-lg mt-8"
+    >
+      <issue.Content />
+    </div>
+  </article>
+</section>

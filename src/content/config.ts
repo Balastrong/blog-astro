@@ -18,6 +18,16 @@ const post = defineCollection({
   }),
 });
 
+const newsletter = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    publishDate: z.date().or(z.string()).optional(),
+    draft: z.boolean().optional(),
+  }),
+});
+
 export const collections = {
-  post: post,
+  post,
+  newsletter,
 };

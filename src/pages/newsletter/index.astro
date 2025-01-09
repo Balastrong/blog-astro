@@ -1,0 +1,50 @@
+---
+import newsletterBanner from 'src/assets/images/banner-newsletter.png';
+import NewsletterForm from '~/components/widgets/NewsletterForm.astro';
+import Layout from '~/layouts/PageLayout.astro';
+import { fetchNewsletterIssues } from '~/utils/newsletter';
+import { getPermalink } from '~/utils/permalinks';
+import { getFormattedDate } from '~/utils/utils';
+
+const issues = await fetchNewsletterIssues();
+
+const meta = {
+  title: 'Newsletter',
+  description: "Subscribe for unfiltered thoughts, what's on my mind, and what I'm working on.",
+  image: newsletterBanner,
+};
+---
+
+<Layout {meta}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 mb-8">
+    <div class="pt-8 lg:pt-12">
+      <div class="md:mx-auto text-center max-w-3xl">
+        <h1 class="text-5xl md:text-6xl font-bold leading-tighter tracking-tighter mb-4 font-heading">{meta.title}</h1>
+        <p class="max-w-3xl mx-auto sm:text-center text-xl text-muted dark:text-slate-400">
+          {meta.description}
+        </p>
+      </div>
+    </div>
+    <NewsletterForm />
+    <div class="text-center">
+      <h3 class="text-2xl font-bold leading-tight sm:text-3xl font-heading">Archive</h3>
+      <ul>
+        {
+          issues.map((issue) => (
+            <li class="mt-2">
+              <span>
+                <a href={getPermalink(issue.id.toString(), 'newsletter')} class="text-xl font-bold dark:text-blue-400">
+                  (#{issue.id}) {issue.title}
+                </a>
+                <span class="italic">
+                  <time datetime={String(issue.publishDate)}>{getFormattedDate(issue.publishDate)}</time>
+                </span>
+              </span>
+              <p class="text-muted dark:text-slate-400">{issue.description}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</Layout>

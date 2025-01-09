@@ -30,6 +30,18 @@ export type Post = {
   readingTime?: number;
 };
 
+export type NewsletterIssue = {
+  id: number;
+  title: string;
+  description?: string;
+  publishDate: Date;
+  draft?: boolean;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Content: any;
+  readingTime?: number;
+};
+
 export type MetaSEO = {
   title?: string;
   description?: string;

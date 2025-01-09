@@ -1,0 +1,57 @@
+---
+import { Icon } from 'astro-icon/components';
+import Author from '~/components/blog/Author.astro';
+import SocialShare from '~/components/common/SocialShare.astro';
+import { TopProgress } from '~/components/common/TopProgress';
+import NewsletterFooter from '~/components/newsletter/Footer.astro';
+import SingleNewsletterIssue from '~/components/newsletter/SingleNewsletterIssue.astro';
+import Layout from '~/layouts/PageLayout.astro';
+import { type MetaSEO } from '~/types';
+import { fetchNewsletterIssues } from '~/utils/newsletter';
+import { getCanonical, getPermalink, NEWSLETTER_BASE } from '~/utils/permalinks';
+
+export async function getStaticPaths() {
+  const issues = await fetchNewsletterIssues();
+
+  return issues.map((issue) => {
+    return {
+      params: {
+        page: issue.id,
+      },
+      props: {
+        issue,
+      },
+    };
+  });
+}
+
+const { issue } = Astro.props;
+const url = getCanonical(getPermalink(issue.id.toString(), 'newsletter'));
+
+const meta: MetaSEO = {
+  title: issue.title,
+  description: issue.description,
+  // canonical: url,
+  ogType: 'article',
+  author: 'Leonardo Montini',
+};
+---
+
+<Layout {meta}>
+  <TopProgress client:only />
+  <SingleNewsletterIssue issue={issue} />
+  <div class="mx-auto px-6 sm:px-6 max-w-3xl mt-8 flex justify-between flex-col sm:flex-row">
+    <SocialShare url={url} text={issue.title} class="mt-5 sm:mt-1 align-middle text-gray-500 dark:text-slate-600" />
+  </div>
+  <div class="mx-auto px-6 sm:px-6 max-w-3xl mt-4">
+    <NewsletterFooter issueId={issue.id} />
+  </div>
+  <div class="mx-auto px-6 sm:px-6 max-w-3xl mt-4">
+    <Author />
+  </div>
+  <div class="mx-auto px-6 sm:px-6 max-w-3xl pt-8 pb-12 md:pb-20">
+    <a class="btn btn-ghost px-3 md:px-3" href={getPermalink(NEWSLETTER_BASE)}>
+      <Icon name="tabler:chevron-left" class="w-5 h-5 mr-1 -ml-1.5" /> Back to Newsletter Archive</a
+    >
+  </div>
+</Layout>

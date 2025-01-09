@@ -54,6 +54,12 @@ const CONFIG = {
       noindex: true,
       disabled: false,
     },
+
+    newsletter: {
+      pathname: 'newsletter', // Newsletter main path /newsletter
+      noindex: false,
+      disabled: false,
+    },
   },
 };
 
