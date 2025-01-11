@@ -1,0 +1,11 @@
+---
+import { Icon } from 'astro-icon/components';
+import { getPermalink, NEWSLETTER_BASE } from '~/utils/permalinks';
+---
+
+<div class="pt-8 pb-12 md:pb-20">
+  <a class="btn btn-ghost px-3 md:px-3" href={getPermalink(NEWSLETTER_BASE)}>
+    <Icon name="tabler:chevron-left" class="w-5 h-5 mr-1 -ml-1.5" />
+    Back to Newsletter Archive
+  </a>
+</div>

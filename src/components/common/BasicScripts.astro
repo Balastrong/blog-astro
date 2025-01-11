@@ -63,6 +63,9 @@ import { SITE } from '~/config.mjs';
         case 'twitter':
           href = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
           break;
+        case 'bluesky':
+          href = `https://bsky.app/intent/compose?&text=${text + ' ' + url}`;
+          break;
         case 'linkedin':
           href = `https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${text}`;
           break;
