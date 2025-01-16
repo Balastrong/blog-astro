@@ -1,0 +1,84 @@
+---
+title: 'Doing AI demos is... quite an experience 🤖'
+description: "Feel the pressure when sharing your screen and doing typos? That's a whole another level"
+publishDate: '2025-01-16'
+---
+
+import Image from '~/components/widgets/Image.astro';
+import YouTube from '~/components/widgets/YouTube.astro';
+
+Hey everyone, you subscribed to my newsletter don't you remember? Here's the first full issue, enjoy!
+
+import intro from './_img/1intro.png';
+
+<Image src={intro} alt="Talking about AI" class="mx-auto" />
+
+A few months ago I did a live session using Copilot in front of 150 people and I was reeeally nervous for one reason in particular: even though I practiced a lot my routine and I was showcasing a tool I use on a daily basis, when playing with AI you know it's just... not exactly... predictable.
+
+On that session I had about 10 minutes in which I wanted to show a long list of features and some were strictly linked to the previous, meaning AI had to generate exactly what I needed to explain the next step on my list. I had backup plans but you want your main plan to succeed :D
+
+Fast forward, everything went fine and I'm happy, but next week I'll have a similar session talking about Copilot with a live demo. This time it's gonna be different: I've got twice the time and I want to approach it in a more relaxed and casual way.
+
+The plan is still to showcase a lot of features but I want to focus more on the developer's side, giving more space in explaining how I'm using them and my personal experience and thoughts.
+
+I believe with this format (I couldn't do the last time due to time constraints) I should be able to give even more value to the audience as I'm not just talking about the tool and its features, but it's gonna be about the humans using the tool to achieve their results.
+
+I'll link the [eventbrite page](https://www.eventbrite.it/e/biglietti-ai-per-systems-engineer-e-developer-verso-un-futuro-co-creato-1119103291069?aff=leo) here, it's gonna be in person here in Italy so probably most of you won't be able to attend anyway 😅
+
+Wish me luck!
+
+---
+
+### Open Source corner
+
+We're working on a huuuuge PR on TanStack Form. The current state is that validators can return a string, I had the idea of expanding it to return an array of strings so you can set multiple errors but Corbin said "why don't we let return anything?" and... we went that way!
+
+The cool thing is that internally we had to throw a thousand any here and there but with some magical typescript types it's gonna be all magically inferred on the user's side.
+
+You define a validator that returns an object with some fields? Then your form.errors array will be typed that way, magically.
+
+I'll make a video on that when we merge the PR because it's really cool.
+
+---
+
+### Side projets
+
+Before continuing with the TanStack Start tutorial I wanted to build a project on my own and I'm usually blocked by a daunting question: what domain should I pick? No no, not the website domain (which would also be another major blocker if I want to make it a product), I mean what the project should be about.
+
+I feel so silly when I'm blocked for this reason when on side projects it doesn't really matter, all I have to do is just... do stuff.
+
+But hey, after postponing it multiple times I think I decided, it will be a list of conferences with customizable filters (to play with query params) and I'll make it somehow interactive with forms (submit a conf) and auth to let users write comments or bookmark stuff and... well ok enough ideas, it's time to write some code!
+
+Still super early stages but will be on: https://github.com/Balastrong/confhub
+
+---
+
+### Channel highlights
+
+<YouTube id="_JDf5_wVujo" />
+
+This week's video has been on my backlog for quite some time and it's a bit frustrating for me.
+
+Not because of the topic, but it's the fact that it's not a video that needed huge preparation, nevertheless it remained there because I wanted to prepare it. I should stop doing that.
+
+This year as I mentioned I want to learn how to be more natural, just press record and deliver the video. Maybe with a few edits but I want it to be less scripted and structured, more natural.
+I want it to be a conversation with you, not a lesson. I hope I'll get there and I know the only way is... practice!
+
+---
+
+### Cool picks
+
+- [5 Years of Building React Table](https://youtu.be/O4IWJcafX8c): when talking on Discord about the Form update, Kevin linked this talk for the last part about Typescript "type bags". I think the entire talk is 100% worth watching.
+
+---
+
+### Thanks for reading!
+
+I was talking with a friend and he was wondering why this newsletter isn't on substack where it could potentially reach a wider audience. Uhmm... that's a good question!
+
+The idea is that instead of constantly spamming around "hey read my newsletter!" I would like this to somehow grow organically, where interested people sign up.
+
+I still know nothing about newsletters and the available tools, I did a little research a couple of weeks ago and this service I'm using seems like a good one. If you have some experience even on what I should look for to take a more informed decision, please let me know!
+
+Thank you!<br />
+_Leonardo_
