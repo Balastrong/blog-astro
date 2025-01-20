@@ -204,7 +204,8 @@ export const tanStackTutorials: Tutorial[] = [
       },
       {
         title: 'Custom Link Element',
-        soon: true,
+        video: 'https://youtu.be/-kmf3ZYlduU',
+        code: 'https://github.com/Balastrong/tanstack-router-demo/tree/09-custom-link',
       },
     ],
   },
