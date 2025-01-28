@@ -149,6 +149,10 @@ export const tanStackTutorials: Tutorial[] = [
         title: 'Server Function Errors & Responses',
         soon: true,
       },
+      {
+        title: 'Integrating Convex (backend) & Clerk (auth)',
+        video: 'https://youtu.be/RXDYqoO7V6w',
+      },
     ],
   },
   {
