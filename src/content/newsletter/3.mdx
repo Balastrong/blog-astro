@@ -1,0 +1,69 @@
+---
+title: 'Should I move into a devrel position? 🤔'
+description: 'Sometimes changes are unexpected'
+publishDate: '2025-01-31'
+---
+
+import Image from '~/components/widgets/Image.astro';
+import YouTube from '~/components/widgets/YouTube.astro';
+
+Hey there, fresh news this week!
+
+import intro from './_img/3intro.png';
+
+<Image src={intro} alt="Leonardo is now a DevRel" class="mx-auto" />
+
+I'm joking, that's a fake news... or is it?
+
+It's no surprise that I've got in the back of my mind the idea of transitioning into a devrel role but Claranet, the company I work for, doesn't have such a position. Until now!
+
+We're internally moving towards that direction and we're preparing technical content to share outside, I offered myself to deliver our first webinar. It's not really a topic I'm super strong on, I'll be talking about APIs and security, but I'm backed by one of our backend engineers who helped writing the script and reviewed my slides.
+
+I'm really excited as I've got the chance of using some of my time at work to officially work on creating and presenting content, that's so cool! I'm not (yet) officially switching into the new role but at least having some protected time during the week is perfect to see if it's something I like doing or not.
+
+If you want to join this first experiment it will be next Thursday, February 6th at 12:00 CET and you can [sign up here (click)](https://academy.claranet.it/pages/software-engineering-secure-api?utm_source=brevo).
+
+---
+
+### Open Source corner
+
+While waiting for the huuuge validation PR to be merged on TanStack Form there are a couple that might be interesting, specifically this one about [onSubmit meta](https://github.com/TanStack/form/pull/1131). It's probably an edge case but I've also seen it myself in a project, where you basically have two submit buttons and you want your form to react differently, be it remaining on the page or navigating away depending on the submit button that was clicked.
+
+As of today you can achieve it with a useRef to store the clicked button (and avoid a rerender!) but that's not ideal, the PR should cover this case.
+
+---
+
+### Side projets
+
+Finally! After last week doing basically nothing, this time I spent a couple of evenings on [ConfHub](https://github.com/Balastrong/confhub), basically the version 2.0 of my TanStack Start side project.
+
+I've got BIG plans for this one. I currently integrated Supabase for both database and authentication and works really smooth. I can already use it for a few videos about authentication and server functions. The next step will be implementing middlewares to make sure some APIs (aka server functions) can only be used by authenticated users.
+
+I'm having a lot of fun learning TanStack Start and I really hope it get the popularity it deserves.
+
+---
+
+### Channel highlights
+
+<YouTube id="RXDYqoO7V6w" />
+
+As mentioned I'm rolling supabase on a project because... I already tried Convex + Clerk and it was too damn powerful! With just a few lines I got a real time chat integrated with login through GitHub and Google.
+
+This should also open up for a series of videos showing how to get super quick implementing a complete app using services that integrate well with Start. I know if you're reading this paragraph you're already subscribe and that's a really good choice!
+
+---
+
+### Cool picks
+
+I've got a really cool pick about TanStack Start but I didn't want to make this newsletter monothematic so I'll leave it for next week.
+
+- [21st.dev](https://21st.dev/): A huuuuge list of components, you can take inspiration... or directly grab the code!
+
+---
+
+### Thanks for reading!
+
+One more newsletter is over, see you next week :D
+
+Thank you!<br />
+_Leonardo_
