@@ -152,6 +152,12 @@ export const tanStackTutorials: Tutorial[] = [
       {
         title: 'Integrating Convex (backend) & Clerk (auth)',
         video: 'https://youtu.be/RXDYqoO7V6w',
+        code: 'https://github.com/Balastrong/kickstart',
+      },
+      {
+        title: 'Authentication with Supabase',
+        video: 'https://youtu.be/6c8kuvBolQg',
+        code: 'https://github.com/Balastrong/confhub',
       },
     ],
   },
