@@ -159,6 +159,10 @@ export const tanStackTutorials: Tutorial[] = [
         video: 'https://youtu.be/6c8kuvBolQg',
         code: 'https://github.com/Balastrong/confhub',
       },
+      {
+        title: 'Themes & Dark Mode',
+        soon: true,
+      },
     ],
   },
   {
@@ -260,6 +264,10 @@ export const tanStackTutorials: Tutorial[] = [
       },
       {
         title: 'Standard Schema Validators',
+        video: 'https://youtu.be/_JDf5_wVujo',
+      },
+      {
+        title: 'Custom Validators',
         soon: true,
       },
     ],
@@ -278,6 +286,10 @@ export const tanStackTutorials: Tutorial[] = [
       {
         title: 'How TanStack releases multiple times a day',
         video: 'https://youtu.be/ILa_5QVJocA',
+      },
+      {
+        title: 'TanStack Store',
+        soon: true,
       },
     ],
   },
