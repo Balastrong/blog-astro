@@ -310,3 +310,14 @@ export type TutorialChapter = {
   code?: string;
   soon?: boolean;
 };
+
+export type SpeakingSession = {
+  title: string;
+  event: string;
+  date: string;
+  type: 'session' | 'interview';
+  mode: 'in-person' | 'remote' | 'hybrid';
+  language: '🇮🇹' | '🇬🇧';
+  eventUrl?: string;
+  recording?: string;
+};

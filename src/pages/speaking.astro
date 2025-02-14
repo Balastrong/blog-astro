@@ -1,0 +1,93 @@
+---
+import { Icon } from 'astro-icon/components';
+import { speakingSessions } from '~/data';
+import Layout from '~/layouts/PageLayout.astro';
+import type { MetaSEO } from '~/types';
+
+const pageDescription = 'You may have seen me talking about things I like on some occasions';
+
+const meta: MetaSEO = {
+  title: 'Public Speaking',
+  description: pageDescription,
+  //image: tanstackBanner,
+  author: 'Leonardo Montini',
+};
+---
+
+<Layout {meta}>
+  <section class="relative">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 mb-12 flex flex-col gap-4">
+      <div class="pt-8 sm:pt-6 lg:pt-12">
+        <div class="mb-8 md:mx-auto text-center max-w-3xl">
+          <p class="text-base text-primary dark:text-blue-200 font-semibold tracking-wide uppercase">Archive</p>
+          <h1 class="text-5xl md:text-6xl font-bold leading-tighter tracking-tighter mb-4 font-heading">
+            Public Speaking
+          </h1>
+          <p class="max-w-3xl mx-auto sm:text-center text-xl text-muted dark:text-slate-400">
+            {pageDescription}
+          </p>
+        </div>
+      </div>
+      <div class="rounded-lg overflow-x-auto">
+        <table class="w-full text-sm text-left">
+          <thead class="bg-blue-50 dark:bg-slate-700">
+            <tr>
+              <th class="px-3 sm:px-6 py-3 rounded-tl-lg">Date</th>
+              <th class="px-3 sm:px-6 py-3">Title</th>
+              <th class="px-3 sm:px-6 py-3">Event</th>
+              <th class="hidden md:table-cell px-3 sm:px-6 py-3">Mode</th>
+              <th class="hidden md:table-cell px-3 sm:px-6 py-3">Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              speakingSessions
+                .toSorted((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+                .map((session, index) => (
+                  <tr
+                    class={`border-b dark:border-gray-700 ${
+                      index % 2 === 0 ? 'bg-white dark:bg-gray-800' : 'bg-gray-50 dark:bg-gray-700'
+                    }`}
+                  >
+                    <td class="px-3 sm:px-6 py-4 font-medium md:whitespace-nowrap">
+                      {new Date(session.date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                      })}
+                    </td>
+                    <td class="px-3 sm:px-6 py-4">
+                      {session.language}
+                      {session.recording ? (
+                        <a href={session.recording} target="_blank" class="text-primary dark:text-blue-400">
+                          {session.title} <Icon name="tabler:external-link" class="inline w-4 h-4" />
+                        </a>
+                      ) : (
+                        session.title
+                      )}
+                    </td>
+                    <td class="px-3 sm:px-6 py-4">
+                      {session.eventUrl ? (
+                        <a href={session.eventUrl} target="_blank" class="text-primary dark:text-blue-400">
+                          {session.event} <Icon name="tabler:external-link" class="inline w-4 h-4" />
+                        </a>
+                      ) : (
+                        session.event
+                      )}
+                    </td>
+                    <td class="hidden md:table-cell px-3 sm:px-6 py-4 capitalize">{session.type}</td>
+                    <td class="hidden md:table-cell px-3 sm:px-6 py-4 text-center">
+                      <Icon
+                        name={session.mode === 'in-person' ? 'tabler:users' : 'tabler:device-laptop'}
+                        class="inline w-4 h-4"
+                      />
+                    </td>
+                  </tr>
+                ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</Layout>

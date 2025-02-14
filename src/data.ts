@@ -1,5 +1,5 @@
-import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
-import { type GitHubRepo, type Tutorial } from './types';
+import { type GitHubRepo, type SpeakingSession, type Tutorial } from './types';
+import { getAsset, getBlogPermalink, getPermalink } from './utils/permalinks';
 
 export const youTubeChannelUrl = 'https://www.youtube.com/@DevLeonardo';
 export const youTubeChannelUrlSubscribe = youTubeChannelUrl + '?sub_confirmation=1';
@@ -33,6 +33,10 @@ export const headerData = {
     {
       text: 'TanStack',
       href: getPermalink('/tanstack'),
+    },
+    {
+      text: 'Speaking',
+      href: getPermalink('/speaking'),
     },
   ],
   actions: [{ type: 'button', text: 'YouTube', href: youTubeChannelUrlSubscribe }],
@@ -292,5 +296,105 @@ export const tanStackTutorials: Tutorial[] = [
         soon: true,
       },
     ],
+  },
+];
+
+export const speakingSessions: SpeakingSession[] = [
+  {
+    date: '2023-07-04',
+    title: 'Open Source: non è un paese per scrocconi',
+    event: 'DevMy - YouTube',
+    type: 'interview',
+    mode: 'remote',
+    language: '🇮🇹',
+    eventUrl: 'https://www.youtube.com/@Devmy',
+    recording: 'https://www.youtube.com/watch?v=LyR9nvjXNzI',
+  },
+  {
+    date: '2023-10-23',
+    title: "L'importante è partecipare",
+    event: 'Continous Delivery Podcast',
+    type: 'interview',
+    mode: 'remote',
+    language: '🇮🇹',
+    eventUrl: 'https://www.youtube.com/@ContinuousDeliverySpark',
+    recording: 'https://www.youtube.com/watch?v=4s-rDXEjArw',
+  },
+  {
+    date: '2024-02-12',
+    title: "Come si diventa una GitHub Star (e crescere con l'Open Source)",
+    event: 'Giuppi - YouTube',
+    type: 'interview',
+    mode: 'remote',
+    language: '🇮🇹',
+    eventUrl: 'https://www.youtube.com/@giuppidev',
+    recording: 'https://www.youtube.com/watch?v=UHf5WJzgSwA',
+  },
+  {
+    date: '2024-09-24',
+    title: 'Il futuro di React è questo? TANSTACK 🔥',
+    event: 'Giuppi - YouTube',
+    type: 'interview',
+    mode: 'remote',
+    language: '🇮🇹',
+    eventUrl: 'https://www.youtube.com/@giuppidev',
+    recording: 'https://www.youtube.com/watch?v=WBwodqVUmWs',
+  },
+  {
+    date: '2024-10-14',
+    title: 'Provo un nuovo framework per React 🚀',
+    event: 'Giuppi - YouTube',
+    type: 'interview',
+    mode: 'remote',
+    language: '🇮🇹',
+    eventUrl: 'https://www.youtube.com/@giuppidev',
+    recording: 'https://www.youtube.com/watch?v=SU-ncWr4UTQ',
+  },
+  {
+    date: '2024-10-30',
+    title: 'GitHub Best Practices',
+    event: 'Salottino Tech - Manuel Zavatta YouTube',
+    type: 'interview',
+    mode: 'remote',
+    language: '🇮🇹',
+    eventUrl: 'https://www.youtube.com/@Zavy86',
+    recording: 'https://www.youtube.com/watch?v=n7f22yU3GFQ',
+  },
+  {
+    date: '2024-08-06',
+    title: 'TanStack Router: Navigare tra le pagine di una Single Page Application',
+    event: 'Quattro Dev e un Meetup',
+    mode: 'in-person',
+    language: '🇮🇹',
+    type: 'session',
+  },
+  {
+    date: '2024-10-23',
+    title: 'How GitHub Copilot is assisting my flight, until it takes full control',
+    event: 'Codemotion Milan 2024',
+    type: 'session',
+    mode: 'in-person',
+    language: '🇬🇧',
+    eventUrl: 'https://conferences.codemotion.com/milan2024/it/home/',
+  },
+  {
+    date: '2025-01-22',
+    title: 'Se GitHub l’ha chiamato Copilot, un motivo ci sarà',
+    event: 'AI per Systems Engineer e Developer, verso un futuro co-creato',
+    type: 'session',
+    mode: 'in-person',
+    language: '🇮🇹',
+    eventUrl:
+      'https://www.eventbrite.it/e/biglietti-ai-per-systems-engineer-e-developer-verso-un-futuro-co-creato-1119103291069',
+    recording: 'https://youtu.be/T8xYVyhvO_Q',
+  },
+  {
+    date: '2025-02-06',
+    title: 'Securing APIs: Techniques and Best Practices for Security',
+    event: 'Claranet - Software Engineering Days',
+    type: 'session',
+    mode: 'remote',
+    language: '🇬🇧',
+    eventUrl: 'https://academy.claranet.it/pages/software-engineering-secure-api',
   },
 ];
