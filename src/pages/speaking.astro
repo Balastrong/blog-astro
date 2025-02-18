@@ -3,13 +3,14 @@ import { Icon } from 'astro-icon/components';
 import { speakingSessions } from '~/data';
 import Layout from '~/layouts/PageLayout.astro';
 import type { MetaSEO } from '~/types';
+import speakingBanner from 'src/assets/images/banner-speaking.png';
 
 const pageDescription = 'You may have seen me talking about things I like on some occasions';
 
 const meta: MetaSEO = {
   title: 'Public Speaking',
   description: pageDescription,
-  //image: tanstackBanner,
+  image: speakingBanner,
   author: 'Leonardo Montini',
 };
 ---
