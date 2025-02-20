@@ -1,0 +1,75 @@
+---
+title: "No worries, I'm still here 🙋‍♂️"
+description: 'I missed a week so 2x content today!'
+publishDate: '2025-02-20'
+---
+
+import Image from '~/components/widgets/Image.astro';
+import YouTube from '~/components/widgets/YouTube.astro';
+
+Hey there, how is it going? Have you missed me?
+
+import intro from './_img/5intro.png';
+
+<Image src={intro} alt="Two weeks later" class="mx-auto" />
+
+Here's a problem: I didn't find the time to write the newsletter last week and I tried to justify myself by saying that I didn't have enough content anyway.
+
+Well, turns out I was wrong 😂
+
+I released 3 videos in the meantime and I've got so many stuff to talk about that something will inevitably jump to next week.
+
+I also thought about moving to by-weekly or monthly but then it would take too much time to collect all the topics, filter the most relevant and summarize them so yeah, weekly remains the best option!
+
+This exercise of writing the newsletter should also be a moment where I pause and think about what happened during the week. It's not an extra thing to do, it's a peaceful time I want to cherish.
+
+Let's keep the momentum and enjoy today's issue 🚀
+
+---
+
+### Open Source corner
+
+A few days ago it became official, the React team is [Sunsetting Create React App](https://react.dev/blog/2025/02/14/sunsetting-create-react-app) after announcing it in their blog.
+
+This handy command, often just called cra, has been the entry point for every new React app in the past years but over time more modern solutions have been released with vite based applications being the de-facto new standard.
+
+From now on, vite is officially the recommended build tool and if you want to get the most out of it, the TanStack team released a drop-in replacement for cra called cta, or `create-tsrouter-app`
+
+You can start a React app with Vite and TanStack Router already configured with `npx create-tsrouter-app@latest` and with the `--template file-router` you'll also have the best from the file based routing and typescript.
+
+If you want to learn more I obviously [covered the news in a youtube video](https://youtu.be/K2m5awz3cAk).
+
+---
+
+### Side Projects
+
+With TanStack Start being my core topic in the last (and next!) web development videos I've been continuing to play around with [ConfHub](https://github.com/Balastrong/confhub) and this time I implemented the full authentication flow with Supabase, from sign up to handling the user session and some custom data.
+
+Yep, there's also [a video for that](https://youtu.be/6c8kuvBolQg)! Make sure to also not miss the part where I showcase two different approaches in keeping the user session alive. The first relies more on the cache and fires just one call to validate the user while the other spams the database way more often to make sure the user is constantly authorized to do what they're doing. I'd like to find a solution in between, happy to hear your feedback!
+
+---
+
+### Channel highlights
+
+<YouTube id="bq4D_A7UPY8" />
+
+Fun fact on today's highlight: a friend sent me a message asking "hey have you tried the new copilot feature? What do you think?" and I started answering in chat, but then... hold on a moment, wouldn't be easier to just show that in a video?
+
+And there it is, I feel sorry that my friend had to wait two days for my answer but now it's also available for everyone :D
+
+---
+
+### Cool picks
+
+- [close-tabs](https://marketplace.visualstudio.com/items?itemName=Balastrong.close-tabs): did you know I released a vscode extension a few years ago? It's not that popular as it only adds a couple handy buttons in the UI but I received a nice PR this week and there's now a new feature!
+
+Wait this shouldn't be just a cool pick in the newsletter, I will definitely dedicate it a full paragraph soon!
+
+---
+
+### Thanks for reading!
+
+Get ready as next week is gonna be another celebration week and yes, I'll make sure to send the newsletter :D
+
+Thank you!<br />
+_Leonardo_
