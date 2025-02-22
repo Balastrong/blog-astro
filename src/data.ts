@@ -293,6 +293,10 @@ export const tanStackTutorials: Tutorial[] = [
         video: 'https://youtu.be/ILa_5QVJocA',
       },
       {
+        title: 'A new tool to Create React Apps with TanStack',
+        video: 'https://youtu.be/K2m5awz3cAk',
+      },
+      {
         title: 'TanStack Store',
         soon: true,
       },

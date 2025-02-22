@@ -15,6 +15,8 @@ import { getBlogPermalink, NEWSLETTER_BASE } from '~/utils/permalinks';
 
 const meta = {
   title: 'Leonardo Montini',
+  description:
+    'π-shaped Frontend Developer, Open Source maintainer and educator. Awarded GitHub Star ⭐️ since 2023 and Microsoft MVP 🔷 since 2024.',
   dontUseTitleTemplate: true,
 };
 
@@ -34,8 +36,7 @@ const { shortVideos, longVideos } = await getVideos();
     jobTitle: 'Frontend Developer',
     sameAs: [blueskyUrl, youTubeChannelUrl, linkedinUrl, twitterUrl],
     knowsAbout: ['Web Development', 'TanStack', 'Open Source', 'JavaScript', 'React', 'TypeScript', 'GitHub'],
-    description:
-      'π-shaped Frontend Developer, Open Source maintainer and educator. Awarded GitHub Star ⭐️ since 2023 and Microsoft MVP 🔷 since 2024.',
+    description: meta.description,
     potentialAction: [
       {
         '@type': 'SubscribeAction',
