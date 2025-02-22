@@ -113,9 +113,10 @@ export const myProjects: GitHubRepo[] = [
   'chess-stats-action',
   'close-tabs',
   'trello-card-numbers-plus',
-  'wrand',
+  'shadcn-autocomplete-demo',
   'blog-astro',
-  'kickstart',
+  'confhub',
+  'awesome-tanstack-start',
 ].map((repo) => ({
   owner: 'Balastrong',
   repo,
