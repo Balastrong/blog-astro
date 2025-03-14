@@ -304,6 +304,7 @@ export const tanStackTutorials: Tutorial[] = [
   },
 ];
 
+// TODO: Might want to replace mode with location as "online" | string
 export const speakingSessions: SpeakingSession[] = [
   {
     date: '2023-07-04',
@@ -401,5 +402,41 @@ export const speakingSessions: SpeakingSession[] = [
     mode: 'remote',
     language: '🇬🇧',
     eventUrl: 'https://academy.claranet.it/pages/software-engineering-secure-api',
+  },
+  {
+    date: '2025-03-21',
+    title: 'Learning (Web) Development through Open Source',
+    event: 'Open Source Day 2025',
+    type: 'session',
+    mode: 'in-person',
+    language: '🇬🇧',
+    eventUrl: 'https://osday.dev/schedule/d8326b1b-34a3-4027-8ed0-077c1d13dbb3',
+  },
+  {
+    date: '2025-03-25',
+    title: 'GitHub Copilot: vediamo chi comanda',
+    event: 'Commit University',
+    type: 'session',
+    mode: 'in-person',
+    language: '🇮🇹',
+    eventUrl: 'https://www.commitsoftware.it/commit-university/',
+  },
+  {
+    date: '2025-03-26',
+    title: 'GitHub Copilot: vediamo chi comanda',
+    event: 'Dilaxia',
+    type: 'session',
+    mode: 'in-person',
+    language: '🇮🇹',
+    eventUrl: 'https://www.dilaxia.com/blog/github-copilot-vediamo-chi-comanda',
+  },
+  {
+    date: '2025-03-27',
+    title: 'Frontend Rendering: How to Not Mess with SPAs, SSR & Friends',
+    event: 'Claranet - Software Engineering Days',
+    type: 'session',
+    mode: 'remote',
+    language: '🇬🇧',
+    eventUrl: 'https://academy.claranet.it/pages/frontend-rendering-software-engineering-days',
   },
 ];
