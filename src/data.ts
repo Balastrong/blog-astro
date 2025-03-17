@@ -268,6 +268,11 @@ export const tanStackTutorials: Tutorial[] = [
         code: 'https://github.com/Balastrong/tanstack-form-demo/tree/06-field-listeners',
       },
       {
+        title: 'Composable Fields for Large Forms',
+        video: 'https://youtu.be/YJ3rW85fnKo',
+        code: 'https://github.com/Balastrong/tanstack-form-demo/tree/07-form-composition',
+      },
+      {
         title: 'Standard Schema Validators',
         video: 'https://youtu.be/_JDf5_wVujo',
       },
