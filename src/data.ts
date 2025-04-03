@@ -398,6 +398,7 @@ export const speakingSessions: SpeakingSession[] = [
     eventUrl:
       'https://www.eventbrite.it/e/biglietti-ai-per-systems-engineer-e-developer-verso-un-futuro-co-creato-1119103291069',
     recording: 'https://youtu.be/T8xYVyhvO_Q',
+    image: 'copilot-macerata.png',
   },
   {
     date: '2025-02-06',
@@ -417,6 +418,7 @@ export const speakingSessions: SpeakingSession[] = [
     language: '🇬🇧',
     eventUrl: 'https://osday.dev/schedule/d8326b1b-34a3-4027-8ed0-077c1d13dbb3',
     recording: 'https://www.youtube.com/live/_IdH5YTBAGs?si=SylYiwsmBHeCvohy&t=29902',
+    image: 'osday.png',
   },
   {
     date: '2025-03-25',
@@ -426,6 +428,7 @@ export const speakingSessions: SpeakingSession[] = [
     mode: 'in-person',
     language: '🇮🇹',
     eventUrl: 'https://www.commitsoftware.it/commit-university/',
+    image: 'copilot-commit.jpg',
   },
   {
     date: '2025-03-26',
@@ -435,6 +438,7 @@ export const speakingSessions: SpeakingSession[] = [
     mode: 'in-person',
     language: '🇮🇹',
     eventUrl: 'https://www.dilaxia.com/blog/github-copilot-vediamo-chi-comanda',
+    image: 'copilot-dilaxia.jpg',
   },
   {
     date: '2025-03-27',

@@ -320,4 +320,5 @@ export type SpeakingSession = {
   language: '🇮🇹' | '🇬🇧';
   eventUrl?: string;
   recording?: string;
+  image?: string;
 };

@@ -62,8 +62,8 @@ const getSessionColor = (type: 'session' | 'interview') => {
 const getAnimationClass = (type: 'session' | 'interview') => {
   const baseAnimation = 'transition-all ease-in-out duration-500 md:hover:scale-105 hover:shadow-lg';
   return type === 'session'
-    ? `${baseAnimation} hover:shadow-blue-200/50 dark:hover:shadow-blue-800/30`
-    : `${baseAnimation} hover:shadow-purple-200/50 dark:hover:shadow-purple-800/30`;
+    ? `${baseAnimation} hover:shadow-blue-200/50 dark:hover:shadow-blue-800/30 group`
+    : `${baseAnimation} hover:shadow-purple-200/50 dark:hover:shadow-purple-800/30 group`;
 };
 ---
 
@@ -119,79 +119,97 @@ const getAnimationClass = (type: 'session' | 'interview') => {
                     <div
                       class={`p-4 rounded-lg border shadow-sm ${getSessionColor(session.type)} ${getAnimationClass(
                         session.type
-                      )} `}
+                      )} relative overflow-hidden`}
                     >
-                      {/* Date */}
-                      <div
-                        class={`font-medium text-gray-500 dark:text-gray-400 mb-1 flex ${
-                          index % 2 === 0 ? 'md:flex-row-reverse' : 'flex-row'
-                        } items-center gap-1`}
-                      >
-                        {formatDate(session.date)} <span class="text-lg">{session.language}</span>
-                      </div>
+                      {/* Background Image (if available) */}
+                      {session.image && (
+                        <div class="absolute inset-0 z-0 transition-opacity duration-300">
+                          <img
+                            src={'src/assets/images/speaking/' + session.image}
+                            class="w-full h-full object-cover opacity-20 group-hover:opacity-35 transition-opacity duration-300"
+                          />
+                          <div class="absolute inset-0 bg-gradient-to-r from-white/50 to-white/50 dark:from-black/50 dark:to-black/50 group-hover:from-white/30 group-hover:to-white/30 dark:group-hover:from-black/30 dark:group-hover:to-black/30 transition-all duration-500" />
+                        </div>
+                      )}
 
-                      {/* Title */}
-                      <h3
-                        class={`font-bold text-lg md:text-xl mb-2 break-words ${
-                          index % 2 === 0 ? 'md:text-right' : 'md:text-left'
-                        }`}
-                      >
-                        <span class="break-words">{session.title}</span>
-                      </h3>
-
-                      {/* Event */}
-                      <div
-                        class={`text-base text-gray-700 dark:text-gray-300 mb-3 break-words ${
-                          index % 2 === 0 ? 'md:text-right' : 'md:text-left'
-                        }`}
-                      >
-                        <span class="break-words">{session.event}</span>
-                      </div>
-
-                      {/* Icons and Links */}
-                      <div
-                        class={`flex flex-col md:${
-                          index % 2 === 0 ? 'flex-row-reverse' : 'flex-row'
-                        } md:items-center justify-between gap-3 text-gray-600 dark:text-gray-400`}
-                      >
-                        {/* Type and Mode */}
-                        <div class={`flex ${index % 2 === 0 ? 'md:flex-row-reverse' : 'flex-row'} items-center gap-3`}>
-                          <div class="flex items-center gap-1" title={`Type: ${session.type}`}>
-                            <Icon name={getSessionTypeIcon(session.type)} class="w-4 h-4" />
-                            <span class="text-sm md:text-base capitalize">{session.type}</span>
-                          </div>
-                          <div class="flex items-center gap-1" title={`Mode: ${session.mode}`}>
-                            <Icon name={getModeIcon(session.mode)} class="w-4 h-4" />
-                            <span class="text-sm md:text-base capitalize">{session.mode}</span>
-                          </div>
+                      {/* Content with higher z-index */}
+                      <div class="relative">
+                        {/* Date */}
+                        <div
+                          class={`font-medium text-gray-500 dark:text-gray-400 mb-1 flex ${
+                            index % 2 === 0 ? 'md:flex-row-reverse' : 'flex-row'
+                          } items-center gap-1`}
+                        >
+                          {formatDate(session.date)} <span class="text-lg">{session.language}</span>
                         </div>
 
-                        {/* Links */}
-                        <div class={`flex ${index % 2 === 0 ? 'md:flex-row-reverse' : 'flex-row'} items-center gap-3`}>
-                          {session.recording && (
-                            <a
-                              href={session.recording}
-                              target="_blank"
-                              rel="noopener"
-                              class="text-primary dark:text-blue-400 hover:underline flex items-center gap-1"
-                              title="Watch recording"
-                            >
-                              <Icon name="tabler:player-play" class="w-4 h-4" />
-                              <span class="text-sm md:text-base">Recording</span>
-                            </a>
-                          )}
-                          {session.eventUrl && (
-                            <a
-                              href={session.eventUrl}
-                              target="_blank"
-                              rel="noopener"
-                              class="text-primary dark:text-blue-400 hover:underline flex items-center gap-1"
-                              title="Event page"
-                            >
-                              <Icon name="tabler:link" class="w-4 h-4" />
-                              <span class="text-sm md:text-base">Event</span>
-                            </a>
-                          )}
+                        {/* Title */}
+                        <h3
+                          class={`font-bold text-lg md:text-xl mb-2 break-words ${
+                            index % 2 === 0 ? 'md:text-right' : 'md:text-left'
+                          }`}
+                        >
+                          <span class="break-words">{session.title}</span>
+                        </h3>
+
+                        {/* Event */}
+                        <div
+                          class={`text-base text-gray-700 dark:text-gray-300 mb-3 break-words ${
+                            index % 2 === 0 ? 'md:text-right' : 'md:text-left'
+                          }`}
+                        >
+                          <span class="break-words">{session.event}</span>
+                        </div>
+
+                        {/* Icons and Links */}
+                        <div
+                          class={`flex flex-col md:${
+                            index % 2 === 0 ? 'flex-row-reverse' : 'flex-row'
+                          } md:items-center justify-between gap-3 text-gray-600 dark:text-gray-400`}
+                        >
+                          {/* Type and Mode */}
+                          <div
+                            class={`flex ${index % 2 === 0 ? 'md:flex-row-reverse' : 'flex-row'} items-center gap-3`}
+                          >
+                            <div class="flex items-center gap-1" title={`Type: ${session.type}`}>
+                              <Icon name={getSessionTypeIcon(session.type)} class="w-4 h-4" />
+                              <span class="text-sm md:text-base capitalize">{session.type}</span>
+                            </div>
+                            <div class="flex items-center gap-1" title={`Mode: ${session.mode}`}>
+                              <Icon name={getModeIcon(session.mode)} class="w-4 h-4" />
+                              <span class="text-sm md:text-base capitalize">{session.mode}</span>
+                            </div>
+                          </div>
+
+                          {/* Links */}
+                          <div
+                            class={`flex ${index % 2 === 0 ? 'md:flex-row-reverse' : 'flex-row'} items-center gap-3`}
+                          >
+                            {session.recording && (
+                              <a
+                                href={session.recording}
+                                target="_blank"
+                                rel="noopener"
+                                class="text-primary dark:text-blue-400 hover:underline flex items-center gap-1"
+                                title="Watch recording"
+                              >
+                                <Icon name="tabler:player-play" class="w-4 h-4" />
+                                <span class="text-sm md:text-base">Recording</span>
+                              </a>
+                            )}
+                            {session.eventUrl && (
+                              <a
+                                href={session.eventUrl}
+                                target="_blank"
+                                rel="noopener"
+                                class="text-primary dark:text-blue-400 hover:underline flex items-center gap-1"
+                                title="Event page"
+                              >
+                                <Icon name="tabler:link" class="w-4 h-4" />
+                                <span class="text-sm md:text-base">Event</span>
+                              </a>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
