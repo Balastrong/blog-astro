@@ -121,12 +121,12 @@ const getAnimationClass = (type: 'session' | 'interview') => {
                   <div
                     class={`relative ${
                       index % 2 === 0 ? 'md:ml-auto md:pr-8 md:text-right' : 'md:mr-auto md:pl-8 md:text-left'
-                    } ml-6 md:ml-0 pl-2 md:pl-0`}
+                    } ml-6 md:ml-0 pl-2 md:pl-0 w-full md:w-fit`}
                   >
                     {/* Connection lines */}
                     {index % 2 === 0 ? (
                       <div
-                        class={`absolute top-1/2 right-0 w-8 h-0.5 ${
+                        class={`absolute top-1/2 -left-4 md:left-auto md:right-0 w-8 h-0.5 ${
                           session.type === 'session'
                             ? 'bg-blue-500 dark:bg-blue-400'
                             : 'bg-purple-500 dark:bg-purple-400'
@@ -134,7 +134,7 @@ const getAnimationClass = (type: 'session' | 'interview') => {
                       />
                     ) : (
                       <div
-                        class={`absolute top-1/2 left-0 w-8 h-0.5 ${
+                        class={`absolute top-1/2 -left-4 md:left-0 w-8 h-0.5 ${
                           session.type === 'session'
                             ? 'bg-blue-500 dark:bg-blue-400'
                             : 'bg-purple-500 dark:bg-purple-400'
@@ -189,7 +189,7 @@ const getAnimationClass = (type: 'session' | 'interview') => {
 
                         {/* Icons and Links */}
                         <div
-                          class={`flex flex-col md:gap-4 md:${
+                          class={`flex flex-col md:gap-8 md:${
                             index % 2 === 0 ? 'flex-row-reverse' : 'flex-row'
                           } md:items-center justify-between gap-3 text-gray-600 dark:text-gray-400`}
                         >
