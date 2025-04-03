@@ -74,8 +74,8 @@ const getSessionColor = (type: 'session' | 'interview') => {
 const getAnimationClass = (type: 'session' | 'interview') => {
   const baseAnimation = 'transition-all ease-in-out duration-500 md:hover:scale-105 hover:shadow-lg';
   return type === 'session'
-    ? `${baseAnimation} hover:shadow-blue-200/50 dark:hover:shadow-blue-800/30 group`
-    : `${baseAnimation} hover:shadow-purple-200/50 dark:hover:shadow-purple-800/30 group`;
+    ? `${baseAnimation} hover:shadow-blue-300/60 dark:hover:shadow-blue-700/40 group`
+    : `${baseAnimation} hover:shadow-purple-300/60 dark:hover:shadow-purple-700/40 group`;
 };
 ---
 
@@ -110,7 +110,9 @@ const getAnimationClass = (type: 'session' | 'interview') => {
                 <div class={`relative md:w-1/2 flex md:odd:mt-0 md:even:mt-0 md:even:left-1/2 mb-4 md:mb-0`}>
                   {/* Timeline dot */}
                   <div
-                    class={`absolute w-4 h-4 rounded-full bg-primary dark:bg-blue-400 top-1/2 -translate-y-1/2 z-10 
+                    class={`absolute w-4 h-4 rounded-full ${
+                      session.type === 'session' ? 'bg-blue-500 dark:bg-blue-400' : 'bg-purple-500 dark:bg-purple-400'
+                    } top-1/2 -translate-y-1/2 z-10 
                     ${index % 2 === 0 ? 'md:right-0 md:translate-x-1/2' : 'md:left-0 md:-translate-x-1/2'} 
                     -left-1.5 md:left-auto`}
                   />
@@ -123,9 +125,21 @@ const getAnimationClass = (type: 'session' | 'interview') => {
                   >
                     {/* Connection lines */}
                     {index % 2 === 0 ? (
-                      <div class="absolute top-1/2 right-0 w-8 h-0.5 bg-primary dark:bg-blue-400 -translate-y-1/2 hidden md:block" />
+                      <div
+                        class={`absolute top-1/2 right-0 w-8 h-0.5 ${
+                          session.type === 'session'
+                            ? 'bg-blue-500 dark:bg-blue-400'
+                            : 'bg-purple-500 dark:bg-purple-400'
+                        } -translate-y-1/2`}
+                      />
                     ) : (
-                      <div class="absolute top-1/2 left-0 w-8 h-0.5 bg-primary dark:bg-blue-400 -translate-y-1/2 hidden md:block" />
+                      <div
+                        class={`absolute top-1/2 left-0 w-8 h-0.5 ${
+                          session.type === 'session'
+                            ? 'bg-blue-500 dark:bg-blue-400'
+                            : 'bg-purple-500 dark:bg-purple-400'
+                        } -translate-y-1/2`}
+                      />
                     )}
 
                     <div
@@ -144,7 +158,7 @@ const getAnimationClass = (type: 'session' | 'interview') => {
                         </div>
                       )}
 
-                      {/* Content with higher z-index */}
+                      {/* Content */}
                       <div class="relative">
                         {/* Date */}
                         <div
@@ -161,7 +175,7 @@ const getAnimationClass = (type: 'session' | 'interview') => {
                             index % 2 === 0 ? 'md:text-right' : 'md:text-left'
                           }`}
                         >
-                          <span class="break-words">{session.title}</span>
+                          {session.title}
                         </h3>
 
                         {/* Event */}
@@ -170,12 +184,12 @@ const getAnimationClass = (type: 'session' | 'interview') => {
                             index % 2 === 0 ? 'md:text-right' : 'md:text-left'
                           }`}
                         >
-                          <span class="break-words">{session.event}</span>
+                          {session.event}
                         </div>
 
                         {/* Icons and Links */}
                         <div
-                          class={`flex flex-col md:${
+                          class={`flex flex-col md:gap-4 md:${
                             index % 2 === 0 ? 'flex-row-reverse' : 'flex-row'
                           } md:items-center justify-between gap-3 text-gray-600 dark:text-gray-400`}
                         >
@@ -184,8 +198,23 @@ const getAnimationClass = (type: 'session' | 'interview') => {
                             class={`flex ${index % 2 === 0 ? 'md:flex-row-reverse' : 'flex-row'} items-center gap-3`}
                           >
                             <div class="flex items-center gap-1" title={`Type: ${session.type}`}>
-                              <Icon name={getSessionTypeIcon(session.type)} class="w-4 h-4" />
-                              <span class="text-sm md:text-base capitalize">{session.type}</span>
+                              <Icon
+                                name={getSessionTypeIcon(session.type)}
+                                class={`w-4 h-4 ${
+                                  session.type === 'session'
+                                    ? 'text-blue-600 dark:text-blue-400'
+                                    : 'text-purple-600 dark:text-purple-400'
+                                }`}
+                              />
+                              <span
+                                class={`text-sm md:text-base capitalize font-semibold ${
+                                  session.type === 'session'
+                                    ? 'text-blue-700 dark:text-blue-300'
+                                    : 'text-purple-700 dark:text-purple-300'
+                                }`}
+                              >
+                                {session.type}
+                              </span>
                             </div>
                             <div class="flex items-center gap-1" title={`Mode: ${session.mode}`}>
                               <Icon name={getModeIcon(session.mode)} class="w-4 h-4" />
