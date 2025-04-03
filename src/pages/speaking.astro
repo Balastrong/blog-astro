@@ -54,8 +54,16 @@ const getModeIcon = (mode: 'in-person' | 'remote' | 'hybrid') => {
 // Helper to get color based on session type
 const getSessionColor = (type: 'session' | 'interview') => {
   return type === 'session'
-    ? 'bg-blue-50 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800'
-    : 'bg-purple-50 dark:bg-purple-900/30 border-purple-200 dark:border-purple-800';
+    ? 'bg-blue-50 dark:bg-blue-950 border-blue-200 dark:border-blue-800'
+    : 'bg-purple-50 dark:bg-purple-950 border-purple-200 dark:border-purple-800';
+};
+
+// Helper to get animation class based on session type
+const getAnimationClass = (type: 'session' | 'interview') => {
+  const baseAnimation = 'transition-all ease-in-out duration-500 md:hover:scale-105 hover:shadow-lg';
+  return type === 'session'
+    ? `${baseAnimation} hover:shadow-blue-200/50 dark:hover:shadow-blue-800/30`
+    : `${baseAnimation} hover:shadow-purple-200/50 dark:hover:shadow-purple-800/30`;
 };
 ---
 
@@ -76,96 +84,114 @@ const getSessionColor = (type: 'session' | 'interview') => {
 
       {
         years.map((year) => (
-          <div class="mb-14 flex flex-col">
+          <div class="mb-8 flex flex-col">
             {/* Year header */}
-            <h2 class="text-3xl font-bold mb-8 text-center">{year}</h2>
+            <h2 class="text-4xl font-bold mb-8 text-center">{year}</h2>
 
-            <div class="timeline relative">
+            <div class="relative min-h-[350px]">
               {/* Timeline center line */}
-              <div class="absolute h-full w-0.5 bg-gray-200 dark:bg-gray-700 left-1/2 transform -translate-x-1/2" />
+              <div class="absolute h-full w-0.5 bg-gray-200 dark:bg-gray-700 left-1/2 -translate-x-1/2 md:block hidden" />
+              {/* Mobile timeline line (left-aligned) */}
+              <div class="absolute h-full w-0.5 bg-gray-200 dark:bg-gray-700 left-0 md:hidden block" />
 
               {sessionsByYear[year].map((session, index) => (
-                <div
-                  class={`timeline-item relative mb-8 ${index % 2 === 0 ? 'left-item' : 'right-item'} ${
-                    index === 0 ? 'first-item' : ''
-                  }`}
-                >
+                <div class={`relative md:w-1/2 flex md:odd:mt-0 md:even:mt-0 md:even:left-1/2 mb-4 md:mb-0`}>
                   {/* Timeline dot */}
-                  <div class="absolute w-4 h-4 rounded-full bg-primary dark:bg-blue-400 left-1/2 transform -translate-x-1/2 z-10" />
+                  <div
+                    class={`absolute w-4 h-4 rounded-full bg-primary dark:bg-blue-400 top-1/2 -translate-y-1/2 z-10 
+                    ${index % 2 === 0 ? 'md:right-0 md:translate-x-1/2' : 'md:left-0 md:-translate-x-1/2'} 
+                    -left-1.5 md:left-auto`}
+                  />
 
                   {/* Timeline card */}
-                  <div class={`session-card relative ${index % 2 === 0 ? 'mr-auto pr-8' : 'ml-auto pl-8'} w-5/12`}>
+                  <div
+                    class={`relative ${
+                      index % 2 === 0 ? 'md:ml-auto md:pr-8 md:text-right' : 'md:mr-auto md:pl-8 md:text-left'
+                    } ml-6 md:ml-0 pl-2 md:pl-0`}
+                  >
+                    {/* Connection lines */}
+                    {index % 2 === 0 ? (
+                      <div class="absolute top-1/2 right-0 w-8 h-0.5 bg-primary dark:bg-blue-400 -translate-y-1/2 hidden md:block" />
+                    ) : (
+                      <div class="absolute top-1/2 left-0 w-8 h-0.5 bg-primary dark:bg-blue-400 -translate-y-1/2 hidden md:block" />
+                    )}
+
                     <div
-                      class={`p-4 rounded-lg border ${getSessionColor(session.type)} shadow-sm ${
-                        index % 2 === 0 ? 'text-right' : 'text-left'
-                      }`}
+                      class={`p-4 rounded-lg border shadow-sm ${getSessionColor(session.type)} ${getAnimationClass(
+                        session.type
+                      )} `}
                     >
                       {/* Date */}
-                      <div class="font-medium text-gray-500 dark:text-gray-400 mb-1">
+                      <div
+                        class={`font-medium text-gray-500 dark:text-gray-400 mb-1 flex ${
+                          index % 2 === 0 ? 'md:flex-row-reverse' : 'flex-row'
+                        } items-center gap-1`}
+                      >
                         {formatDate(session.date)} <span class="text-lg">{session.language}</span>
                       </div>
 
                       {/* Title */}
                       <h3
                         class={`font-bold text-lg md:text-xl mb-2 break-words ${
-                          index % 2 === 0 ? 'flex flex-row-reverse' : 'flex'
-                        } items-center gap-2`}
+                          index % 2 === 0 ? 'md:text-right' : 'md:text-left'
+                        }`}
                       >
-                        {session.recording ? (
-                          <a
-                            href={session.recording}
-                            target="_blank"
-                            rel="noopener"
-                            class={`text-primary dark:text-blue-400 hover:underline ${
-                              index % 2 === 0 ? 'inline-flex flex-row-reverse' : 'inline-flex'
-                            } flex-wrap items-center`}
-                          >
-                            <span>{session.title}</span>
-                            <Icon
-                              name="tabler:external-link"
-                              class={`inline w-3 h-3 ${index % 2 === 0 ? 'mr-1' : 'ml-1'} flex-shrink-0`}
-                            />
-                          </a>
-                        ) : (
-                          <span class="break-words">{session.title}</span>
-                        )}
+                        <span class="break-words">{session.title}</span>
                       </h3>
 
                       {/* Event */}
-                      <div class="text-base text-gray-700 dark:text-gray-300 mb-3 break-words">
-                        {session.eventUrl ? (
-                          <a
-                            href={session.eventUrl}
-                            target="_blank"
-                            rel="noopener"
-                            class={`text-primary dark:text-blue-400 hover:underline ${
-                              index % 2 === 0 ? 'inline-flex flex-row-reverse' : 'inline-flex'
-                            } flex-wrap items-center`}
-                          >
-                            <span>{session.event}</span>
-                            <Icon
-                              name="tabler:external-link"
-                              class={`inline w-3 h-3 ${index % 2 === 0 ? 'mr-1' : 'ml-1'} flex-shrink-0`}
-                            />
-                          </a>
-                        ) : (
-                          <span class="break-words">{session.event}</span>
-                        )}
+                      <div
+                        class={`text-base text-gray-700 dark:text-gray-300 mb-3 break-words ${
+                          index % 2 === 0 ? 'md:text-right' : 'md:text-left'
+                        }`}
+                      >
+                        <span class="break-words">{session.event}</span>
                       </div>
 
-                      {/* Icons */}
+                      {/* Icons and Links */}
                       <div
-                        class={`${
-                          index % 2 === 0 ? 'flex flex-row-reverse' : 'flex'
-                        } items-center gap-3 text-gray-600 dark:text-gray-400`}
+                        class={`flex flex-col md:${
+                          index % 2 === 0 ? 'flex-row-reverse' : 'flex-row'
+                        } md:items-center justify-between gap-3 text-gray-600 dark:text-gray-400`}
                       >
-                        <div class="flex items-center gap-1" title={`Type: ${session.type}`}>
-                          <Icon name={getSessionTypeIcon(session.type)} class="w-4 h-4" />
-                          <span class="text-sm md:text-base capitalize">{session.type}</span>
+                        {/* Type and Mode */}
+                        <div class={`flex ${index % 2 === 0 ? 'md:flex-row-reverse' : 'flex-row'} items-center gap-3`}>
+                          <div class="flex items-center gap-1" title={`Type: ${session.type}`}>
+                            <Icon name={getSessionTypeIcon(session.type)} class="w-4 h-4" />
+                            <span class="text-sm md:text-base capitalize">{session.type}</span>
+                          </div>
+                          <div class="flex items-center gap-1" title={`Mode: ${session.mode}`}>
+                            <Icon name={getModeIcon(session.mode)} class="w-4 h-4" />
+                            <span class="text-sm md:text-base capitalize">{session.mode}</span>
+                          </div>
                         </div>
-                        <div class={'flex items-center gap-1'} title={`Mode: ${session.mode}`}>
-                          <Icon name={getModeIcon(session.mode)} class="w-4 h-4" />
-                          <span class="text-sm md:text-base capitalize">{session.mode}</span>
+
+                        {/* Links */}
+                        <div class={`flex ${index % 2 === 0 ? 'md:flex-row-reverse' : 'flex-row'} items-center gap-3`}>
+                          {session.recording && (
+                            <a
+                              href={session.recording}
+                              target="_blank"
+                              rel="noopener"
+                              class="text-primary dark:text-blue-400 hover:underline flex items-center gap-1"
+                              title="Watch recording"
+                            >
+                              <Icon name="tabler:player-play" class="w-4 h-4" />
+                              <span class="text-sm md:text-base">Recording</span>
+                            </a>
+                          )}
+                          {session.eventUrl && (
+                            <a
+                              href={session.eventUrl}
+                              target="_blank"
+                              rel="noopener"
+                              class="text-primary dark:text-blue-400 hover:underline flex items-center gap-1"
+                              title="Event page"
+                            >
+                              <Icon name="tabler:link" class="w-4 h-4" />
+                              <span class="text-sm md:text-base">Event</span>
+                            </a>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -179,134 +205,3 @@ const getSessionColor = (type: 'session' | 'interview') => {
     </div>
   </section>
 </Layout>
-
-<style>
-  /* Make sure the timeline is centered and responsive */
-  .timeline {
-    position: relative;
-    min-height: 350px;
-    padding-bottom: 40px; /* Add padding at bottom to account for overlaps */
-  }
-
-  /* Ensure cards are properly positioned */
-  .timeline-item {
-    position: relative;
-    width: 100%;
-    display: flex;
-    margin-bottom: 20px; /* Reduced from 8 to allow for more overlap */
-  }
-
-  /* Add overlapping effects for both sides */
-  .timeline-item:nth-child(odd) {
-    margin-top: -60px; /* Apply overlap to odd items (left side) */
-  }
-
-  .timeline-item:nth-child(even) {
-    margin-top: -60px; /* Keep the same overlap for even items (right side) */
-  }
-
-  /* Explicitly reset margin for the first item in each year group */
-  .timeline-item.first-item {
-    margin-top: 0 !important; /* Use !important to override other rules */
-  }
-
-  /* First-of-type selector as fallback */
-  .timeline-item:first-of-type {
-    margin-top: 0 !important;
-  }
-
-  /* Position the cards closer to the middle */
-  .left-item .session-card,
-  .right-item .session-card {
-    width: 50%; /* Reduced from 5/12 (41.66%) to bring cards closer to middle */
-  }
-
-  /* Ensure each card has a higher z-index than the previous */
-  .left-item .session-card::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: 0;
-    width: 8px;
-    height: 2px;
-    background-color: var(--color-primary);
-    transform: translateY(-50%);
-  }
-
-  .right-item .session-card::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 8px;
-    height: 2px;
-    background-color: var(--color-primary);
-    transform: translateY(-50%);
-  }
-
-  /* Make timeline responsive */
-  @media (max-width: 768px) {
-    .timeline-item {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    /* Remove overlapping effect on mobile */
-    .timeline-item:nth-child(odd),
-    .timeline-item:nth-child(even) {
-      margin-top: 0;
-    }
-
-    /* Reset z-index for mobile */
-    .timeline-item {
-      z-index: auto;
-      margin-bottom: 20px; /* Restore regular spacing for mobile */
-    }
-
-    .left-item .session-card,
-    .right-item .session-card {
-      width: 85%;
-      margin: 0 0 0 1.5rem;
-      text-align: left;
-      padding-left: 0.5rem;
-    }
-
-    /* Force left alignment for all content on mobile */
-    .session-card div {
-      text-align: left !important;
-    }
-
-    /* Reset all flex-row-reverse to normal flex on mobile */
-    .session-card .flex-row-reverse {
-      flex-direction: row !important;
-    }
-
-    /* Ensure links have correct icon placement on mobile */
-    .session-card a .inline {
-      margin-left: 0.25rem !important;
-      margin-right: 0 !important;
-    }
-
-    .timeline .absolute {
-      left: 0;
-      transform: none;
-    }
-
-    .session-card::before,
-    .session-card::after {
-      display: none;
-    }
-
-    /* Move timeline to the left side for mobile */
-    .timeline .absolute.h-full {
-      left: 0;
-      transform: none;
-    }
-
-    /* Fix for mobile: properly align the dots on the line */
-    .timeline-item .absolute.w-4.h-4 {
-      left: 6px; /* Same as the line position */
-      transform: translateX(-1.5px); /* Adjusted to better center the dot on the line */
-    }
-  }
-</style>

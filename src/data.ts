@@ -416,6 +416,7 @@ export const speakingSessions: SpeakingSession[] = [
     mode: 'in-person',
     language: '🇬🇧',
     eventUrl: 'https://osday.dev/schedule/d8326b1b-34a3-4027-8ed0-077c1d13dbb3',
+    recording: 'https://www.youtube.com/live/_IdH5YTBAGs?si=SylYiwsmBHeCvohy&t=29902',
   },
   {
     date: '2025-03-25',
@@ -429,7 +430,7 @@ export const speakingSessions: SpeakingSession[] = [
   {
     date: '2025-03-26',
     title: 'GitHub Copilot: vediamo chi comanda',
-    event: 'Dilaxia',
+    event: 'Dilaxia Xplora',
     type: 'session',
     mode: 'in-person',
     language: '🇮🇹',
