@@ -14,6 +14,18 @@ const meta: MetaSEO = {
   author: 'Leonardo Montini',
 };
 
+const images = Object.entries(import.meta.glob('/src/assets/images/speaking/*', { eager: true })).reduce(
+  (acc, [path, image]) => {
+    const key = path.split('/').pop() ?? '';
+    const imageSrc = (image as { default: { src: string } })?.default?.src;
+    if (key && imageSrc) {
+      acc[key] = imageSrc;
+    }
+    return acc;
+  },
+  {} as Record<string, string>
+);
+
 const sessionsByYear = speakingSessions
   .toSorted((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
   .reduce((acc, session) => {
@@ -125,7 +137,7 @@ const getAnimationClass = (type: 'session' | 'interview') => {
                       {session.image && (
                         <div class="absolute inset-0 z-0 transition-opacity duration-300">
                           <img
-                            src={'src/assets/images/speaking/' + session.image}
+                            src={images[session.image]}
                             class="w-full h-full object-cover opacity-20 group-hover:opacity-35 transition-opacity duration-300"
                           />
                           <div class="absolute inset-0 bg-gradient-to-r from-white/50 to-white/50 dark:from-black/50 dark:to-black/50 group-hover:from-white/30 group-hover:to-white/30 dark:group-hover:from-black/30 dark:group-hover:to-black/30 transition-all duration-500" />
