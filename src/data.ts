@@ -165,6 +165,10 @@ export const tanStackTutorials: Tutorial[] = [
         code: 'https://github.com/Balastrong/confhub',
       },
       {
+        title: 'SSR, Preloading, Caching and more with Start + Query',
+        video: 'https://youtu.be/kgw83CziJgM',
+      },
+      {
         title: 'Themes & Dark Mode',
         soon: true,
       },
