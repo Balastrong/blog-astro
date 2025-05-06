@@ -306,6 +306,10 @@ export const tanStackTutorials: Tutorial[] = [
         video: 'https://youtu.be/K2m5awz3cAk',
       },
       {
+        title: 'How we unit test Typescript types in TanStack',
+        video: 'https://youtu.be/pKvebYHH3x4',
+      },
+      {
         title: 'TanStack Store',
         soon: true,
       },
