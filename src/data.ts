@@ -457,4 +457,12 @@ export const speakingSessions: SpeakingSession[] = [
     language: '🇬🇧',
     eventUrl: 'https://academy.claranet.it/pages/frontend-rendering-software-engineering-days',
   },
+  {
+    date: '2025-05-17',
+    title: 'GitHub Copilot: Intelligenza Artificiale a supporto della programmazione',
+    event: 'IIS Galilei High Scool - Lesson',
+    type: 'session',
+    mode: 'in-person',
+    language: '🇮🇹',
+  },
 ];
