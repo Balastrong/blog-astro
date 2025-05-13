@@ -151,8 +151,8 @@ export const tanStackTutorials: Tutorial[] = [
         code: 'https://github.com/Balastrong/tanstack-start-demo/tree/02-server-function-validator',
       },
       {
-        title: 'Server Function Errors & Responses',
-        soon: true,
+        title: 'Middleware',
+        video: 'https://youtu.be/L1j7NQGsy0c',
       },
       {
         title: 'Integrating Convex (backend) & Clerk (auth)',
