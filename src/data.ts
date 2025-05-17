@@ -460,9 +460,10 @@ export const speakingSessions: SpeakingSession[] = [
   {
     date: '2025-05-17',
     title: 'GitHub Copilot: Intelligenza Artificiale a supporto della programmazione',
-    event: 'IIS Galilei High Scool - Lesson',
+    event: 'IIS Marconi Pieralisi - High Scool Lesson',
     type: 'session',
     mode: 'in-person',
     language: '🇮🇹',
+    image: 'iis-marconi.jpeg',
   },
 ];
