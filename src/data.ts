@@ -437,6 +437,7 @@ export const speakingSessions: SpeakingSession[] = [
     language: '🇮🇹',
     eventUrl: 'https://www.commitsoftware.it/commit-university/',
     image: 'copilot-commit.jpg',
+    recording: 'https://www.youtube.com/watch?v=KQKEYOKRejM',
   },
   {
     date: '2025-03-26',
