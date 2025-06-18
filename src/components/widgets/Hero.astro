@@ -1,6 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components';
 import { Picture } from 'astro:assets';
+import heroBanner from 'src/assets/images/hero-banner.png';
 
 type CallToAction = {
   text: string;
@@ -26,8 +27,13 @@ const {
 } = Astro.props;
 ---
 
-<section class="relative md:-mt-[76px]">
-  <div class="absolute inset-0 pointer-events-none" aria-hidden="true"></div>
+<section class="relative md:-mt-[95px]">
+  <div class="absolute inset-0 z-0 pointer-events-none opacity-25" aria-hidden="true">
+    <div class="absolute inset-0 bg-cover bg-left bg-no-repeat" style={`background-image: url('${heroBanner.src}')`}>
+    </div>
+    <div class="absolute top-1/2 inset-0 bg-gradient-to-b from-transparent via-transparent to-white dark:to-slate-900">
+    </div>
+  </div>
   <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
     <div class="pt-0 md:pt-[76px] pointer-events-none"></div>
     <div class="py-8 md:py-12">
