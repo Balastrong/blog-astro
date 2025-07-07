@@ -27,6 +27,8 @@ const {
 } = Astro.props;
 ---
 
+<link rel="preload" as="image" href={heroBanner.src} fetchpriority="high" />
+
 <section class="relative md:-mt-[95px]">
   <div class="absolute inset-0 z-0 pointer-events-none opacity-25" aria-hidden="true">
     <div class="absolute inset-0 bg-cover bg-left bg-no-repeat" style={`background-image: url('${heroBanner.src}')`}>
