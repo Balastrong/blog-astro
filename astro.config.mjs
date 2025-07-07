@@ -47,17 +47,7 @@ export default defineConfig({
       })
     ),
     icon(),
-    compress({
-      css: true,
-      html: {
-        removeAttributeQuotes: false,
-      },
-      img: false,
-      js: true,
-      svg: false,
-
-      logger: 1,
-    }),
+    compress(),
   ],
 
   vite: {
