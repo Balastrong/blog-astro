@@ -1,3 +1,12 @@
 [build]
   publish = "dist"
   command = "pnpm run build"
+
+# Function configuration
+[functions]
+  directory = "netlify/functions"
+  
+[[redirects]]
+  from = "/api/visitor-count"
+  to = "/.netlify/functions/visitor-tracker"
+  status = 200
