@@ -10,7 +10,7 @@
     "astro": "astro",
     "format": "prettier -w .",
     "test": "vitest",
-    "lint:eslint": "eslint . --ext .js,.ts,.astro"
+    "lint:eslint": "eslint . --ext .js,.ts,.tsx,.jsx,.astro"
   },
   "devDependencies": {
     "@astrojs/mdx": "^2.2.0",
@@ -31,6 +31,7 @@
     "eslint": "^8.57.0",
     "eslint-plugin-astro": "^0.26.2",
     "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-react": "^7.37.5",
     "jsdom": "^23.2.0",
     "limax": "2.1.0",
     "mdast-util-to-string": "^3.2.0",
@@ -47,15 +48,15 @@
     "node": ">=18"
   },
   "dependencies": {
-    "@astrojs/react": "^3.1.0",
+    "@astrojs/react": "^4.3.0",
     "@iconify-json/tabler": "^1.2.10",
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.22",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
     "@upstash/redis": "^1.35.1",
     "astro-seo-schema": "^5.0.0",
     "classnames": "^2.5.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "schema-dts": "^1.1.2"
   }
 }

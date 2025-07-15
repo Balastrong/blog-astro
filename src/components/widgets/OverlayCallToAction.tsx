@@ -61,7 +61,7 @@ export const OverlayCallToAction = ({ youtubeId }: { youtubeId: string | undefin
         <section className="flex flex-col gap-4">
           {youtubeId && (
             <p>
-              Did you know there's also a video version?{' '}
+              Did you know there&#39;s also a video version?{' '}
               <a href={`https://youtu.be/${youtubeId}`} className="underline cursor-pointer">
                 Watch it here
               </a>

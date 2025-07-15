@@ -43,7 +43,7 @@ export default function ActiveVisitors() {
     fetchVisitorCount();
 
     // Set up interval to periodically update the visitor count (every 30 seconds)
-    const intervalId = setInterval(fetchVisitorCount, 30000);
+    const intervalId = window?.setInterval(fetchVisitorCount, 30000);
 
     // Clean up interval on component unmount
     return () => {

@@ -29,15 +29,26 @@ module.exports = {
       },
     },
     {
-      files: ['*.ts'],
+      files: ['*.ts', '*.tsx'],
       parser: '@typescript-eslint/parser',
-      extends: ['plugin:@typescript-eslint/recommended'],
+      extends: ['plugin:@typescript-eslint/recommended', 'plugin:react/recommended'],
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
       rules: {
         '@typescript-eslint/no-unused-vars': [
           'error',
           { argsIgnorePattern: '^_', destructuredArrayIgnorePattern: '^_' },
         ],
         '@typescript-eslint/no-non-null-assertion': 'off',
+        'react/react-in-jsx-scope': 'off',
+      },
+      settings: {
+        react: {
+          version: 'detect',
+        },
       },
     },
     {
