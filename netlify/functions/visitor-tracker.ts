@@ -1,13 +1,16 @@
-const { Redis } = require('@upstash/redis');
-const crypto = require('crypto');
+import crypto from 'crypto';
+import { getStore } from '@netlify/blobs';
+import { type Handler } from '@netlify/functions';
 
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN,
-});
-
-exports.handler = async (event) => {
+export const handler: Handler = async (event) => {
   try {
+    // Initialize Netlify Blob store
+    const store = getStore({
+      name: 'visitors',
+      siteID: process.env.N_SITE_ID,
+      token: process.env.N_BLOB_TOKEN,
+    });
+
     // Check if request is from a bot
     const userAgent = event.headers['user-agent'] || '';
     const isUserBot = isBot(userAgent);
@@ -29,13 +32,37 @@ exports.handler = async (event) => {
       .digest('hex')
       .substring(0, 16);
 
-    if (anonymizedIp !== 'unknown') {
-      await redis.set(`online:${anonymizedIp}`, event.headers, { ex: 60 * 30 }); // Set key with 30 minutes expiration
+    // Get current visitors object or create a new one
+    let visitorsObj = {};
+    try {
+      visitorsObj = (await store.get('online-visitors', { type: 'json' })) || {};
+    } catch (error) {
+      // If the blob doesn't exist yet, we'll create it
+      visitorsObj = {};
     }
 
-    // Count online users by counting keys
-    const keys = await redis.keys('online:*');
-    const count = keys.length;
+    // Current timestamp
+    const now = Date.now();
+    const expirationTime = 30 * 60 * 1000; // 30 minutes in milliseconds
+
+    // Add or update the current visitor
+    if (anonymizedIp !== 'unknown') {
+      // Filter out expired visitors
+      for (const id in visitorsObj) {
+        if (now - visitorsObj[id] > expirationTime) {
+          delete visitorsObj[id];
+        }
+      }
+
+      // Add or update current visitor
+      visitorsObj[anonymizedIp] = now;
+
+      // Save updated object
+      await store.set('online-visitors', JSON.stringify(visitorsObj));
+    }
+
+    // Count online users
+    const count = Object.keys(visitorsObj).length;
 
     return {
       statusCode: 200,
@@ -51,7 +78,7 @@ exports.handler = async (event) => {
 };
 
 // Function to check if the request is from a bot
-function isBot(userAgent) {
+function isBot(userAgent: string) {
   if (!userAgent) return true;
 
   const botPatterns = [

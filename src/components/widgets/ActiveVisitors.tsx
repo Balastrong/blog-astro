@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 const STORAGE_KEY = 'active_visitor_count';
 const TIMESTAMP_KEY = 'active_visitor_timestamp';
 
-const DISPLAY_UPDATE_INTERVAL = 60000; // 30 seconds for UI refreshes
+const DISPLAY_UPDATE_INTERVAL = 30000; // 30 seconds for UI refreshes
 
 export default function ActiveVisitors() {
   // Initialize state from localStorage if available, otherwise null
