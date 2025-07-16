@@ -6,7 +6,6 @@ import Footer from '~/components/widgets/Footer.astro';
 import { headerData, footerData } from '~/data';
 
 import { type MetaSEO } from '~/types';
-import ActiveVisitors from '~/components/widgets/ActiveVisitors';
 
 export type Props = {
   meta?: MetaSEO;
@@ -25,5 +24,4 @@ const { meta } = Astro.props;
   <slot name="footer">
     <Footer {...footerData} />
   </slot>
-  <ActiveVisitors client:only />
 </Layout>

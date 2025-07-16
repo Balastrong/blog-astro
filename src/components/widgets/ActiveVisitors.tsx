@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 const STORAGE_KEY = 'active_visitor_count';
+const TIMESTAMP_KEY = 'active_visitor_timestamp';
+
+const DISPLAY_UPDATE_INTERVAL = 30000; // 30 seconds for UI refreshes
 
 export default function ActiveVisitors() {
   // Initialize state from localStorage if available, otherwise null
@@ -15,23 +18,45 @@ export default function ActiveVisitors() {
   const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
+    // Function to check if we need to make a new API call
+    const shouldFetchNewCount = (): boolean => {
+      if (typeof window === 'undefined') return false;
+
+      // Get timestamp of last fetch
+      const lastFetchTimestamp = localStorage.getItem(TIMESTAMP_KEY);
+      const now = Date.now();
+
+      // If no timestamp or it's older than our refresh interval, fetch new data
+      return !lastFetchTimestamp || now - parseInt(lastFetchTimestamp, 10) > DISPLAY_UPDATE_INTERVAL;
+    };
+
     const fetchVisitorCount = async () => {
       try {
-        const response = await fetch('/api/visitor-count');
+        // Only make API call if needed according to our rules
+        if (shouldFetchNewCount()) {
+          const response = await fetch('/api/visitor-count');
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch visitor count');
-        }
+          if (!response.ok) {
+            throw new Error('Failed to fetch visitor count');
+          }
 
-        const data = await response.json();
+          const data = await response.json();
 
-        if (data.success) {
-          setVisitorCount(data.count);
-          // Store the count in localStorage
-          localStorage.setItem(STORAGE_KEY, data.count.toString());
-          setError(false);
+          if (data.success) {
+            setVisitorCount(data.count);
+            // Store the count and current timestamp in localStorage
+            localStorage.setItem(STORAGE_KEY, data.count.toString());
+            localStorage.setItem(TIMESTAMP_KEY, Date.now().toString());
+            setError(false);
+          } else {
+            throw new Error('Failed to get visitor count');
+          }
         } else {
-          throw new Error('Failed to get visitor count');
+          // Use cached value without making API call
+          const storedCount = localStorage.getItem(STORAGE_KEY);
+          if (storedCount) {
+            setVisitorCount(parseInt(storedCount, 10));
+          }
         }
       } catch (err) {
         setError(true);
@@ -42,8 +67,8 @@ export default function ActiveVisitors() {
     // Initial fetch
     fetchVisitorCount();
 
-    // Set up interval to periodically update the visitor count (every 30 seconds)
-    const intervalId = window?.setInterval(fetchVisitorCount, 30000);
+    // Set up interval to periodically check if we need to update
+    const intervalId = window?.setInterval(fetchVisitorCount, DISPLAY_UPDATE_INTERVAL);
 
     // Clean up interval on component unmount
     return () => {
