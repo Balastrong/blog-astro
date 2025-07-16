@@ -19,7 +19,7 @@ exports.handler = async (event) => {
       .substring(0, 16);
 
     if (anonymizedIp !== 'unknown') {
-      await redis.set(`online:${anonymizedIp}`, '1', { ex: 60 * 30 }); // Set key with 30 minutes expiration
+      await redis.set(`online:${anonymizedIp}`, event.headers.referer, { ex: 60 * 30 }); // Set key with 30 minutes expiration
     }
 
     // Count online users by counting keys
