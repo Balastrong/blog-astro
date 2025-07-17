@@ -34,7 +34,7 @@ export default function ActiveVisitors() {
       try {
         // Only make API call if needed according to our rules
         if (shouldFetchNewCount()) {
-          const response = await fetch('/api/visitor-count');
+          const response = await fetch('/api/visitor-count-v2');
 
           if (!response.ok) {
             throw new Error('Failed to fetch visitor count');

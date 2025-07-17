@@ -7,6 +7,6 @@
   directory = "netlify/functions"
   
 [[redirects]]
-  from = "/api/visitor-count"
-  to = "/.netlify/functions/visitor-tracker"
+  from = "/api/visitor-count-v2"
+  to = "/.netlify/functions/visitor-tracker-v2"
   status = 200
