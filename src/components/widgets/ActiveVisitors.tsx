@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 const STORAGE_KEY = 'active_visitor_count';
 const TIMESTAMP_KEY = 'active_visitor_timestamp';
 
-const DISPLAY_UPDATE_INTERVAL = 30000; // 30 seconds for UI refreshes
+const DISPLAY_UPDATE_INTERVAL = 60000; // 60 seconds for UI refreshes
 
 export default function ActiveVisitors() {
   // Initialize state from localStorage if available, otherwise null
@@ -68,11 +68,11 @@ export default function ActiveVisitors() {
     fetchVisitorCount();
 
     // Set up interval to periodically check if we need to update
-    const intervalId = window?.setInterval(fetchVisitorCount, DISPLAY_UPDATE_INTERVAL);
+    //const intervalId = window?.setInterval(fetchVisitorCount, DISPLAY_UPDATE_INTERVAL);
 
     // Clean up interval on component unmount
     return () => {
-      clearInterval(intervalId);
+      // clearInterval(intervalId);
     };
   }, []);
 
