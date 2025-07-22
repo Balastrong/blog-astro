@@ -1,11 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 const STORAGE_KEY = 'active_visitor_count';
 const TIMESTAMP_KEY = 'active_visitor_timestamp';
 
 const DISPLAY_UPDATE_INTERVAL = 60000; // 60 seconds for UI refreshes
+const MAX_API_CALLS = 5; // Maximum number of API calls before stopping
 
 export default function ActiveVisitors() {
+  const apiCallCount = useRef(0);
+  const intervalIdRef = useRef<number | null>(null);
+
   // Initialize state from localStorage if available, otherwise null
   const [visitorCount, setVisitorCount] = useState<number | null>(() => {
     // Check if we're in the browser environment
@@ -21,6 +25,11 @@ export default function ActiveVisitors() {
     // Function to check if we need to make a new API call
     const shouldFetchNewCount = (): boolean => {
       if (typeof window === 'undefined') return false;
+
+      // Check if we've already made 5 API calls
+      if (apiCallCount.current >= 5) {
+        return false;
+      }
 
       // Get timestamp of last fetch
       const lastFetchTimestamp = localStorage.getItem(TIMESTAMP_KEY);
@@ -47,6 +56,16 @@ export default function ActiveVisitors() {
             // Store the count and current timestamp in localStorage
             localStorage.setItem(STORAGE_KEY, data.count.toString());
             localStorage.setItem(TIMESTAMP_KEY, Date.now().toString());
+
+            // Increment API call counter
+            apiCallCount.current += 1;
+
+            // Clear interval after MAX_API_CALLS
+            if (apiCallCount.current >= MAX_API_CALLS && intervalIdRef.current) {
+              clearInterval(intervalIdRef.current);
+              intervalIdRef.current = null;
+            }
+
             setError(false);
           } else {
             throw new Error('Failed to get visitor count');
@@ -68,11 +87,13 @@ export default function ActiveVisitors() {
     fetchVisitorCount();
 
     // Set up interval to periodically check if we need to update
-    //const intervalId = window?.setInterval(fetchVisitorCount, DISPLAY_UPDATE_INTERVAL);
+    intervalIdRef.current = window?.setInterval(fetchVisitorCount, DISPLAY_UPDATE_INTERVAL);
 
     // Clean up interval on component unmount
     return () => {
-      // clearInterval(intervalId);
+      if (intervalIdRef.current) {
+        clearInterval(intervalIdRef.current);
+      }
     };
   }, []);
 
