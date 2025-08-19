@@ -42,7 +42,8 @@ export const tanStackTutorials: Tutorial[] = [
       },
       {
         title: 'Themes & Dark Mode',
-        soon: true,
+        video: 'https://youtu.be/NoxvbjkyLAg',
+        code: 'https://github.com/Balastrong/start-theme-demo',
       },
     ],
   },
