@@ -1,0 +1,78 @@
+---
+// Simple site-wide banner with a dismiss action persisted in localStorage
+// Props left here for future extensibility
+export interface Props {
+  message?: string;
+  href?: string;
+}
+const {
+  message,
+  href = 'https://confhub.tech/?utm_source=blog&utm_medium=banner&utm_campaign=sitewide_announcement&utm_content=sitewide_top_banner',
+} = Astro.props as Props;
+---
+
+<style is:global>
+  /* Hide the banner when the root has the dismissal flag */
+  .announcement-hidden .announcement-bar {
+    display: none;
+  }
+</style>
+
+<script>
+  const BANNER_ID = 'confhub-announcement-v1';
+  try {
+    const dismissed = localStorage.getItem(BANNER_ID) === '1';
+    if (dismissed) {
+      document.documentElement.classList.add('announcement-hidden');
+    }
+  } catch (e) {
+    // ignore access errors (e.g., privacy mode / SSR)
+  }
+</script>
+
+<div
+  class:list={[
+    'announcement-bar w-full z-40 text-[13px] leading-5',
+    'bg-blue-50/90 dark:bg-blue-900/25 text-blue-900 dark:text-blue-100',
+    'border-b border-blue-200/60 dark:border-blue-800',
+    'print:hidden',
+  ]}
+>
+  <div class="max-w-7xl mx-auto px-3 md:px-4 py-1.5 md:py-1.5 flex items-center justify-center gap-2 md:gap-3">
+    <div class="flex items-center gap-2 text-center">
+      <span
+        class="inline-flex items-center rounded-full bg-blue-100/90 dark:bg-blue-800/60 text-blue-800 dark:text-blue-100 px-1 text-[10px] font-semibold tracking-wide"
+      >
+        NEW
+      </span>
+      <a
+        href={href}
+        target="_blank"
+        class="font-medium hover:text-blue-700 dark:hover:text-blue-200"
+        aria-label="Explore Confhub — tech conferences, CFPs, and speaking gigs"
+      >
+        <span class="mr-1" aria-hidden="true">✨</span>
+        {
+          message ? (
+            message
+          ) : (
+            <span>
+              My latest project:
+              <strong class="font-semibold">Confhub</strong>
+              <span class="mx-1">— discover tech conferences, CFPs, and speaking gigs in one place.</span>
+              <span class="">Explore</span> →
+            </span>
+          )
+        }
+      </a>
+    </div>
+    <button
+      type="button"
+      class="absolute right-2 md:right-4 shrink-0 inline-flex items-center justify-center rounded-md px-1.5 py-0.5 text-blue-900/70 dark:text-blue-100/70 hover:bg-blue-200/50 dark:hover:bg-blue-800/60"
+      aria-label="Dismiss announcement"
+      onclick="try{localStorage.setItem('confhub-announcement-v1','1')}catch(e){};document.documentElement.classList.add('announcement-hidden')"
+    >
+      <span class="inline-block leading-none text-[12px]">✕</span>
+    </button>
+  </div>
+</div>
