@@ -29,7 +29,7 @@ export const tanStackTutorials: Tutorial[] = [
       {
         title: 'Authentication with Supabase',
         video: 'https://youtu.be/6c8kuvBolQg',
-        code: 'Repo: https://github.com/Balastrong/confhub/tree/dc79c9f8fd2a4fb621e2b7029bb0e8dd202d6eb6',
+        code: 'https://github.com/Balastrong/confhub/tree/dc79c9f8fd2a4fb621e2b7029bb0e8dd202d6eb6',
       },
       {
         title: 'SSR, Preloading, Caching and more with Start + Query',
@@ -102,6 +102,11 @@ export const tanStackTutorials: Tutorial[] = [
         title: 'Custom Link Element',
         video: 'https://youtu.be/-kmf3ZYlduU',
         code: 'https://github.com/Balastrong/tanstack-router-demo/tree/09-custom-link',
+      },
+      {
+        title: 'Go to Previous page on Sign In',
+        video: 'https://youtu.be/MXffKeNfOvQ',
+        code: 'https://github.com/Balastrong/confhub',
       },
     ],
   },
