@@ -45,6 +45,11 @@ export const tanStackTutorials: Tutorial[] = [
         video: 'https://youtu.be/NoxvbjkyLAg',
         code: 'https://github.com/Balastrong/start-theme-demo',
       },
+      {
+        title: 'Localization with i18next',
+        video: 'https://youtu.be/w80x52dvrGQ',
+        code: 'https://github.com/Balastrong/confhub',
+      },
     ],
   },
   {
