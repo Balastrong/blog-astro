@@ -150,4 +150,13 @@ export const speakingSessions: SpeakingSession[] = [
     language: '🇮🇹',
     image: 'iis-marconi.jpeg',
   },
+  {
+    date: '2025-10-16',
+    title: 'TanStack: Start a fresh take on React full-stack applications',
+    event: 'ReactJS Day 2025',
+    type: 'session',
+    mode: 'in-person',
+    language: '🇬🇧',
+    eventUrl: 'https://www.reactjsday.it/talk/tanstack-start-a-fresh-take-on-react-full-stack-applications/',
+  },
 ];
