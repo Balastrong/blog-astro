@@ -178,4 +178,13 @@ export const speakingSessions: SpeakingSession[] = [
     language: '🇬🇧',
     eventUrl: 'https://devfest.gdgpescara.it/schedule/',
   },
+  {
+    date: '2025-11-13',
+    title: 'Coding Agents are here: how can we make the most of them?',
+    event: 'Claranet - Software Engineering Days',
+    type: 'session',
+    mode: 'remote',
+    language: '🇬🇧',
+    eventUrl: 'https://academy.claranet.it/pages/coding-agents-sed9',
+  },
 ];
