@@ -22,3 +22,6 @@ pnpm-debug.log*
 .astro
 # Local Netlify folder
 .netlify
+
+
+/subtitles.md
