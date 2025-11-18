@@ -177,6 +177,7 @@ export const speakingSessions: SpeakingSession[] = [
     mode: 'in-person',
     language: '🇬🇧',
     eventUrl: 'https://devfest.gdgpescara.it/schedule/',
+    image: 'pescara-together.jpg',
   },
   {
     date: '2025-11-13',
