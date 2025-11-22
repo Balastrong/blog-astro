@@ -1,9 +1,15 @@
 ---
 agent: agent
-model: Claude Sonnet 4.5 (copilot)
+model: Gemini 3 Pro (Preview) (copilot)
 ---
 
-I will send you the automatically generated subtitles of a video of my tech youtube channel.
+If there is no `subtitles.md` file in the project root, reply with exactly:
+
+"No subtitles file found, put it in the root of the project and try again."
+
+# Task
+
+You will cleanup the content of `subtitles.md`.
 
 Your task is to correct any transcription errors, such as misspellings or misheard words, and add appropriate punctuation and capitalization to make the subtitles readable.
 

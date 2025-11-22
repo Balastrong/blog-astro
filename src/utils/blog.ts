@@ -176,6 +176,9 @@ export const findSimilarPosts = (post: Post, config?: { count?: number }): Post[
           if (post.language === p.language) {
             acc += 10;
           }
+          const yearsDiff = Math.abs(post.publishDate.getFullYear() - p.publishDate.getFullYear());
+          acc += Math.max(0, 5 - yearsDiff);
+
           return acc;
         }, 0) ?? 0;
       return { p, score };

@@ -1,5 +1,6 @@
 ---
 agent: agent
+model: Gemini 3 Pro (Preview) (copilot)
 ---
 
 If there is no `subtitles.md` file in the project root, reply with exactly:
@@ -38,6 +39,7 @@ You will convert the content of `subtitles.md` into a blog post article.
 ## Video Embed
 
 - Choose a natural point early in the article (after the introduction or after the first main section) to embed the related YouTube video.
+  - If possible not immediately, let the reader get some context first.
 - Use the same Astro component used in other articles, but with a placeholder video ID:
   
   `<YouTube id="VIDEO_ID_HERE" />`
@@ -56,7 +58,7 @@ You will convert the content of `subtitles.md` into a blog post article.
   where:
   - `[TODAY-YEAR]` is the current year (e.g. `2025`),
   - `[TODAY-MONTH]` is the current month as a two-digit number (e.g. `11`),
-  - `[SLUG]` is a URL-friendly slug derived from the article title (lowercase, words separated by `-`).
+  - `[SLUG]` is a URL-friendly and SEO optimized slug derived from the article title (lowercase, words separated by `-`).
 
 - The file must follow the same structure as other posts in that folder.
 
@@ -69,7 +71,7 @@ At the top of the file, include frontmatter with at least:
 title: "Your Generated Title"
 description: "A concise, friendly summary of the article."
 publishDate: "YYYY-MM-DD"
-image: "_cover.png"
+image: "./_cover.png"
 tags:
   - tag-one
   - tag-two
