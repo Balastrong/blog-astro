@@ -1,0 +1,138 @@
+---
+title: 'Git: 3 formas de mover commits entre ramas'
+publishDate: '2023-01-25'
+description: '¿Hiciste un commit en la rama equivocada? ¡Moverlo es más fácil de lo que piensas!'
+image: './_cover.png'
+slug: git-mover-commits-entre-ramas
+tags:
+  - git
+  - branch
+---
+
+import Image from '~/components/widgets/Image.astro';
+import YouTube from '~/components/widgets/YouTube.astro';
+
+Estás muy contento, el primer bloque de esa nueva funcionalidad está listo y es un gran momento para hacer commit. Abres la terminal y escribes:
+
+```bash
+git add .
+git commit -m "feat: first commit"
+```
+
+Pero entonces te das cuenta de que no estás en la rama correcta. Estás en `main` y deberías estar en `feature/new-cool-stuff`. No puedes simplemente cambiar de rama porque ya has hecho commit de algo, además `main` tiene algunas políticas y ni siquiera puedes hacer push ahora.
+
+¿Qué puedes hacer?
+
+No te preocupes, hay muchas formas de mover commits entre ramas y te mostraré 3 de ellas. De todos modos, estoy bastante seguro de que puedes hacer prácticamente lo mismo de una docena de otras formas, ¡así que siéntete libre de añadir las tuyas en los comentarios!
+
+Si quieres verlo en acción y seguir un procedimiento paso a paso, ¡puedes ver el video! De lo contrario, siéntete libre de seguir leyendo :)
+
+<YouTube id="0pzFGXvemvA" />
+
+## 1. Mover a una nueva rama
+
+Este es el escenario más fácil y es exactamente lo que se describe arriba. Hiciste un commit en `main` pero en realidad querías moverte a una nueva rama.
+
+Piénsalo, cuando creas una nueva rama básicamente empiezas desde la situación actual de la rama en la que estás. Así que, si estás en `main` y creas una nueva rama, empezarás desde el estado actual de `main` (que es el commit que acabas de hacer).
+
+Esto significa que el paso #1 es:
+
+```bash
+git branch feature/new-cool-stuff
+```
+
+**Nota**: Intencionalmente no usé `git checkout -b feature/new-cool-stuff` porque ese comando también te mueve a la nueva rama. Queremos quedarnos en `main` por ahora.
+
+En el estado actual, tienes tanto `main` como `feature/new-cool-stuff` apuntando al mismo commit y todavía estás posicionado en `main`.
+
+Puedes hacer una comprobación rápida con:
+
+```bash
+git log --oneline
+```
+
+El paso #2 es tan fácil como un hard reset al commit anterior:
+
+```bash
+git reset HEAD~1
+```
+
+¿Qué pasó aquí? Eliminaste de `main` el commit que acabas de hacer, pero no lo perdiste. Todavía está ahí, pero en la nueva rama.
+
+## 2. Mover a una rama existente (stash)
+
+Cambiemos un poco el enfoque, puedes estar en cualquier rama y quieres mover el último commit a otra rama. Puedes hacerlo guardando el commit en el stash y luego aplicándolo (pop) en la otra rama. Déjame explicarte.
+
+Si tienes cambios sin commitear, todavía puedes cambiar de una rama a otra, pero no siempre. Si tus cambios entran en conflicto con la nueva rama a la que intentas cambiar, obtendrás un error. Aquí es donde el stash resulta útil.
+
+Pero estábamos hablando de un commit en la rama equivocada y no puedes hacer stash de un commit (¿o sí puedes? Que yo sepa no).
+
+El plan aquí es deshacerse del commit, poner los cambios en algún lugar (stash) y luego volver a aplicar los cambios en la rama correcta para que puedas hacer commit de nuevo. Veamos cómo.
+
+Primero de todo, necesitas deshacerte del commit. Puedes hacerlo con un soft reset:
+
+```bash
+git reset --soft HEAD~1
+```
+
+Como usamos `--soft`, los cambios todavía están ahí, simplemente no están commiteados. Ahora puedes hacer stash de ellos:
+
+```bash
+git stash
+```
+
+Como puedes ver ahora, todos tus cambios han desaparecido. No te preocupes, si ejecutas `git stash list` verás que todavía están ahí.
+
+Ahora es el momento de cambiar a la rama correcta:
+
+```bash
+git checkout feature/new-cool-stuff
+```
+
+Y finalmente, puedes volver a aplicar tus cambios con:
+
+```bash
+git stash pop
+```
+
+¿Por qué `pop`? Porque el stash es en realidad una pila (stack). Con el primer `git stash` añadiste un nuevo elemento en la cima de la pila. Con `git stash pop` básicamente eliminas el elemento superior de la pila y lo aplicas.
+
+En este punto podrías tener algunos conflictos (por eso usamos stash en lugar de simplemente hacer checkout con los cambios sin commitear) pero no es un problema si viste mi video sobre [cómo resolver conflictos de merge](https://youtu.be/lz5OuKzvadQ).
+
+## 3. Mover a una rama existente (cherry-pick)
+
+Una forma similar de mover commits entre ramas es usar `git cherry-pick`. En este caso, el plan no es eliminar el commit y luego volver a commitearlo, sino simplemente moverlo a la otra rama (y luego puedes limpiar la rama antigua).
+
+Lo que hace `cherry-pick` es básicamente copiar un commit de una rama a otra (generando un nuevo commit, con los mismos cambios). Veamos cómo podemos usarlo en nuestro escenario.
+
+Primero de todo, necesitas obtener el hash del commit que quieres mover. Puedes hacerlo con:
+
+```bash
+git log --oneline
+```
+
+Si me sigues, sabes que suelo usar [alias de git](https://youtu.be/Uk4GnYoQx_I) así que en el video me verás usando `git lgo` en lugar de `git log --oneline`.
+
+Ahora que tienes el hash, puedes hacer `checkout` a la rama destino donde quieres mover el commit, y luego puedes hacer `cherry-pick` de él:
+
+```bash
+git checkout feature/new-cool-stuff
+git cherry-pick <commit-hash>
+```
+
+¡Eso es todo! Como de costumbre, si tienes conflictos puedes resolverlos con vscode. De manera similar a un merge normal, una vez que hayas arreglado todos los conflictos puedes usar `git add .` y `git cherry-pick --continue` para terminar el cherry-pick. Si quieres abortar el cherry-pick puedes usar `git cherry-pick --abort` y la situación será la misma que antes de empezar.
+
+Ahora que la nueva rama tiene nuestro commit, podemos volver a la rama antigua y eliminarlo:
+
+```bash
+git checkout main
+git reset HEAD~1
+```
+
+Limpio y ordenado, moviste el commit de `main` a `feature/new-cool-stuff` y lo eliminaste de `main`.
+
+## Conclusión
+
+Espero que hayas disfrutado de este post y que hayas aprendido algo nuevo. Si es así, ¡por favor compártelo con tus amigos y colegas!
+
+¿Y tú? ¿Tienes alguna otra forma de mover commits entre ramas? Quiero decir, como mencioné al principio estoy seguro de que las hay, solo tengo curiosidad por saber cuál te funciona mejor. ¡Házmelo saber en los comentarios, me encantaría aprender nuevos métodos!

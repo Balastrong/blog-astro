@@ -29,6 +29,7 @@ const {
   author,
 
   dontUseTitleTemplate = false,
+  languageAlternates,
 } = Astro.props;
 
 const pageTitle = `${title}${dontUseTitleTemplate ? '' : ` | ${SITE.name}`}`;
@@ -52,6 +53,7 @@ const image =
   canonical={String(canonical)}
   noindex={noindex}
   nofollow={nofollow}
+  languageAlternates={languageAlternates}
   openGraph={{
     url: String(canonical),
     title: pageTitle,

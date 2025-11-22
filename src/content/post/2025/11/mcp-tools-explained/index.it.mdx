@@ -1,0 +1,145 @@
+---
+title: 'Come GitHub Copilot usa MCP dietro le quinte'
+description: 'Una guida passo-passo su come Copilot scopre e chiama i tool MCP, trasformando gli output grezzi dai server in risposte utili.'
+publishDate: 2025-11-17
+image: ./_cover.png
+tags:
+  - copilot
+  - mcp
+  - github
+slug: come-github-copilot-usa-tool-mcp-dietro-quinte
+---
+
+import YouTube from '~/components/widgets/YouTube.astro';
+import Image from '~/components/widgets/Image.astro';
+
+Prima di entrare nei dettagli, ecco la versione video di questo articolo, se preferisci guardarlo prima di leggere l'approfondimento. Se invece preferisci leggere, puoi saltarlo e passare direttamente agli esempi.
+
+<YouTube id="U_ahtUrubuQ" />
+
+Iniziamo con un esempio semplice per rendere tutto più concreto.
+
+Apri una nuova chat e fai a Copilot una domanda semplice ma molto pratica: "c'è qualche pull request che mi aspetta?"
+
+Dopo una breve pausa e un po' di magia dietro le quinte, Copilot risponde con l'elenco esatto delle pull request che richiedono la tua attenzione. Nessuna ricerca manuale, nessun cambio di scheda. Nel resto di questo articolo, sveleremo cosa è successo realmente.
+
+import chat from './_chat.png';
+
+<Image src={chat} alt="chat" />
+
+Vedremo come funziona davvero quella "magia" degli strumenti MCP (MCP Tools), usando il server MCP di GitHub come esempio.
+
+## Da una semplice domanda allo strumento giusto
+
+Nell'esempio precedente, quando chiedi a Copilot delle tue PR, non sta "indovinando" la risposta, poiché non può saperlo da solo. Sta invece usando uno strumento fornito dal server MCP di GitHub per cercare nei tuoi repository.
+
+Installare un server MCP significa sostanzialmente dire al client LLM dove si trova il server e come parlarci. Ad esempio, un server potrebbe essere ospitato a un URL come `https://api.githubcopilot.com/mcp/`, e il client può comunicare con esso tramite HTTP.
+
+Ma la posizione del server è solo una parte della storia. Ciò che conta davvero è **quali strumenti** quel server espone.
+
+Dall'interfaccia di GitHub Chat, cliccando sul pulsante degli strumenti (Tools), puoi vedere per ogni server l'elenco degli strumenti registrati e le loro descrizioni. Nel GitHub MCP, ad esempio, troverai uno strumento per cercare le pull request.
+
+È quello che Copilot ha usato per rispondere alla mia domanda sulle PR aperte.
+
+## Come Copilot scopre gli strumenti
+
+Finora ci siamo concentrati su cosa fanno gli strumenti; il passo successivo è capire come Copilot ne viene a conoscenza.
+
+La risposta sta nelle specifiche del Model Context Protocol (MCP).
+
+Non appena il client si avvia (ad esempio aprendo VS Code), il client MCP chiede a ogni server registrato un elenco di strumenti.
+
+Il server risponde con una lista che include, per ogni strumento:
+
+- Il nome dello strumento
+- Una descrizione
+- Lo schema di input (quali parametri si aspetta)
+
+Questa lista viene poi resa disponibile al modello linguistico. In altre parole, Copilot vede un catalogo del tipo: "c'è uno strumento `search_pull_requests` che accetta una `query`, un `owner` e un `repository`."
+
+Da lì, il modello può decidere **quale** strumento chiamare e **come** compilare quegli input.
+
+```json
+{
+  "query": "repo:Balastrong/confhub is:open",
+  "owner": "Balastrong",
+  "repo": "confhub"
+}
+```
+
+Copilot sceglie i valori per questi campi in base alla tua domanda, al contesto del repository corrente e ad altri metadati. Quindi invia quel payload al server MCP.
+
+Il server esegue la sua logica, parla con API esterne se necessario e restituisce un output strutturato.
+
+```json
+{
+  "total_count": 1,
+  "incomplete_results": false,
+  "items": [
+    {
+      "id": 3592203585,
+      "number": 5,
+      "state": "open",
+      "locked": false,
+      "title": "Modernize create community form with card-based layout and visual elements",
+      "body": "The create community form ...",
+      "created_at": "2025-11-05T17:57:06Z",
+      "updated_at": "2025-11-08T15:46:28Z"
+    },
+    ...
+  ]
+}
+```
+
+## Trasformare l'output grezzo in risposte
+
+La risposta che torna dal server MCP non è quella che vedi nella chat.
+
+Lo strumento restituisce dati strutturati: oggetti, array, campi con ID, titoli, URL e così via. Questo è estremamente utile per il modello, ma non necessariamente leggibile per gli umani.
+
+Quando Copilot riceve quell'output, lo tratta come **contesto aggiuntivo**, non come la risposta finale. Con questi dati extra, il modello può:
+
+- Scegliere solo i campi rilevanti
+- Formattarli in modo chiaro
+- Spiegare cosa sta succedendo in linguaggio naturale
+
+Questo è il passaggio in cui l'output grezzo dello strumento diventa la risposta chiara nella tua chat, alimentata da dati reali dal server MCP.
+
+A questo punto, sai come Copilot trova lo strumento giusto e trasforma il suo output in qualcosa di leggibile. Ma c'è ancora una domanda interessante.
+
+## Come fa Copilot a sapere chi sei?
+
+Nell'esempio precedente, lo strumento di ricerca delle pull request deve sapere **con quale** utente e repository lavorare.
+
+Se guardi la scheda dell'output MCP, puoi vedere che la chat di Copilot viene inizializzata con il tuo nome utente GitHub e altri dettagli del contesto del repository.
+
+Per curiosità, puoi anche chiedere direttamente a Copilot: "qual è il mio nome utente GitHub?" Può rispondere in base al contesto del repository e alle informazioni iniettate nella sessione.
+
+Più specificamente, la chat di Copilot aggiunge dettagli come:
+
+- Il tuo nome utente GitHub
+- Il repository su cui stai lavorando
+- Il branch corrente
+- E altri metadati necessari agli strumenti
+
+È così che il modello linguistico "sa" chi sei all'interno della chat di Copilot: non indovinando, ma perché il client condivide esplicitamente quelle informazioni come parte del contesto.
+
+## Perché capire questo è importante
+
+È facile guardare queste funzionalità e pensare che sia tutta magia.
+
+Ma quando capisci che c'è un protocollo chiaro, un elenco di server, un elenco di strumenti, schemi di input e output strutturati, tutto diventa molto più tangibile.
+
+Sapere come si muovono le cose dietro le quinte ti dà più controllo. Puoi:
+
+- Capire meglio di cosa è capace Copilot
+- Ragionare su quali strumenti potrebbero essere utili per il tuo flusso di lavoro
+- Progettare o configurare server MCP che espongano esattamente gli strumenti di cui hai bisogno
+
+La magia è bella, ma la conoscenza è il tuo vero potere.
+
+Ho in programma di creare altri contenuti che esplorano come VS Code, Copilot e MCP lavorano insieme, andando oltre l'effetto "wow" e scendendo nei dettagli pratici.
+
+Grazie per aver letto. Spero che questo abbia risposto ad alcune delle tue domande su come Copilot usa gli strumenti MCP.
+
+Alla prossima!

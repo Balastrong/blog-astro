@@ -3,6 +3,7 @@ import type { CollectionEntry } from 'astro:content';
 import type { Post } from '~/types';
 import { cleanSlug, trimSlash, POST_PERMALINK_PATTERN } from './permalinks';
 import { seriesNames } from '~/data';
+import { LANGUAGES, type Language } from '~/content/config';
 
 const generatePermalink = async ({ id, slug, publishDate, series }) => {
   const year = String(publishDate.getFullYear()).padStart(4, '0');
@@ -29,9 +30,22 @@ const generatePermalink = async ({ id, slug, publishDate, series }) => {
     .join('/');
 };
 
+const getLanguageFromId = (id: string): Language => {
+  const match = id.match(/\.([a-z]{2})\.(md|mdx)$/);
+  const lang = match ? match[1] : 'en';
+
+  if (!LANGUAGES.includes(lang as Language)) {
+    throw new Error(`Unsupported language code: ${lang} in post id: ${id}`);
+  }
+
+  return lang as Language;
+};
+
 const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> => {
-  const { id, slug: rawSlug = '', data } = post;
+  const { id, slug: rawSlug, data } = post;
   const { Content, remarkPluginFrontmatter } = await post.render();
+
+  const language = getLanguageFromId(id);
 
   const youtubeId = post.body.match(/<YouTube.*?id="(.*?)".*?>/g)?.map((match) => match.match(/id="(.*?)"/)?.[1])?.[0];
 
@@ -57,6 +71,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     tags,
     author,
     youtubeId,
+    language,
 
     ...rest,
 
@@ -76,6 +91,33 @@ const load = async function (): Promise<Post[]> {
     .sort((a, b) => b.publishDate.valueOf() - a.publishDate.valueOf())
     .filter((post) => !post.draft);
 
+  const groupedPosts: Record<string, Post[]> = {};
+  results.forEach((post) => {
+    const id = post.id;
+    const groupSlug = id
+      .replace(/\.(md|mdx)$/, '')
+      .replace(/\.([a-z]{2})$/, '')
+      .replace(/\/index$/, '');
+
+    if (!groupedPosts[groupSlug]) {
+      groupedPosts[groupSlug] = [];
+    }
+    groupedPosts[groupSlug].push(post);
+  });
+
+  Object.values(groupedPosts).forEach((group) => {
+    if (group.length > 1) {
+      const translations = group.reduce((acc, p) => {
+        acc[p.language] = p.permalink || p.slug;
+        return acc;
+      }, {} as Record<string, string>);
+
+      group.forEach((p) => {
+        p.translations = translations;
+      });
+    }
+  });
+
   return results;
 };
 
@@ -83,40 +125,12 @@ let _posts: Post[];
 let _series: Map<string, Post[]>;
 
 /** */
-export const fetchPosts = async (): Promise<Post[]> => {
+export const fetchPosts = async (language: Post['language'] | 'all' = 'en'): Promise<Post[]> => {
   if (!_posts) {
     _posts = await load();
   }
 
-  return _posts;
-};
-
-/** */
-export const findPostsBySlugs = async (slugs: string[]): Promise<Post[]> => {
-  if (!Array.isArray(slugs)) return [];
-
-  const posts = await fetchPosts();
-
-  return slugs.reduce(function (r: Post[], slug: string) {
-    posts.some(function (post: Post) {
-      return slug === post.slug && r.push(post);
-    });
-    return r;
-  }, []);
-};
-
-/** */
-export const findPostsByIds = async (ids: string[]): Promise<Post[]> => {
-  if (!Array.isArray(ids)) return [];
-
-  const posts = await fetchPosts();
-
-  return ids.reduce(function (r: Post[], id: string) {
-    posts.some(function (post: Post) {
-      return id === post.id && r.push(post);
-    });
-    return r;
-  }, []);
+  return language === 'all' ? _posts : _posts.filter((post) => post.language === language);
 };
 
 export const findPostsInSeries = (series?: string): Post[] => {
@@ -159,12 +173,12 @@ export const findSimilarPosts = (post: Post, config?: { count?: number }): Post[
           if (post.tags?.includes(tag)) {
             acc += 1;
           }
+          if (post.language === p.language) {
+            acc += 10;
+          }
           return acc;
         }, 0) ?? 0;
-      return {
-        p,
-        score: score,
-      };
+      return { p, score };
     })
     .sort((a, b) => b.score - a.score)
     .map((p) => p.p)

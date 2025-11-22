@@ -1,0 +1,144 @@
+---
+title: '4 Metodi Gratuiti per usare API LLM in Sviluppo'
+description: 'Scopri 4 modi diversi per utilizzare Large Language Model gratuitamente durante lo sviluppo, incluse opzioni locali e ospitate.'
+publishDate: 2025-09-09
+image: ./_cover.png
+slug: 4-metodi-gratuiti-api-llm-sviluppo
+tags:
+  - ai
+  - llm
+  - github
+---
+
+import YouTube from '~/components/widgets/YouTube.astro';
+
+Potresti trovarti nella stessa situazione in cui ero io l'altro giorno: volevo sviluppare una piccola funzionalità AI a scopo didattico sul mio [side project](confhub.tech), ma non volevo pagare per una API key.
+
+Così ho fatto qualche ricerca: lascia che ti mostri 4 modi diversi che ho trovato per farlo gratuitamente, con la possibilità di passare tra una vasta gamma di modelli, così puoi scegliere il migliore per il tuo caso d'uso.
+
+Il mio primo tentativo è stato ovviamente Ollama per eseguire i modelli localmente, poi ho provato i piani gratuiti di alcuni provider hosted.
+
+Ne parlo e mostro alcuni passaggi e demo in questo [video YouTube](https://youtu.be/87HrBpOZeUE), oppure puoi continuare a leggere qui sotto.
+
+<YouTube id="87HrBpOZeUE" />
+
+## Configurazione del codice
+
+Iniziamo con una buona notizia: tutti e quattro i metodi funzionano con lo stesso identico codice, poiché fortunatamente supportano tutti l'SDK di OpenAI. L'unico cambiamento sarà impostare i valori corretti nelle variabili d'ambiente.
+
+Se sei curioso, puoi trovare [qui il codice effettivo](https://github.com/Balastrong/confhub/blob/main/src/services/ai.api.ts) che sto usando nella mia demo, incluso il system prompt e i miei goffi tentativi di forzare il modello a comportarsi e rispondere come voglio.
+
+Comunque, non voglio aggiungere complessità inutile a questo articolo, quindi mostrerò solo un riassunto che puoi usare come punto di partenza:
+
+```ts
+import OpenAI from 'openai';
+
+const token = process.env.LLM_TOKEN!;
+const endpoint = process.env.LLM_ENDPOINT!;
+const model = process.env.LLM_MODEL!;
+
+export async function prompt(userPrompt: string) {
+  const client = new OpenAI({ baseURL: endpoint, apiKey: token });
+
+  const response = await client.chat.completions.create({
+    messages: [
+      { role: 'system', content: 'You are a helpful assistant.' },
+      { role: 'user', content: userPrompt },
+    ],
+    model: model,
+  });
+
+  console.log(response.choices[0].message.content);
+}
+```
+
+## 1. Ollama - Esegui modelli localmente
+
+- **Homepage**: https://ollama.com/
+
+Questa è la prima cosa che ho provato perché volevo vedere come funziona l'esecuzione dei modelli in locale. Per farla breve: l'hanno reso così facile che è come fare il pull di immagini Docker. C'è letteralmente un comando `ollama pull`.
+
+Puoi installare l'app dal sito web e troverai lo strumento da riga di comando `ollama` nel tuo path. Quando l'ho fatto un paio di settimane fa l'app era quasi vuota, ora vedo che hanno iniziato ad aggiungere funzionalità come una UI dove puoi chattare con i tuoi modelli installati (oltre a parlarci nel terminale) e altri piccoli tocchi piacevoli.
+
+A questo punto vorrai avere dei modelli, giusto? Puoi trovare una lista nella loro pagina [Models](https://ollama.com/search), poi apri un terminale ed esegui `ollama pull <model-name>` per scaricarlo. Prima di scegliere un modello dai un'occhiata alla dimensione (potrebbero essere molti GB) e preparati ad avere risposte lente se la tua macchina non è abbastanza potente.
+
+Puoi vedere in qualsiasi momento quali modelli hai con `ollama ls`.
+
+Tornando alla nostra missione di imparare come usare gli LLM nel nostro codice, ora che hai Ollama attivo e funzionante con almeno un modello scaricato, puoi impostare questi valori per le tue variabili d'ambiente:
+
+```bash
+LLM_TOKEN=ollama
+LLM_ENDPOINT=http://localhost:11434/v1
+LLM_MODEL=<your_downloaded_model>
+```
+
+Sei pronto a partire!
+
+## 2. GitHub Models - Hosted
+
+- **Homepage**: https://github.com/marketplace?type=models
+- **Piano Gratuito**: https://docs.github.com/en/github-models/use-github-models/prototyping-with-ai-models#rate-limits
+
+Ollama è stato divertente, ma non stavo usando modelli molto intelligenti e a un certo punto volevo portare la mia funzionalità AI in produzione, quindi... non potevo semplicemente dire "funziona sulla mia macchina con Ollama", dovevo trovare una soluzione hosted. Gratuitamente.
+
+Il primo servizio che ho provato è stato GitHub Models. Offre fondamentalmente alcuni dei modelli più recenti con un piano gratuito (non serve nemmeno un abbonamento Copilot) che puoi testare già nel browser.
+
+Puoi anche usarli nella tua app e hai bisogno solo di una singola chiave API: un GitHub Personal Access Token (PAT).
+
+Puoi generarne uno dalle tue impostazioni sviluppatore, ma sul marketplace dei Models troverai un link diretto per farlo letteralmente con un click. Dovrebbe funzionare anche da qui: [https://github.com/settings/personal-access-tokens/new](https://github.com/settings/personal-access-tokens/new?description=Used+to+call+GitHub+Models+APIs+to+easily+run+LLMs%3A+https%3A%2F%2Fdocs.github.com%2Fgithub-models%2Fquickstart%23step-2-make-an-api-call&name=GitHub+Models+token&user_models=read)
+
+Una volta ottenuto il token, impostalo nelle tue variabili d'ambiente e sei pronto a partire!
+
+```bash
+LLM_TOKEN=<your_github_pat>
+LLM_ENDPOINT=https://models.github.ai/inference
+LLM_MODEL=<model_name>
+```
+
+Nella mia app ho semplicemente impostato queste variabili su Netlify per far funzionare la funzionalità AI sul mio sito in produzione.
+
+## 3. Open Router - Hosted
+
+- **Homepage**: https://openrouter.ai/
+- **Piano Gratuito**: https://openrouter.ai/docs/api-reference/limits
+
+Ero soddisfatto di GitHub Models, ma per amore di una buona ricerca volevo provare più provider. Open Router è un'altra soluzione hosted che offre un piano gratuito, ma su alcuni modelli selezionati.
+
+Puoi trovarli tutti [filtrando la lista](https://openrouter.ai/models?q=%3Afree) per `:free` nel nome del modello.
+
+Una volta registrato puoi ottenere la tua API Key dalle [impostazioni](https://openrouter.ai/settings/keys) e inserirla nelle tue variabili d'ambiente come al solito:
+
+```bash
+LLM_TOKEN=<your_open_router_api_key>
+LLM_ENDPOINT=https://openrouter.ai/api/v1
+LLM_MODEL=<model_name:free>
+```
+
+## 4. Groq - Hosted
+
+- **Homepage**: https://groq.com/
+- **Piano Gratuito**: https://console.groq.com/docs/rate-limits#rate-limits
+
+La prima cosa che ho detto quando un collega mi ha parlato di Groq è stata "aspetta, non si chiama Grok?" e no, non era un errore di battitura, sono due cose molto diverse.
+
+Groq è un'azienda hardware che esegue LLM sui propri chip.
+
+Similmente a Open Router, con una chiave API Groq puoi accedere a una selezione di modelli supportati e passare da uno all'altro cambiando il nome del modello nelle tue variabili d'ambiente.
+
+Puoi ottenere la chiave dopo esserti registrato, ma non dovresti essere sorpreso ora dopo aver letto le sezioni precedenti. Fortunatamente, la maggior parte di questi provider funziona in modo molto simile.
+
+```bash
+LLM_TOKEN=<your_groq_api_key>
+LLM_ENDPOINT=https://api.groq.com/openai/v1
+LLM_MODEL=<model_name>
+```
+
+## Bonus
+
+Questi approcci che ho provato davano tutti la possibilità di passare tra diversi modelli, il che è ottimo per trovare il migliore per il tuo caso d'uso.
+
+In ogni caso, tutti i provider di LLM di solito hanno i loro piani gratuiti. Ci sono molte opzioni che puoi scegliere direttamente dal fornitore, che sia OpenAI, Anthropic, Google, ecc.
+
+Quando è il momento di andare in produzione... beh, quella è un'altra storia.
+
+Cosa stai usando per lo sviluppo? E cosa usi in produzione? Discutiamone nei commenti!

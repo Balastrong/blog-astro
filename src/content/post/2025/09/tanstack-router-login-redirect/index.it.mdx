@@ -1,0 +1,195 @@
+---
+title: 'TanStack Router: Tornare alla pagina precedente dopo il Sign In'
+description: 'Impara come implementare un redirect di login in TanStack Router per riportare gli utenti alla loro pagina precedente dopo il login.'
+slug: 'tanstack-router-redirect-login-pagina-precedente'
+publishDate: 2025-09-16
+image: ./_cover.png
+series: tanstack-router
+tags:
+  - tanstack
+  - tanstack-router
+  - react
+  - typescript
+---
+
+import TanStackBanner from '~/components/widgets/TanStackBanner.astro';
+
+Bentornati alla serie TanStack Router! Oggi raggiungiamo la doppia cifra con il [capitolo 10](https://www.youtube.com/playlist?list=PLOQjd5dsGSxJilh0lBofeY8Qib98kzmF5)!
+
+Risolviamo un problema di UX molto comune nei flussi di autenticazione. Navighi verso una pagina, sei costretto a fare il login, ma poi vieni reindirizzato alla homepage. Magari avevi impostato dei filtri o inserito dei dati: ora è tutto sparito.
+
+In questo articolo mostrerò due approcci per reindirizzare gli utenti alla pagina in cui si trovavano prima del login, mantenendo intatti tutti i query parameter. Vedremo prima il classico redirect esplicito, poi un'alternativa che cattura automaticamente la posizione precedente.
+
+Versione video qui: https://youtu.be/MXffKeNfOvQ
+
+<TanStackBanner libraryName="Router" />
+
+## Il problema in breve
+
+Fai il login e vieni reindirizzato alla homepage, perdendo la pagina e i parametri di ricerca che stavi visualizzando.
+
+## Approccio 1: redirect esplicito tramite search param
+
+Questa è la soluzione più diretta e affidabile. Passiamo esplicitamente un parametro `redirectTo` ovunque l'utente possa navigare alla pagina di login e lo usiamo per tornare indietro dopo l'autenticazione.
+
+Il nostro componente form di Sign In apparirà così: di default porta alla homepage, oppure reindirizza all'URL fornito dopo un login riuscito.
+
+```tsx
+export const SignInForm = ({ redirectTo = '/' }: { redirectTo?: string }) => {
+  const navigate = useNavigate();
+
+  const signIn = () => {
+    // La tua logica di sign in qui
+
+    navigate({ to: redirectTo });
+  };
+
+  return (
+    <form onSubmit={signIn}>
+      {/* campi del form */}
+      <Button type="submit">Sign In</Button>
+    </form>
+  );
+};
+```
+
+Ma da dove arriva `redirectTo`? Aggiungiamolo come parametro di ricerca alla rotta di sign in.
+
+```tsx
+import { createFileRoute } from '@tanstack/react-router';
+import { SignInForm } from 'src/components/auth/sign-in-form';
+import { Layout } from 'src/components/layout';
+import { z } from 'zod';
+
+export const Route = createFileRoute('/sign-in')({
+  component: RouteComponent,
+  validateSearch: z.object({
+    redirectTo: z.string().optional().catch('/'),
+  }),
+  // ...
+});
+
+function RouteComponent() {
+  const { redirectTo } = Route.useSearch();
+
+  return (
+    <Layout>
+      {/* ... */}
+      <SignInForm redirectTo={redirectTo} />
+      {/* ... */}
+    </Layout>
+  );
+}
+```
+
+Cosa fa quel `validateSearch`? Usa Zod per analizzare i parametri di ricerca ed estrarre `redirectTo`, impostandolo a `/` se non fornito. Poi nel componente lo leggiamo con `Route.useSearch()` e lo passiamo al `SignInForm`.
+
+> Se vuoi saperne di più su come gestire i parametri di ricerca con TanStack Router, dai un'occhiata al mio articolo precedente: [Handling Query Parameters](/tanstack-router-query-params).
+
+Il passo successivo è assicurarsi che ogni link alla pagina di sign in includa il parametro `redirectTo`. Ecco un esempio nel componente `Header`:
+
+```tsx
+import { useRouter } from '@tanstack/react-router';
+import { ButtonLink } from '../button-link';
+
+export const Header = () => {
+  const router = useRouter();
+
+  return (
+    <header>
+      {/* ... */}
+
+      <ButtonLink to="/sign-in" search={{ redirectTo: router.state.location.href }}>
+        Sign In
+      </ButtonLink>
+      {/* ... */}
+    </header>
+  );
+};
+```
+
+> Cos'è `ButtonLink`? È solo un wrapper stilizzato attorno al componente `Link` di TanStack Router. Puoi usare `Link` direttamente se preferisci, o imparare a creare il tuo componente link personalizzato in un video che ho realizzato: https://youtu.be/-kmf3ZYlduU
+
+Con questo, dopo un login riuscito tornerai alla pagina originale, inclusi tutti i parametri di ricerca.
+
+## Compromesso dell'approccio esplicito
+
+Devi ricordarti di aggiungere il parametro `redirectTo` in ogni link alla pagina di sign in. Non è un grosso problema, e puoi incapsularlo in un helper o custom hook come utility "vai al login", ma è comunque un passaggio in più.
+
+## Approccio 2: catturare automaticamente la posizione precedente
+
+Ho sperimentato anche un piccolo hook che traccia la posizione precedente senza passare parametri di ricerca alla pagina di sign in. Non sono sicuro al 100% della sua stabilità e affidabilità in ogni scenario, ma nei miei test ha funzionato bene, quindi ho pensato valesse la pena condividerlo:
+
+```ts
+function usePreviousLocation() {
+  const router = useRouter();
+  const [previousLocation, setPreviousLocation] = useState<string>('/');
+  useEffect(() => {
+    return router.subscribe('onResolved', ({ fromLocation }) => {
+      setPreviousLocation(fromLocation?.href ?? '/');
+    });
+  }, []);
+  return previousLocation;
+}
+```
+
+Questo hook si iscrive agli eventi di navigazione del router e cattura la posizione "from" dopo ogni navigazione, memorizzandola nello stato per usarla successivamente.
+
+Con questo, puoi dimenticare quanto detto prima: non avrai più bisogno di passare `redirectTo` in ogni navigazione o gestire search param. Usa semplicemente l'hook nel tuo form di sign in:
+
+```tsx
+export const SignInForm = () => {
+  const navigate = useNavigate();
+  const previousLocation = usePreviousLocation();
+
+  const signIn = () => {
+    // La tua logica di sign in qui
+
+    navigate({ to: previousLocation });
+  };
+
+  return (
+    <form onSubmit={signIn}>
+      {/* campi del form */}
+      <Button type="submit">Sign In</Button>
+    </form>
+  );
+};
+```
+
+## Combinare entrambi per una UX robusta
+
+I due approcci possono funzionare bene insieme. Puoi dare priorità al `redirectTo` esplicito quando presente, e usare come fallback la posizione precedente catturata quando manca. Questo copre sia i redirect intenzionali che il comportamento di default senza sforzo extra.
+
+```tsx
+export const SignInForm = ({ redirectTo }: { redirectTo?: string }) => {
+  const navigate = useNavigate();
+  const previousLocation = usePreviousLocation();
+
+  const signIn = () => {
+    // La tua logica di sign in qui
+
+    navigate({ to: redirectTo ?? previousLocation });
+  };
+
+  return (
+    <form onSubmit={signIn}>
+      {/* campi del form */}
+      <Button type="submit">Sign In</Button>
+    </form>
+  );
+};
+```
+
+## Note
+
+- Questo articolo si concentra su TanStack Router, ma la stessa idea funziona anche in TanStack Start.
+- Se stai usando rotte autenticate o guardie, potrebbe interessarti anche questo articolo correlato: [Authenticated Routes and Guards](/tanstack-router-authenticated-guards).
+
+## Conclusione
+
+È tutto! Con il redirect esplicito o l'approccio della posizione precedente, puoi far sì che il tuo flusso di login riporti gli utenti esattamente dove avevano lasciato, preservando i query parameter e il contesto.
+
+Se hai idee diverse o miglioramenti, fammelo sapere nei commenti.
+
+Il codice è tratto dal [progetto ConfHub](https://confhub.tech/), puoi trovarlo qui: https://github.com/Balastrong/confhub

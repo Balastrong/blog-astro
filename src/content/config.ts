@@ -1,5 +1,8 @@
 import { z, defineCollection } from 'astro:content';
 
+export const LANGUAGES = ['en', 'it', 'es'] as const;
+export type Language = (typeof LANGUAGES)[number];
+
 const post = defineCollection({
   schema: z.object({
     title: z.string(),

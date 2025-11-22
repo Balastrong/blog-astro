@@ -1,0 +1,339 @@
+---
+title: 'TanStack Start: tema claro, oscuro y sistema sin parpadeos'
+description: 'Cómo implementar un selector de tema robusto en una app TanStack Start con renderizado del lado del servidor: almacenamiento, SSR, preferencia del sistema y sin FOUC.'
+slug: 'tanstack-start-tema-sin-parpadeos'
+publishDate: 2025-08-22
+image: ./_cover.png
+tags:
+  - tanstack
+  - tanstack-start
+  - react
+  - typescript
+  - tailwind
+---
+
+import YouTube from '~/components/widgets/YouTube.astro';
+import Image from '~/components/widgets/Image.astro';
+
+import theme from './_theme.gif';
+
+<Image src={theme} alt="tema" />
+
+Tener múltiples temas es una solicitud común en aplicaciones (web) hoy en día, al menos tener claro, oscuro y sistema (define oscuro/claro automáticamente según el sistema del usuario).
+
+Si tu aplicación también tiene algún tipo de renderizado del lado del servidor, esta petición aparentemente sencilla puede complicarse más de lo esperado, especialmente cuando empiezas a ver problemas como:
+
+- La app carga inicialmente con el tema incorrecto (FOUC: Flash Of Unstyled Content)
+- Refrescas la página y el tema desaparece
+- El usuario cambia el tema del sistema y la app no lo sigue
+- Aparecen algunos errores extraños en los logs porque se llaman APIs de solo cliente en el servidor
+- Problemas de hidratación por todas partes
+- ... la lista continúa
+
+## Detalles de Implementación
+
+Hace poco dediqué un tiempo a implementar un enfoque robusto para una aplicación TanStack Start ([código aquí](https://github.com/Balastrong/start-theme-demo)) y grabé un vídeo donde explico paso a paso todas las partes móviles. Puedes verlo aquí y usar este artículo como referencia futura.
+
+<YouTube id="NoxvbjkyLAg" />
+
+### Los dos tipos de tema
+
+Empecemos definiendo los tipos. Me gusta distinguir entre lo que el usuario elige y lo que la app realmente renderiza:
+
+```ts
+export type UserTheme = 'light' | 'dark' | 'system';
+export type AppTheme = Exclude<UserTheme, 'system'>;
+```
+
+`UserTheme` es la elección explícita del usuario, mientras que `AppTheme` es el tema resuelto que la app realmente usa para renderizar.
+
+### Almacenamiento que no rompe SSR
+
+Persistamos la elección del usuario a través de localStorage.
+
+Espera... ¿pero no es una API solo de cliente? Sí, lo es. La elección arquitectónica habitual suele ser entre localStorage y cookies. Entraré un poco más en detalle al final del artículo si tienes curiosidad, pero por ahora vamos con el enfoque localStorage.
+
+Regla número 1: nunca toques `window` o `localStorage` cuando se ejecuta en el servidor. Hay otra regla interesante pero te la diré después... vale, no la pongo ahora: en el primer renderizado (en el servidor) no puedes depender de JS o tendrás errores de hidratación y parpadeos extraños. Veremos eso en práctica en el selector de tema.
+
+Aquí está el enfoque a través de algunos métodos de utilidad: un getter seguro que devuelve 'system' en el servidor y valida los valores en el cliente; y un setter que no hace nada en el servidor.
+
+```ts
+function getStoredUserTheme(): UserTheme {
+  if (typeof window === 'undefined') return 'system';
+  try {
+    const stored = localStorage.getItem(themeStorageKey);
+    return stored && themes.includes(stored as UserTheme) ? (stored as UserTheme) : 'system';
+  } catch {
+    return 'system';
+  }
+}
+
+function setStoredTheme(theme: UserTheme): void {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(themeStorageKey, theme);
+  } catch {}
+}
+```
+
+### Resolviendo el tema del sistema
+
+Los navegadores exponen la preferencia del SO vía `matchMedia('(prefers-color-scheme: dark)')`.
+
+```ts
+function getSystemTheme(): AppTheme {
+  if (typeof window === 'undefined') return 'light';
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+```
+
+Solo con esto, si el usuario cambia su preferencia (por ejemplo en la configuración del SO) mientras tu página está cargada, la app no reflejará ese cambio hasta que ocurra una recarga completa. Lo genial es que puedes _suscribirte_ a eso.
+
+```ts
+function setupPreferredListener() {
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  const handler = () => handleThemeChange('system');
+  mediaQuery.addEventListener('change', handler);
+  return () => mediaQuery.removeEventListener('change', handler);
+}
+```
+
+¿Por qué devuelve una función de limpieza? No es ningún misterio: la usaremos dentro de un useEffect como función de limpieza del event listener para evitar fugas de memoria.
+
+### Aplicando el tema al DOM
+
+La definición DOM del tema está en una clase en el elemento `<html>`, ya sea `light` o `dark`. Si es `system`, también estableceremos eso en el elemento `<html>`.
+
+```ts
+function handleThemeChange(userTheme: UserTheme) {
+  const root = document.documentElement;
+  root.classList.remove('light', 'dark', 'system');
+  const newTheme = userTheme === 'system' ? getSystemTheme() : userTheme;
+  root.classList.add(newTheme);
+
+  if (userTheme === 'system') {
+    root.classList.add('system');
+  }
+}
+```
+
+### El ThemeProvider
+
+Probablemente el caso de uso más común para React Context, el componente ThemeProvider facilita el acceso y la actualización del tema en toda la aplicación.
+
+En el montaje, establece el tema inicial desde el almacenamiento y conecta el listener del sistema solo si `userTheme === 'system'`.
+
+Al establecer un nuevo tema: actualiza el estado, persiste al almacenamiento y reaplica clases a `<html>`.
+
+La implementación podría ser algo como:
+
+```tsx
+type ThemeContextProps = {
+  userTheme: UserTheme;
+  appTheme: AppTheme;
+  setTheme: (theme: UserTheme) => void;
+};
+const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
+
+type ThemeProviderProps = {
+  children: ReactNode;
+};
+export function ThemeProvider({ children }: ThemeProviderProps) {
+  const [userTheme, setUserTheme] = useState<UserTheme>(getStoredUserTheme);
+
+  useEffect(() => {
+    if (userTheme !== 'system') return;
+    return setupPreferredListener();
+  }, [userTheme]);
+
+  const appTheme = userTheme === 'system' ? getSystemTheme() : userTheme;
+
+  const setTheme = (newUserTheme: UserTheme) => {
+    setUserTheme(newUserTheme);
+    setStoredTheme(newUserTheme);
+    handleThemeChange(newUserTheme);
+  };
+
+  return (
+    <ThemeContext value={{ userTheme, appTheme, setTheme }}>
+      <ScriptOnce children={themeScript} />
+
+      {children}
+    </ThemeContext>
+  );
+}
+
+export const useTheme = () => {
+  const context = use(ThemeContext);
+  if (!context) {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+  return context;
+};
+```
+
+### El script inline crucial: sin FOUC
+
+Si ya estás en el debate cookie vs localStorage, sabes que para hacer que esto funcione necesitas inyectar un pequeño script inline que se ejecute inmediatamente, antes de la hidratación, para establecer la clase correcta en el elemento raíz. Si tienes buen ojo, habrás notado ese `<ScriptOnce children={themeScript} />` en el snippet anterior.
+
+La forma más fácil en TanStack Start para inyectar este script inline es usar el componente `ScriptOnce`, que te permite ejecutar un script solo una vez durante el renderizado inicial.
+
+Una pequeña molestia de los scripts inline es que se escriben como strings planos... así que aquí tenéis un truco mágico para escribirlo como una función JS propiamente dicha, aprovechando los linters y el soporte del IDE, para luego poner la versión `toString` dentro de una IIFE.
+
+```ts
+const themeScript: string = (function () {
+  function themeFn() {
+    try {
+      const storedTheme = localStorage.getItem('ui-theme') || 'system';
+      const validTheme = ['light', 'dark', 'system'].includes(storedTheme) ? storedTheme : 'system';
+
+      if (validTheme === 'system') {
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.classList.add(systemTheme, 'system');
+      } else {
+        document.documentElement.classList.add(validTheme);
+      }
+    } catch (e) {
+      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.classList.add(systemTheme, 'system');
+    }
+  }
+  return `(${themeFn.toString()})();`;
+})();
+```
+
+Con este pequeño fragmento de lógica, que se convierte a un string, te aseguras _tan pronto como sea posible_ de agregar la clase CSS correcta.
+
+¿Qué pasa sin esto? Tendrás un parpadeo: la página carga con el estilo por defecto y cambia una vez que React se monta. El script inline previene eso escribiendo la clase durante el pintado HTML inicial.
+
+### Deja que CSS, no JS, maneje la UI del selector
+
+Aquí está la regla número 2 que mencioné antes.
+
+Como los valores iniciales se establecen antes de React, la UI que depende del estado JS probablemente parpadeará, ya que el servidor renderiza una cosa (ej. el icono para el tema claro) pero luego en el cliente se sobrescribe por el estado real y se reemplaza con el tema oscuro... porque estás usando el tema oscuro, ¿verdad?
+
+El enfoque más seguro es dejar que CSS decida la visibilidad basada en las clases raíz. Con Tailwind v4 puedes usar `:not()` y selectores de clase para mantenerlo simple.
+
+Aquí hay un ejemplo:
+
+```tsx
+const themeConfig: Record<UserTheme, { icon: string; label: string }> = {
+  light: { icon: '☀️', label: 'Light' },
+  dark: { icon: '🌙', label: 'Dark' },
+  system: { icon: '💻', label: 'System' },
+};
+
+export const ThemeToggle = () => {
+  const { userTheme, setTheme } = useTheme();
+
+  const getNextTheme = () => {
+    const themes = Object.keys(themeConfig) as UserTheme[];
+    const currentIndex = themes.indexOf(userTheme);
+    const nextIndex = (currentIndex + 1) % themes.length;
+    return themes[nextIndex];
+  };
+
+  return (
+    <Button onClick={() => setTheme(getNextTheme())} className="w-28">
+      <span className="not-system:light:inline hidden">
+        {themeConfig.light.label}
+        <span className="ml-1">{themeConfig.light.icon}</span>
+      </span>
+      <span className="not-system:dark:inline hidden">
+        {themeConfig.dark.label}
+        <span className="ml-1">{themeConfig.dark.icon}</span>
+      </span>
+      <span className="system:inline hidden">
+        {themeConfig.system.label}
+        <span className="ml-1">{themeConfig.system.icon}</span>
+      </span>
+    </Button>
+  );
+};
+```
+
+Puedes usar `userTheme` (el tema que viene del hook) en cualquier _otro_ momento, por ejemplo para alternar entre temas al hacer clic, pero en el _renderizado inicial_ no. CSS se encargará del botón.
+
+## Primitivas TanStack Start: clientOnly y createIsomorphicFn
+
+Para evitar comprobaciones manuales de `typeof window !== 'undefined'`, puedes usar las utilidades de Start, que te permiten definir lógica solo de cliente o lógica dual cliente/servidor sin llenar el código de condicionales.
+
+- `clientOnly(fn)`: lanza error en servidor, ejecuta en cliente
+- `createIsomorphicFn({ server, client })`: dada la naturaleza isomórfica de algunas funciones, te permite definir diferentes comportamientos en cliente y servidor
+
+Son perfectos para helpers de almacenamiento y funciones que tocan el DOM. Mira qué expresivo se vuelve el código:
+
+```ts
+const getStoredUserTheme = createIsomorphicFn()
+  .server((): UserTheme => 'system')
+  .client((): UserTheme => {
+    try {
+      const stored = localStorage.getItem(themeStorageKey);
+      return stored && themes.includes(stored as UserTheme) ? (stored as UserTheme) : 'system';
+    } catch {
+      return 'system';
+    }
+  });
+
+const setStoredTheme = clientOnly((theme: UserTheme) => {
+  try {
+    localStorage.setItem(themeStorageKey, theme);
+  } catch {}
+});
+```
+
+## Validar con Zod
+
+En lugar de verificar manualmente strings del almacenamiento, define un enum Zod con un `catch('system')`. Luego llama `schema.parse(value)` y tienes garantizado un `UserTheme` válido.
+
+```ts
+const UserThemeSchema = z.enum(['light', 'dark', 'system']).catch('system');
+const AppThemeSchema = z.enum(['light', 'dark']).catch('light');
+
+export type UserTheme = z.infer<typeof UserThemeSchema>;
+export type AppTheme = z.infer<typeof AppThemeSchema>;
+
+const getStoredUserTheme = createIsomorphicFn()
+  .server((): UserTheme => 'system')
+  .client((): UserTheme => {
+    const stored = localStorage.getItem(themeStorageKey);
+    return UserThemeSchema.parse(stored);
+  });
+
+const setStoredTheme = clientOnly((theme: UserTheme) => {
+  const validatedTheme = UserThemeSchema.parse(theme);
+  localStorage.setItem(themeStorageKey, validatedTheme);
+});
+```
+
+## Cookies vs LocalStorage (y cuándo usarlos)
+
+Para ser sincero, no tengo pruebas claras de que un enfoque sea absolutamente superior al otro, ya que ambos tienen sus pros y sus contras. En la mayoría de los casos no importa tanto de todos modos, solo elige el enfoque que parezca más razonable y estarás bien.
+
+El enfoque localStorage vive solo en el navegador, lo cual es bueno, pero requiere JS para ejecutarse (en la hidratación) y tienes que hacer esos trucos de CSS para controlar el renderizado inicial. Además, el servidor no tiene conocimiento de la preferencia del usuario.
+
+El enfoque con cookies hace que el servidor conozca el tema, pero también implica que el navegador tenga que comunicarse con el servidor para cada cambio de tema, algo que debería ser una función puramente del cliente.
+
+En cualquier caso, en el mismo repo puedes encontrar en el historial de commits una versión con el enfoque de cookies: https://github.com/Balastrong/start-theme-demo/tree/077010bee3ca25ba775a4d452d55244cf8971637
+
+## Resumen
+
+Así que aquí está el flujo completo:
+
+1. Mantén UserTheme ('light'|'dark'|'system') separado de AppTheme ('light'|'dark') y deriva el último.
+2. Usa helpers de almacenamiento seguros que tengan un valor por defecto en el servidor y validen los valores de localStorage en el cliente.
+3. Escribe clases en document.documentElement (light/dark y opcional system) cada vez que el tema cambia.
+4. Proporciona userTheme, appTheme y setTheme vía Context y escucha prefers-color-scheme cuando esté en system.
+5. Inyecta un pequeño script inline para establecer la clase html inicial antes de la hidratación para eliminar FOUC.
+6. Deja que CSS manejado por clases raíz controle la UI del selector para que renderice correctamente en el primer pintado.
+7. Opcionalmente usa TanStack Start clientOnly/createIsomorphicFn y enums Zod para simplificar y validar lógica.
+
+Antes de irme, aquí algunos enlaces útiles:
+
+- Demo en Vivo: https://tanstack-start-theme-demo.netlify.app/
+- Repositorio GitHub: https://github.com/Balastrong/start-theme-demo
+- Video Walkthrough: https://youtu.be/NoxvbjkyLAg
+
+Ahora os dejo deberes: sentíos libres de dejar una estrella en el repo, dar like al vídeo y... ¡disfrutadlo!
+
+¡También cualquier comentario o feedback, por favor, hacédmelo saber!

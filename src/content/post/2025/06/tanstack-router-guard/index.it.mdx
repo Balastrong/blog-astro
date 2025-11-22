@@ -1,0 +1,99 @@
+---
+title: 'TanStack Router: Come proteggere le rotte con una guardia di autenticazione'
+slug: 'tanstack-router-proteggere-rotte-autenticazione'
+publishDate: 2025-06-21
+image: ./_cover.png
+series: tanstack-router-tips
+tags:
+  - tanstack
+  - tanstack-router
+  - react
+  - typescript
+---
+
+import YouTube from '~/components/widgets/YouTube.astro';
+
+Alcune rotte richiedono autenticazione o il rispetto di certe condizioni per l'accesso. TanStack Router offre un potente meccanismo di guardia tramite la funzione `beforeLoad`, che intercetta la navigazione e applica regole di controllo accessi prima del rendering dei componenti.
+
+## Proteggere una rotta
+
+Definendo una rotta con `createFileRoute`, puoi specificare una funzione nella proprietà `beforeLoad`. Questa funzione viene chiamata prima del caricamento della rotta, consentendo controlli e reindirizzamenti se le condizioni non sono soddisfatte.
+
+Un esempio:
+
+```tsx
+import { redirect, createFileRoute } from '@tanstack/react-router';
+import { isAuthenticated } from '../utils/auth';
+
+export const Route = createFileRoute('/profile')({
+  component: RouteComponent,
+  beforeLoad: () => {
+    if (!isAuthenticated()) {
+      throw redirect({ to: '/' });
+    }
+  },
+});
+```
+
+Così facendo, la pagina non verrà caricata se l'utente non è autenticato (il componente non sarà renderizzato) e l'utente verrà reindirizzato alla home page.
+
+## Proteggere più rotte
+
+L'esempio precedente protegge la rotta `/profile` e potenzialmente le rotte figlie, poiché `beforeLoad` viene chiamata attraversando l'albero delle rotte.
+
+Tuttavia, a volte potresti dover proteggere una serie di rotte sorelle, non una singola rotta con i suoi figli. Sebbene sia possibile replicare la logica `beforeLoad` in ogni rotta, esistono metodi migliori.
+
+Un approccio consiste nell'usare il pattern dei layout condivisi, aggiungendo lì la logica di guardia. Ad esempio, il tuo albero delle rotte potrebbe essere:
+
+```tsx
+src/
+├── routes/
+│   ├── __root.tsx
+│   ├── index.tsx
+│   ├── login.tsx
+│   └── (authenticated)/
+│       ├── route.tsx
+│       ├── profile.tsx
+│       ├── settings.tsx
+│       └── dashboard.tsx
+```
+
+Nella cartella `(authenticated)` ci sono tre rotte "regolari" e un file `route.tsx`, un nome speciale che non definisce una rotta specifica ma funge da layout comune per le rotte nella cartella. Qui puoi aggiungere la logica di guardia:
+
+```tsx
+import { createFileRoute, redirect } from '@tanstack/react-router';
+export const Route = createFileRoute('/_authenticated')({
+  beforeLoad: () => {
+    if (!isAuthenticated()) {
+      throw redirect({ to: '/' });
+    }
+  },
+});
+```
+
+### Layout condivisi - opzionale
+
+Nota che questa rotta non ha una proprietà `component`. È opzionale, poiché usiamo la rotta solo per raggruppare la logica di autenticazione (evitando di ripeterla su ogni rotta sorella) e non per renderizzare un componente.
+
+Questa configurazione è il primo passo per un layout comune (non trattato qui); basta definire un `component` e includere `<Outlet />` per renderizzare le rotte figlie.
+
+```tsx
+  component: () => (
+    <>
+      Questo testo apparirà su tutte le rotte sorelle e figlie
+      <Outlet />
+    </>
+  ),
+```
+
+### Rotta senza percorso (cartella)
+
+Nota anche che le rotte autenticate sono raggruppate nella cartella `(authenticated)`, con il nome tra parentesi. È una convenzione di TanStack Router per indicare che la cartella non apparirà nell'URL. È opzionale, ma utile per avere `your-site-com/profile` invece di `your-site-com/authenticated/profile`.
+
+## Di più su guardie e autenticazione
+
+Questo è solo un breve estratto dei concetti principali; trovi una guida passo passo nel video seguente.
+
+Il video spiega come integrare un servizio di autenticazione reale e usare gli hook tramite il contesto del Router per accedere allo stato di autenticazione.
+
+<YouTube id="O6dS0_IvvK0" />

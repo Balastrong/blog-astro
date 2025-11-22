@@ -39,6 +39,33 @@ const { post, url } = Astro.props;
             )
           }
           {post.readingTime && <> · {post.readingTime} min read</>}
+          {
+            post.translations && Object.entries(post.translations).some(([lang]) => lang !== post.language) && (
+              <>
+                {' '}
+                ·{' '}
+                <span>
+                  Also available in:
+                  {Object.entries(post.translations)
+                    .filter(([lang]) => lang !== post.language)
+                    .map(([lang, slug], index, array) => (
+                      <>
+                        <a href={getPermalink(slug, 'post')} class="hover:underline text-primary dark:text-blue-400">
+                          {lang === 'it'
+                            ? '🇮🇹 Italiano'
+                            : lang === 'en'
+                            ? '🇬🇧 English'
+                            : lang === 'es'
+                            ? '🇪🇸 Español'
+                            : lang.toUpperCase()}
+                        </a>
+                        {index < array.length - 1 && ', '}
+                      </>
+                    ))}
+                </span>
+              </>
+            )
+          }
         </p>
       </div>
       <h1
@@ -63,7 +90,6 @@ const { post, url } = Astro.props;
               widths={[400, 900]}
               sizes="(max-width: 900px) 400px, 900px"
               alt={post.description || ''}
-              aspectRatio={16 / 9}
               width={900}
               height={506}
               loading="lazy"

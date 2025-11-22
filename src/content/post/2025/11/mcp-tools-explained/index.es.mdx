@@ -1,0 +1,145 @@
+---
+title: 'Cómo usa GitHub Copilot las herramientas MCP entre bastidores'
+description: 'Una guía paso a paso sobre cómo Copilot descubre y llama a las herramientas MCP, convirtiendo las salidas en bruto de los servidores en respuestas útiles.'
+publishDate: 2025-11-17
+image: ./_cover.png
+slug: como-usa-github-copilot-herramientas-mcp
+tags:
+  - copilot
+  - mcp
+  - github
+---
+
+import YouTube from '~/components/widgets/YouTube.astro';
+import Image from '~/components/widgets/Image.astro';
+
+Antes de entrar en detalles, aquí tenéis la versión en vídeo de este artículo, por si preferís verlo primero y luego volver para leerlo con más calma. Si preferís leer, podéis saltároslo y continuar con los ejemplos a continuación.
+
+<YouTube id="U_ahtUrubuQ" />
+
+Empecemos con un ejemplo sencillo para concretar las cosas.
+
+Abres un nuevo chat y le haces a Copilot una pregunta sencilla pero muy práctica: "¿hay algún pull request esperándome?"
+
+Tras una breve pausa y algo de magia entre bastidores, Copilot responde con la lista exacta de pull requests que necesitan tu atención. Sin búsquedas manuales, sin cambiar de pestañas. En el resto de este artículo, desglosaremos qué ha sucedido realmente entre bastidores.
+
+import chat from './_chat.png';
+
+<Image src={chat} alt="chat" />
+
+En este artículo, veremos cómo funciona realmente esa "magia" de las herramientas MCP, utilizando el servidor MCP de GitHub como ejemplo.
+
+## De una pregunta simple a la herramienta correcta
+
+En el ejemplo del pull request anterior, cuando le preguntas a Copilot sobre tus pull requests, no está "adivinando" la respuesta, ya que no puede saberla por sí solo. En su lugar, está utilizando una herramienta proporcionada por el servidor MCP de GitHub para buscar en tus repositorios.
+
+Instalar un servidor MCP consiste básicamente en decirle al cliente LLM dónde se aloja el servidor y cómo comunicarse con él. Por ejemplo, un servidor podría estar alojado en una URL como `https://api.githubcopilot.com/mcp/`, y el cliente puede hablar con él a través de HTTP.
+
+Pero la ubicación del servidor es solo parte de la historia. Lo que realmente importa es **qué herramientas** expone ese servidor.
+
+Si hacéis clic en el botón de Herramientas (Tools) en la interfaz de chat de GitHub, veréis la lista de herramientas registradas para cada servidor junto con sus descripciones. En el MCP de GitHub, por ejemplo, encontraréis una herramienta que busca pull requests.
+
+Esa es la que usó Copilot para responder a mi pregunta sobre los PR abiertos.
+
+## Cómo descubre Copilot las herramientas
+
+Hasta ahora nos hemos centrado en lo que hacen las herramientas, el siguiente paso es entender cómo Copilot se entera de su existencia en primer lugar.
+
+La respuesta está en la especificación del Model Context Protocol (MCP).
+
+En cuanto se inicia el cliente, por ejemplo al abrir VS Code, el cliente MCP solicita a cada servidor registrado una lista de herramientas.
+
+El servidor responde con una lista que incluye, para cada herramienta:
+
+- El nombre de la herramienta
+- Una descripción
+- El esquema de entrada (qué parámetros espera)
+
+Esta lista se pone a disposición del modelo de lenguaje. En otras palabras, Copilot puede ver un catálogo como "hay una herramienta `search_pull_requests` que toma una `query` (consulta), un `owner` (propietario) y un `repository` (repositorio)".
+
+A partir de ahí, el modelo puede decidir **qué** herramienta llamar y **cómo** rellenar esas entradas.
+
+```json
+{
+  "query": "repo:Balastrong/confhub is:open",
+  "owner": "Balastrong",
+  "repo": "confhub"
+}
+```
+
+Copilot elige los valores de estos campos basándose en tu pregunta, el contexto actual del repositorio y otros metadatos. Luego envía esa carga útil (payload) al servidor MCP.
+
+El servidor ejecuta su propia lógica, se comunica con APIs externas si es necesario y devuelve una salida estructurada.
+
+```json
+{
+  "total_count": 1,
+  "incomplete_results": false,
+  "items": [
+    {
+      "id": 3592203585,
+      "number": 5,
+      "state": "open",
+      "locked": false,
+      "title": "Modernize create community form with card-based layout and visual elements",
+      "body": "The create community form ...",
+      "created_at": "2025-11-05T17:57:06Z",
+      "updated_at": "2025-11-08T15:46:28Z"
+    },
+    ...
+  ]
+}
+```
+
+## Convirtiendo la salida en bruto de la herramienta en respuestas
+
+La respuesta que vuelve del servidor MCP no es lo que ves en el chat.
+
+La herramienta devuelve datos estructurados: objetos, arrays, campos con IDs, títulos, URLs, etc. Esto es extremadamente útil para el modelo, pero no necesariamente amigable para los humanos.
+
+Cuando Copilot recibe esa salida, la trata como **contexto adicional**, no como la respuesta final. Con estos datos extra, el modelo puede:
+
+- Elegir solo los campos relevantes
+- Formatearlos adecuadamente
+- Explicar qué está pasando en lenguaje natural
+
+Este es el paso donde la salida en bruto de la herramienta se convierte en una respuesta clara en el chat, impulsada por datos reales del servidor MCP.
+
+Llegados a este punto, ya sabéis cómo Copilot encuentra la herramienta adecuada y convierte su salida en algo legible. Pero todavía queda una pregunta interesante.
+
+## ¿Cómo sabe Copilot quién eres?
+
+En el ejemplo anterior, la herramienta de búsqueda de pull requests necesita saber **con qué** usuario y repositorio debe trabajar.
+
+Si miráis la pestaña de salida de MCP, veréis que el chat de Copilot se inicializa con vuestro nombre de usuario de GitHub y otras piezas de contexto del repositorio.
+
+Por curiosidad, incluso podéis preguntar a Copilot directamente: "¿cuál es mi nombre de usuario de GitHub?". Puede responder basándose en el contexto del repositorio y la información inyectada en la sesión.
+
+Más específicamente, el chat de Copilot añade detalles como:
+
+- Tu nombre de usuario de GitHub
+- El repositorio en el que estás trabajando
+- La rama actual
+- Y otros metadatos necesarios para las herramientas
+
+Así es como el modelo de lenguaje "sabe" quién eres dentro del chat de Copilot: no adivinando, sino porque el cliente comparte explícitamente esa información como parte del contexto.
+
+## Por qué importa entender esto
+
+Es fácil mirar estas características y pensar que todo es pura magia.
+
+Pero cuando entiendes que hay un protocolo claro, una lista de servidores, una lista de herramientas, esquemas de entrada y salidas estructuradas, todo se vuelve mucho más tangible.
+
+Saber cómo funcionan las cosas entre bastidores os da más control. Podéis:
+
+- Entender mejor de qué es capaz Copilot
+- Razonar sobre qué herramientas podrían ser útiles para vuestro flujo de trabajo
+- Diseñar o configurar servidores MCP que expongan exactamente las herramientas que necesitáis
+
+La magia mola, pero el conocimiento es vuestro verdadero poder.
+
+Tengo pensado crear más contenido explorando cómo VS Code, Copilot y MCP trabajan juntos, yendo más allá del momento "wow" y entrando en los detalles prácticos.
+
+Gracias por leer. Espero que esto haya respondido a algunas de vuestras preguntas sobre cómo Copilot usa las herramientas MCP.
+
+¡Nos vemos en el próximo!

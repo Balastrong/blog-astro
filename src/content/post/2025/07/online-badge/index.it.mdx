@@ -1,0 +1,76 @@
+---
+title: 'Ho vibe codato un contatore di visitatori online per il mio blog'
+description: 'Una semplice implementazione usando Netlify functions, Redis, e un pizzico di magia AI.'
+slug: 'contatore-visitatori-online-blog'
+publishDate: 2025-07-16
+image: ./_cover.png
+tags:
+  - webdev
+  - astro
+  - typescript
+  - copilot
+---
+
+import YouTube from '~/components/widgets/YouTube.astro';
+import Image from '~/components/widgets/Image.astro';
+
+Conoscete quel contatore vecchio stile "X utenti online" sui siti web? L'ho visto di recente sul blog di [roe.dev](https://roe.dev/) e ho pensato: non dovrebbe essere troppo difficile per un'implementazione naive, facciamo un po' di "vibe coding"!
+
+Lo stack: il mio blog è un sito statico costruito con Astro e ospitato su Netlify, quindi avevo bisogno di un modo per tracciare i visitatori attivi senza un backend completo. L'obiettivo era creare un semplice contatore che mostrasse quante persone stanno navigando sul sito, aggiornandosi in tempo reale e senza fastidiosi sfarfallii.
+
+import badge from './_badge.png';
+
+<Image src={badge} alt="utenti online" />
+
+## Netlify Server Functions
+
+Il motore di tutto questo sono le server functions di Netlify. Dopotutto, mi serviva solo un semplice endpoint da chiamare all'arrivo di un visitatore, che restituisse anche il conteggio attuale degli utenti attivi.
+
+Ho chiesto a Copilot di scrivere la logica in JavaScript e, con un paio di iterazioni, avevo già una demo funzionante in locale.
+
+Punti bonus: avendo riconosciuto che ero in un progetto Netlify, ha aggiunto automaticamente la funzione nella cartella giusta e impostato l'export corretto.
+
+## Storage su Redis
+
+Ok, forse è eccessivo, ma volevo una soluzione veloce per salvare i dati, dato che la funzione Netlify gira in un ambiente serverless (quindi senza storage persistente).
+
+Ho cercato "free redis hosting", ho trovato Upstash, creato un account e avevo già un'istanza Redis pronta.
+
+Tempo di scrivere un prompt veloce per Copilot per usare Redis come storage. Dato che ho specificato di voler tracciare non *chi* è esattamente online ma *quanti* utenti hanno visitato il sito negli ultimi 30 minuti, ha suggerito un TTL (time to live) di 30 minuti per ogni chiave. Ottimo, non devo nemmeno preoccuparmi di pulire i vecchi dati.
+
+```js
+await redis.set(`online:${anonymizedIp}`, '1', { ex: 60 * 30 });
+```
+
+Facilissimo: l'opzione `ex` imposta il tempo di scadenza in secondi.
+
+Leggere i valori è altrettanto semplice, basta contare le chiavi con un pattern come `online:*`:
+
+```js
+const keys = await redis.keys('online:*');
+const count = keys.length;
+```
+
+## Evitare lo sfarfallio
+
+Una volta funzionante il backend, il passo successivo era mostrare il contatore sul mio sito statico senza sfarfallii.
+
+Il problema è che, essendo la pagina statica, la parte "dinamica" (il contatore) deve essere recuperata dopo il caricamento. Se avessi renderizzato il contatore con il valore iniziale, avrebbe mostrato zero fino al completamento del fetch: non ideale. E questo a ogni caricamento o navigazione!
+
+Il piano: usare 1 come valore di default per mostrare subito qualcosa, poi recuperare il conteggio effettivo in background e aggiornarlo.
+
+Tuttavia, così facendo avevo il salto da 1 al numero reale a ogni navigazione. La prima soluzione naive che mi è venuta in mente è stata salvare il valore nel local storage e leggerlo a ogni caricamento. In questo modo, il contatore mostra subito l'ultimo valore noto e poi si aggiorna in background.
+
+## Debug locale
+
+Basta digitare `netlify dev` e puoi eseguire le tue funzioni Netlify localmente. Davvero facile!
+
+## E quindi?
+
+Sono sicuro che ci siano un milione di modi migliori per costruire questa piccola funzionalità, ma è stato divertente usare l'IA per creare velocemente qualcosa di funzionante.
+
+Ah, a proposito: questo non è un post sponsorizzato (magari!), ma penso che trovare gli strumenti e i servizi giusti sia importante oggi, specialmente ora che scrivere codice è molto più veloce grazie all'IA.
+
+Se volete vedere il risultato live andate su [https://leonardomontini.dev/](https://leonardomontini.dev/) o date un'occhiata al video dove mostro tutto il processo e il codice:
+
+<YouTube id="HAOMTH4uCkE" />

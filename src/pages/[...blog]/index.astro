@@ -15,7 +15,7 @@ export async function getStaticPaths() {
   if (BLOG?.disabled || BLOG?.post?.disabled) {
     return [];
   }
-  return (await fetchPosts()).flatMap((post) => {
+  return (await fetchPosts('all')).flatMap((post) => {
     const similarPosts = findSimilarPosts(post);
     const postsInSeries = findPostsInSeries(post.series);
     return {
@@ -42,6 +42,12 @@ const meta: MetaSEO = {
   noindex: BLOG?.post?.noindex,
   ogType: 'article',
   author: post.author ?? 'Leonardo Montini',
+  languageAlternates: post.translations
+    ? Object.entries(post.translations).map(([lang, permalink]) => ({
+        href: String(getCanonical(getPermalink(permalink, 'post'))),
+        hreflang: lang,
+      }))
+    : [],
 };
 ---
 
@@ -69,7 +75,7 @@ const meta: MetaSEO = {
 
 <Layout {meta}>
   <TopProgress client:only />
-  <SinglePost post={{ ...post, image: meta.image }} url={url} />
+  <SinglePost post={{ ...post, image: meta.image as string | undefined }} url={url} />
   <div class="mx-auto px-6 sm:px-6 max-w-3xl mt-5">
     {
       post.series && (

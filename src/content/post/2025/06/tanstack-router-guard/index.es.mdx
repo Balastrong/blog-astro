@@ -1,0 +1,99 @@
+---
+title: 'TanStack Router: Cómo proteger rutas con un guardia de autenticación'
+slug: 'tanstack-router-proteger-rutas-autenticacion'
+publishDate: 2025-06-21
+image: ./_cover.png
+series: tanstack-router-tips
+tags:
+  - tanstack
+  - tanstack-router
+  - react
+  - typescript
+---
+
+import YouTube from '~/components/widgets/YouTube.astro';
+
+Algunas rutas en tu aplicación requieren autenticación u otras condiciones que deben cumplirse antes de que los usuarios puedan acceder a ellas. TanStack Router proporciona un poderoso mecanismo de guardia para manejar estos escenarios a través de la función `beforeLoad`, que te permite interceptar la navegación de rutas y aplicar reglas de control de acceso antes de que cualquier componente sea renderizado.
+
+## Protegiendo una ruta
+
+Cuando defines una ruta con `createFileRoute` puedes especificar una función en la propiedad `beforeLoad`. Esta función será llamada antes de que la ruta sea cargada, permitiéndote realizar verificaciones y potencialmente redirigir al usuario si no cumple con las condiciones requeridas.
+
+Un ejemplo:
+
+```tsx
+import { redirect, createFileRoute } from '@tanstack/react-router';
+import { isAuthenticated } from '../utils/auth';
+
+export const Route = createFileRoute('/profile')({
+  component: RouteComponent,
+  beforeLoad: () => {
+    if (!isAuthenticated()) {
+      throw redirect({ to: '/' });
+    }
+  },
+});
+```
+
+Con esta configuración, la página no se cargará en absoluto si el usuario no está autenticado (es decir, el componente no se renderizará). En su lugar, el usuario será redirigido a la página de inicio.
+
+## Protegiendo múltiples rutas
+
+Con el ejemplo anterior ya estás protegiendo la ruta `/profile`, y potencialmente cualquier otra ruta hija, ya que cada función `beforeLoad` se llama al atravesar el árbol de rutas.
+
+Sin embargo, en algunos casos podrías no tener una sola ruta (y sus hijos) que proteger, sino una serie de rutas hermanas. Aunque efectivamente puedes replicar la misma lógica en el `beforeLoad` de cada ruta, hay mejores formas de manejar esto.
+
+Un enfoque es seguir el mismo patrón que usarías para crear layouts compartidos y agregar la lógica de guardia ahí. Por ejemplo, tu árbol de rutas podría verse así:
+
+```tsx
+src/
+├── routes/
+│   ├── __root.tsx
+│   ├── index.tsx
+│   ├── login.tsx
+│   └── (authenticated)/
+│       ├── route.tsx
+│       ├── profile.tsx
+│       ├── settings.tsx
+│       └── dashboard.tsx
+```
+
+Dentro de la carpeta `(authenticated)` puedes encontrar tres rutas "regulares", pero también un archivo `route.tsx`, un nombre especial que no definirá una ruta específica pero será usado como layout común para todas las rutas dentro de la carpeta. Aquí es donde puedes agregar la lógica de guardia:
+
+```tsx
+import { createFileRoute, redirect } from '@tanstack/react-router';
+export const Route = createFileRoute('/_authenticated')({
+  beforeLoad: () => {
+    if (!isAuthenticated()) {
+      throw redirect({ to: '/' });
+    }
+  },
+});
+```
+
+### Layouts compartidos - opcional
+
+Fíjate en que esta ruta no tiene una propiedad `component`. Esto es opcional, ya que estamos usando la ruta solo para agrupar la lógica de autenticación (así no la necesitamos en cada ruta hermana) y no para renderizar un componente específico.
+
+Sin embargo, una vez que tengas esta configuración, este sería el primer paso para tener un layout común (no es parte de este artículo), pero todo lo que realmente necesitas es definir un `component` y asegurarte de agregar el componente `<Outlet />` dentro de él (importado desde `@tanstack/react-router`), para que las rutas hijas puedan renderizarse.
+
+```tsx
+  component: () => (
+    <>
+      Este texto aparecerá en todas las rutas hermanas e hijas
+      <Outlet />
+    </>
+  ),
+```
+
+### Ruta sin path (carpeta)
+
+También observa cómo las rutas autenticadas están agrupadas en una carpeta llamada `(authenticated)` con su nombre entre paréntesis. Esta es una convención en TanStack Router para indicar que esta carpeta no aparecerá en la URL. Esto es opcional, pero a menudo se usa para que puedas tener `your-site.com/profile` en lugar de `your-site.com/authenticated/profile`.
+
+## Más sobre guardias y autenticación
+
+Esto fue solo un breve resumen con los conceptos principales. Puedes encontrar una guía extensa y paso a paso en el siguiente vídeo.
+
+El vídeo incluye cómo integrar con un servicio de autenticación real y cómo usar hooks a través del contexto del Router para acceder al estado de autenticación en tus rutas y componentes.
+
+<YouTube id="O6dS0_IvvK0" />

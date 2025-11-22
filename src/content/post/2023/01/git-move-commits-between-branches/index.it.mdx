@@ -1,0 +1,138 @@
+---
+title: 'Git: 3 modi per spostare commit tra branch'
+publishDate: '2023-01-25'
+description: Hai fatto un commit nel branch sbagliato? Spostarlo è più facile di quanto pensi!
+image: './_cover.png'
+slug: git-spostare-commit-tra-branch
+tags:
+  - git
+  - branch
+---
+
+import Image from '~/components/widgets/Image.astro';
+import YouTube from '~/components/widgets/YouTube.astro';
+
+Sei al settimo cielo, il primo pezzo della tua nuova funzionalità è pronto ed è il momento perfetto per fare un commit. Apri il terminale e scrivi:
+
+```bash
+git add .
+git commit -m "feat: first commit"
+```
+
+Ma poi ti rendi conto di non essere sul branch giusto. Sei su `main` e dovresti essere su `feature/new-cool-stuff`. Non puoi semplicemente cambiare branch perché hai già committato qualcosa, inoltre `main` ha delle policy e non puoi nemmeno fare push ora.
+
+Che fare?
+
+Niente panico, ci sono molti modi per spostare i commit tra i branch e te ne mostrerò 3. Comunque, sono abbastanza sicuro che si possa ottenere lo stesso risultato in una dozzina di altri modi, quindi sentiti libero di aggiungere i tuoi nei commenti!
+
+Se vuoi vedere un po' di azione dal vivo e una procedura passo dopo passo, puoi guardare il video! Altrimenti continua pure a leggere :)
+
+<YouTube id="0pzFGXvemvA" />
+
+## 1. Spostarsi su un nuovo branch
+
+Questo è lo scenario più semplice ed è esattamente quello descritto sopra. Hai fatto un commit su `main` ma in realtà volevi spostarti su un nuovo branch.
+
+Pensaci un attimo, quando crei un nuovo branch inizi fondamentalmente dalla situazione attuale del branch in cui ti trovi. Quindi, se sei su `main` e crei un nuovo branch, inizierai dallo stato corrente di `main` (che include il commit che hai appena fatto).
+
+Questo significa che il passo #1 è:
+
+```bash
+git branch feature/new-cool-stuff
+```
+
+**Nota**: Ho intenzionalmente evitato `git checkout -b feature/new-cool-stuff` perché quel comando ti sposta anche sul nuovo branch. Per ora vogliamo rimanere su `main`.
+
+Allo stato attuale, hai sia `main` che `feature/new-cool-stuff` che puntano allo stesso commit e sei ancora posizionato su `main`.
+
+Puoi fare un rapido controllo con:
+
+```bash
+git log --oneline
+```
+
+Il passo #2 è semplice come un hard reset al commit precedente:
+
+```bash
+git reset HEAD~1
+```
+
+Cosa è successo qui? Hai rimosso da `main` il commit che hai appena fatto, ma non l'hai perso. È ancora lì, ma sul nuovo branch.
+
+## 2. Spostarsi su un branch esistente (stash)
+
+Cambiamo leggermente prospettiva, potresti essere su un branch qualsiasi e voler spostare l'ultimo commit su un altro branch. Puoi farlo "stashando" il commit e poi facendone il pop sull'altro branch. Lascia che ti spieghi.
+
+Se hai modifiche non committate puoi comunque passare da un branch all'altro, ma non sempre. Se le tue modifiche vanno in conflitto con il nuovo branch su cui stai cercando di spostarti, riceverai un errore. È qui che lo stash torna utile.
+
+Ma stavamo parlando di un commit nel branch sbagliato e non puoi fare lo stash di un commit (o forse sì? Non che io sappia).
+
+Il piano qui è sbarazzarsi del commit, mettere le modifiche da qualche parte (stash) e poi riapplicare le modifiche nel branch giusto in modo da poter committare di nuovo. Vediamo come.
+
+Prima di tutto, devi sbarazzarti del commit. Puoi farlo con un soft reset:
+
+```bash
+git reset --soft HEAD~1
+```
+
+Dato che abbiamo usato `--soft`, le modifiche sono ancora lì, semplicemente non sono committate. Ora puoi metterle nello stash:
+
+```bash
+git stash
+```
+
+Come puoi vedere ora, tutte le tue modifiche sono sparite. Non temere, se esegui `git stash list` vedrai che sono ancora lì.
+
+È ora il momento di passare al branch giusto:
+
+```bash
+git checkout feature/new-cool-stuff
+```
+
+E infine, puoi riapplicare le tue modifiche con:
+
+```bash
+git stash pop
+```
+
+Perché `pop`? Perché lo stash è in realtà uno stack (una pila). Con il primo `git stash` hai aggiunto un nuovo elemento in cima allo stack. Con `git stash pop` rimuovi fondamentalmente l'elemento superiore dallo stack e lo applichi.
+
+A questo punto potresti avere dei conflitti (ecco perché abbiamo usato stash invece di fare semplicemente checkout con le modifiche non committate) ma non è un problema se hai guardato il mio video su [come risolvere i conflitti di merge](https://youtu.be/lz5OuKzvadQ).
+
+## 3. Spostarsi su un branch esistente (cherry-pick)
+
+Un modo simile per spostare i commit tra i branch è usare `git cherry-pick`. In questo caso il piano non è rimuovere il commit per poi ricommittarlo, ma semplicemente spostarlo sull'altro branch (e poi puoi ripulire il vecchio branch).
+
+Ciò che fa `cherry-pick` è fondamentalmente copiare un commit da un branch all'altro (generando un nuovo commit, con le stesse modifiche). Vediamo come possiamo usarlo nel nostro scenario.
+
+Prima di tutto, devi ottenere l'hash del commit che vuoi spostare. Puoi farlo con:
+
+```bash
+git log --oneline
+```
+
+Se mi segui sai che di solito uso [alias git](https://youtu.be/Uk4GnYoQx_I) quindi nel video mi vedrai usare `git lgo` invece di `git log --oneline`.
+
+Ora che hai l'hash, puoi fare `checkout` sul branch di destinazione dove vuoi spostare il commit, e poi puoi fare `cherry-pick`:
+
+```bash
+git checkout feature/new-cool-stuff
+git cherry-pick <commit-hash>
+```
+
+Tutto qui! Come al solito se hai conflitti puoi risolverli con vscode. Similmente a un merge regolare, una volta risolti tutti i conflitti puoi usare `git add .` e `git cherry-pick --continue` per terminare il cherry-pick. Se vuoi annullare il cherry-pick puoi usare `git cherry-pick --abort` e la situazione tornerà come prima di iniziare.
+
+Ora che il nuovo branch ha il nostro commit, possiamo tornare al vecchio branch e rimuoverlo:
+
+```bash
+git checkout main
+git reset HEAD~1
+```
+
+Pulito e ordinato, hai spostato il commit da `main` a `feature/new-cool-stuff` e l'hai rimosso da `main`.
+
+## Conclusione
+
+Spero che questo articolo ti sia piaciuto e che tu abbia imparato qualcosa di nuovo. Se è così, condividilo con i tuoi amici e colleghi!
+
+E tu, hai qualche altro modo per spostare i commit tra i branch? Voglio dire, come accennato all'inizio sono sicuro che ce ne siano, sono solo curioso di sapere quale funziona meglio per te. Fammelo sapere nei commenti, mi piacerebbe imparare nuovi metodi!

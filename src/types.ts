@@ -1,8 +1,11 @@
 import type { ImageMetadata } from 'astro';
+import type { Language } from './content/config';
+import type { AstroSeoProps } from '@astrolib/seo';
 
 export type Post = {
   id: string;
   slug: string;
+  language: Language;
 
   publishDate: Date;
   title: string;
@@ -28,6 +31,10 @@ export type Post = {
   content?: string;
 
   readingTime?: number;
+
+  translations?: {
+    [lang in Language]?: string;
+  };
 };
 
 export type NewsletterIssue = {
@@ -53,6 +60,8 @@ export type MetaSEO = {
   nofollow?: boolean;
 
   ogType?: string;
+
+  languageAlternates?: AstroSeoProps['languageAlternates'];
 };
 
 export type GitHubRepository = {

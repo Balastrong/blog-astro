@@ -1,0 +1,76 @@
+---
+title: 'Creé un contador de visitantes online para mi blog haciendo "vibe coding"'
+description: 'Una implementación sencilla usando Netlify functions, Redis y una pizca de magia de IA.'
+slug: 'contador-visitantes-online-blog'
+publishDate: 2025-07-16
+image: ./_cover.png
+tags:
+  - webdev
+  - astro
+  - typescript
+  - copilot
+---
+
+import YouTube from '~/components/widgets/YouTube.astro';
+import Image from '~/components/widgets/Image.astro';
+
+¿Os suena ese contador de estilo retro de "X usuarios online" en un sitio web? Lo vi recientemente en el blog de [roe.dev](https://roe.dev/) y pensé: no debería ser muy difícil hacer una implementación básica, ¡hagamos "vibe coding"!
+
+El stack: mi blog es un sitio estático construido con Astro y alojado en Netlify, así que necesitaba una forma de rastrear visitantes activos sin un backend completo. El objetivo era crear un contador sencillo que mostrara cuántas personas están navegando actualmente por el sitio, actualizándose en tiempo real, sin parpadeos molestos.
+
+import badge from './_badge.png';
+
+<Image src={badge} alt="usuarios online" />
+
+## Netlify Server Functions
+
+El motor principal de todo esto son las Netlify Server Functions. Al fin y al cabo, solo necesitaba un endpoint sencillo para hacer ping cuando entra un visitante, y que también devuelva el recuento actual de usuarios activos.
+
+Le pedí a Copilot que escribiera la lógica en JavaScript y con un par de iteraciones ya tenía una demo funcionando en mi máquina local.
+
+Puntos extra: como reconoció que estaba en un proyecto de Netlify, agregó automáticamente la función a la carpeta correcta y configuró la exportación adecuada.
+
+## Almacenamiento en Redis
+
+Vale, esto puede haber sido exagerado, pero quería una solución rápida para almacenar los datos, ya que las funciones de Netlify se ejecutan en un entorno serverless, lo que significa que no tienen almacenamiento persistente.
+
+Simplemente busqué en Google "free redis hosting" y encontré Upstash, creé una cuenta y ya tenía una instancia de Redis.
+
+Hora de escribir un prompt rápido a Copilot para usar Redis como almacenamiento. Como mencioné que quería rastrear no quién está online exactamente, sino cuántos usuarios han visitado en los últimos 30 minutos, sugirió un TTL (time to live) de 30 minutos para cada clave. Genial, ni siquiera necesito preocuparme por limpiar datos antiguos.
+
+```js
+await redis.set(`online:${anonymizedIp}`, '1', { ex: 60 * 30 });
+```
+
+Así de fácil, existe la opción `ex` que establece el tiempo de expiración en segundos.
+
+Leer valores también es sencillo, solo cuenta las claves con un patrón como `online:*`:
+
+```js
+const keys = await redis.keys('online:*');
+const count = keys.length;
+```
+
+## Evitar el parpadeo
+
+Una vez que el backend estaba funcionando, el siguiente paso era hacer que ese contador apareciera bien en mi sitio estático sin parpadeos molestos.
+
+El problema es que como la página es estática, la parte "dinámica" (el contador) necesita obtenerse después de que la página se cargue. Si simplemente renderizara el contador con el valor inicial, mostraría cero hasta que se completara la petición, lo cual no es ideal. ¡Ah, y esto en cada carga de página o navegación!
+
+Así que aquí está el plan: usar 1 como valor predeterminado para mostrar algo de inmediato, luego obtener el recuento real en segundo plano y actualizarlo una vez que tengamos el número real.
+
+Sin embargo, solo con eso tenía el salto de 1 al número real en cada navegación, así que la primera solución sencilla que se me ocurrió fue almacenar el valor en el `localStorage` y leerlo en cada carga de página. De esta forma, el contador muestra el último valor conocido inmediatamente, y luego se actualiza en segundo plano.
+
+## Depuración local
+
+Solo escribe `netlify dev` y puedes ejecutar tus funciones de Netlify localmente. ¡Así de fácil, en serio!
+
+## ¿Y qué?
+
+Estoy seguro de que hay un millón de formas mejores de construir esta pequeña funcionalidad, pero ha sido divertido usar IA para construir rápidamente algo que funciona.
+
+Ah, por cierto, este no era un post patrocinado (¡ojalá lo fuera!), pero creo que encontrar las herramientas y servicios correctos es relevante hoy en día, especialmente ahora que escribir código es mucho más rápido con IA.
+
+Si queréis ver el resultado en vivo solo id a [https://leonardomontini.dev/](https://leonardomontini.dev/) o echad un vistazo al vídeo donde muestro todo el proceso y el código:
+
+<YouTube id="HAOMTH4uCkE" />

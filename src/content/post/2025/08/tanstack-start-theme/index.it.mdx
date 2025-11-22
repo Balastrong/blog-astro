@@ -1,0 +1,338 @@
+---
+title: 'TanStack Start: tema light, dark e system senza sfarfallii'
+description: 'Come implementare un robusto toggle di tema in un\'app TanStack Start con rendering server-side: storage, SSR, preferenze di sistema, e niente FOUC.'
+slug: 'tanstack-start-tema-senza-sfarfallii'
+publishDate: 2025-08-22
+image: ./_cover.png
+tags:
+  - tanstack
+  - tanstack-start
+  - react
+  - typescript
+  - tailwind
+---
+
+import YouTube from '~/components/widgets/YouTube.astro';
+import Image from '~/components/widgets/Image.astro';
+
+import theme from './_theme.gif';
+
+<Image src={theme} alt="tema" />
+
+Supportare più temi è ormai uno standard nelle applicazioni web moderne: light, dark e system (che segue le impostazioni del sistema operativo).
+
+Se l'applicazione utilizza il server-side rendering (SSR), questa richiesta apparentemente semplice può diventare complessa, portando a problemi come:
+
+- FOUC (Flash Of Unstyled Content): l'app carica inizialmente il tema sbagliato.
+- Perdita del tema al ricaricamento della pagina.
+- Mancato aggiornamento al cambio del tema di sistema.
+- Errori di hydration o chiamate ad API client-only sul server.
+- ... e la lista continua.
+
+## Dettagli dell'Implementazione
+
+Di recente ho lavorato a una soluzione robusta per un'applicazione TanStack Start ([codice qui](https://github.com/Balastrong/start-theme-demo)). Ho registrato un video dove spiego passo dopo passo il funzionamento; puoi guardarlo qui e usare questo articolo come riferimento.
+
+<YouTube id="NoxvbjkyLAg" />
+
+### I due tipi di tema
+
+Partiamo dai tipi. Mi piace distinguere tra la scelta dell'utente e il tema effettivamente renderizzato:
+
+```ts
+export type UserTheme = 'light' | 'dark' | 'system';
+export type AppTheme = Exclude<UserTheme, 'system'>;
+```
+
+`UserTheme` è la scelta esplicita dell'utente, mentre `AppTheme` è il tema risolto che l'app utilizza per il rendering.
+
+### Storage compatibile con SSR
+
+Persistiamo la scelta dell'utente tramite `localStorage`.
+
+Un attimo... non è un'API solo client? Sì, e la scelta architettonica ricade solitamente tra localStorage e cookie. Approfondirò alla fine, ma per ora usiamo `localStorage`.
+
+Regola n. 1: mai accedere a `window` o `localStorage` lato server. C'è anche un'altra regola importante: durante il primo render (sul server) non puoi fare affidamento su JS, pena errori di hydration e flash indesiderati. Vedremo come gestirlo nel selettore del tema.
+
+Ecco come gestirlo con alcuni metodi di utilità: un getter sicuro che restituisce 'system' sul server e valida i valori sul client, e un setter che non fa nulla sul server.
+
+```ts
+function getStoredUserTheme(): UserTheme {
+  if (typeof window === 'undefined') return 'system';
+  try {
+    const stored = localStorage.getItem(themeStorageKey);
+    return stored && themes.includes(stored as UserTheme) ? (stored as UserTheme) : 'system';
+  } catch {
+    return 'system';
+  }
+}
+
+function setStoredTheme(theme: UserTheme): void {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(themeStorageKey, theme);
+  } catch {}
+}
+```
+
+### Risolvere il tema di sistema
+
+I browser espongono la preferenza del sistema operativo via `matchMedia('(prefers-color-scheme: dark)')`.
+
+```ts
+function getSystemTheme(): AppTheme {
+  if (typeof window === 'undefined') return 'light';
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+```
+
+Tuttavia, se l'utente cambia preferenza (es. nelle impostazioni dell'OS) mentre la pagina è aperta, l'app non si aggiornerà senza un ricaricamento. Fortunatamente, possiamo _iscriverci_ a questo evento.
+
+```ts
+function setupPreferredListener() {
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  const handler = () => handleThemeChange('system');
+  mediaQuery.addEventListener('change', handler);
+  return () => mediaQuery.removeEventListener('change', handler);
+}
+```
+
+Perché restituisce una funzione di cleanup? Semplice: la useremo in uno `useEffect`, ed è necessaria per rimuovere l'event listener ed evitare memory leak.
+
+### Applicare il tema al DOM
+
+Definiamo il tema tramite una classe nell'elemento `<html>`: `light` o `dark`. Se è `system`, aggiungeremo anche quella.
+
+```ts
+function handleThemeChange(userTheme: UserTheme) {
+  const root = document.documentElement;
+  root.classList.remove('light', 'dark', 'system');
+  const newTheme = userTheme === 'system' ? getSystemTheme() : userTheme;
+  root.classList.add(newTheme);
+
+  if (userTheme === 'system') {
+    root.classList.add('system');
+  }
+}
+```
+
+### Il ThemeProvider
+
+Probabilmente l'uso più comune di React Context: il `ThemeProvider` facilita l'accesso e l'aggiornamento del tema nell'app.
+
+Al mount, imposta il tema iniziale dallo storage e attiva il listener di sistema solo se `userTheme === 'system'`.
+
+Quando si imposta un nuovo tema: aggiorna lo stato, persiste nello storage e riapplica le classi a `<html>`.
+
+L'implementazione potrebbe essere simile a questa:
+
+```tsx
+type ThemeContextProps = {
+  userTheme: UserTheme;
+  appTheme: AppTheme;
+  setTheme: (theme: UserTheme) => void;
+};
+const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
+
+type ThemeProviderProps = {
+  children: ReactNode;
+};
+export function ThemeProvider({ children }: ThemeProviderProps) {
+  const [userTheme, setUserTheme] = useState<UserTheme>(getStoredUserTheme);
+
+  useEffect(() => {
+    if (userTheme !== 'system') return;
+    return setupPreferredListener();
+  }, [userTheme]);
+
+  const appTheme = userTheme === 'system' ? getSystemTheme() : userTheme;
+
+  const setTheme = (newUserTheme: UserTheme) => {
+    setUserTheme(newUserTheme);
+    setStoredTheme(newUserTheme);
+    handleThemeChange(newUserTheme);
+  };
+
+  return (
+    <ThemeContext value={{ userTheme, appTheme, setTheme }}>
+      <ScriptOnce children={themeScript} />
+
+      {children}
+    </ThemeContext>
+  );
+}
+
+export const useTheme = () => {
+  const context = use(ThemeContext);
+  if (!context) {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+  return context;
+};
+```
+
+### Lo script inline cruciale: addio FOUC
+
+Se conosci il dibattito cookie vs localStorage, sai che per far funzionare questo approccio serve un piccolo script inline eseguito immediatamente, prima dell'hydration, per impostare la classe corretta sull'elemento root. Se hai occhio, avrai notato `<ScriptOnce children={themeScript} />` nello snippet precedente.
+
+In TanStack Start, il modo più semplice per iniettare questo script è usare il componente `ScriptOnce`, che esegue lo script una sola volta durante il render iniziale.
+
+Il problema degli script inline è che vanno scritti come stringhe... ecco un trucco: scrivilo come una vera funzione JS (godendo di linter e supporto IDE), poi convertila in stringa all'interno di una IIFE.
+
+```ts
+const themeScript: string = (function () {
+  function themeFn() {
+    try {
+      const storedTheme = localStorage.getItem('ui-theme') || 'system';
+      const validTheme = ['light', 'dark', 'system'].includes(storedTheme) ? storedTheme : 'system';
+
+      if (validTheme === 'system') {
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.classList.add(systemTheme, 'system');
+      } else {
+        document.documentElement.classList.add(validTheme);
+      }
+    } catch (e) {
+      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.classList.add(systemTheme, 'system');
+    }
+  }
+  return `(${themeFn.toString()})();`;
+})();
+```
+
+Con questo codice, convertito in stringa, ci assicuriamo di aggiungere la classe CSS corretta _il prima possibile_.
+
+Senza questo script, avrai un flash: la pagina carica con lo stile di default, poi cambia dopo il mount di React. Lo script inline previene tutto ciò scrivendo la classe durante il paint HTML iniziale.
+
+### Lascia che sia il CSS, non JS, a gestire la UI del toggle
+
+Ecco la regola n. 2 menzionata prima.
+
+Poiché i valori iniziali sono stabiliti prima di React, una UI dipendente dallo stato JS probabilmente sfarfallerà: il server renderizza qualcosa (es. l'icona del tema light), ma sul client viene sovrascritta dallo stato effettivo (es. tema dark).
+
+L'approccio più sicuro è lasciare che il CSS decida la visibilità in base alle classi root. Con Tailwind v4 puoi usare `:not()` e selettori di classe per semplificare il tutto.
+
+Esempio:
+
+```tsx
+const themeConfig: Record<UserTheme, { icon: string; label: string }> = {
+  light: { icon: '☀️', label: 'Light' },
+  dark: { icon: '🌙', label: 'Dark' },
+  system: { icon: '💻', label: 'System' },
+};
+
+export const ThemeToggle = () => {
+  const { userTheme, setTheme } = useTheme();
+
+  const getNextTheme = () => {
+    const themes = Object.keys(themeConfig) as UserTheme[];
+    const currentIndex = themes.indexOf(userTheme);
+    const nextIndex = (currentIndex + 1) % themes.length;
+    return themes[nextIndex];
+  };
+
+  return (
+    <Button onClick={() => setTheme(getNextTheme())} className="w-28">
+      <span className="not-system:light:inline hidden">
+        {themeConfig.light.label}
+        <span className="ml-1">{themeConfig.light.icon}</span>
+      </span>
+      <span className="not-system:dark:inline hidden">
+        {themeConfig.dark.label}
+        <span className="ml-1">{themeConfig.dark.icon}</span>
+      </span>
+      <span className="system:inline hidden">
+        {themeConfig.system.label}
+        <span className="ml-1">{themeConfig.system.icon}</span>
+      </span>
+    </Button>
+  );
+};
+```
+
+Puoi usare `userTheme` dall'hook in qualsiasi _altro_ momento (es. per ciclare i temi al click), ma al _render iniziale_ non puoi. Il CSS guiderà il tuo bottone.
+
+## Primitive TanStack Start: clientOnly e createIsomorphicFn
+
+Per evitare controlli manuali `typeof window !== 'undefined'`, puoi usare le utility di Start per definire logica client-only o isomorfica senza spargere condizioni ovunque.
+
+- `clientOnly(fn)`: lancia un errore sul server, esegue sul client.
+- `createIsomorphicFn({ server, client })`: permette di definire comportamenti diversi su client e server.
+
+Sono perfetti per helper di storage e funzioni che toccano il DOM:
+
+```ts
+const getStoredUserTheme = createIsomorphicFn()
+  .server((): UserTheme => 'system')
+  .client((): UserTheme => {
+    try {
+      const stored = localStorage.getItem(themeStorageKey);
+      return stored && themes.includes(stored as UserTheme) ? (stored as UserTheme) : 'system';
+    } catch {
+      return 'system';
+    }
+  });
+
+const setStoredTheme = clientOnly((theme: UserTheme) => {
+  try {
+    localStorage.setItem(themeStorageKey, theme);
+  } catch {}
+});
+```
+
+## Validare con Zod
+
+Invece di controllare manualmente le stringhe, definisci un enum Zod con `catch('system')`. Chiama `schema.parse(value)` e avrai un `UserTheme` valido garantito.
+
+```ts
+const UserThemeSchema = z.enum(['light', 'dark', 'system']).catch('system');
+const AppThemeSchema = z.enum(['light', 'dark']).catch('light');
+
+export type UserTheme = z.infer<typeof UserThemeSchema>;
+export type AppTheme = z.infer<typeof AppThemeSchema>;
+
+const getStoredUserTheme = createIsomorphicFn()
+  .server((): UserTheme => 'system')
+  .client((): UserTheme => {
+    const stored = localStorage.getItem(themeStorageKey);
+    return UserThemeSchema.parse(stored);
+  });
+
+const setStoredTheme = clientOnly((theme: UserTheme) => {
+  const validatedTheme = UserThemeSchema.parse(theme);
+  localStorage.setItem(themeStorageKey, validatedTheme);
+});
+```
+
+## Cookie vs LocalStorage (e quando usarli)
+
+Onestamente, non c'è un vincitore assoluto: entrambi gli approcci hanno dei compromessi. Nella maggior parte dei casi, scegli quello che ti sembra più ragionevole e andrà bene.
+
+L'approccio `localStorage` vive solo nel browser: è buono, ma richiede JS per l'esecuzione (all'hydration) e necessita dei trucchi CSS per il render iniziale. Inoltre, il server non conosce la preferenza dell'utente.
+
+L'approccio cookie rende il server consapevole del tema, ma implica che il browser debba comunicare con il server per ogni cambio di tema, che dovrebbe essere un'operazione puramente client-side.
+
+Comunque, nel repo trovi una versione con i cookie nella cronologia dei commit: https://github.com/Balastrong/start-theme-demo/tree/077010bee3ca25ba775a4d452d55244cf8971637
+
+## Riassunto
+
+Ecco il flusso completo:
+
+1. Mantieni `UserTheme` ('light'|'dark'|'system') separato da `AppTheme` ('light'|'dark') e deriva quest'ultimo.
+2. Usa helper di storage sicuri che diano un default sul server e validino `localStorage` sul client.
+3. Scrivi le classi su `document.documentElement` (light/dark e opzionale system) a ogni cambio tema.
+4. Fornisci `userTheme`, `appTheme` e `setTheme` via Context e ascolta `prefers-color-scheme` quando è su system.
+5. Inietta un piccolo script inline per impostare la classe HTML iniziale prima dell'hydration ed eliminare il FOUC.
+6. Lascia che il CSS, guidato dalle classi root, controlli la UI del toggle per un render corretto al primo paint.
+7. Opzionalmente, usa `clientOnly`/`createIsomorphicFn` di TanStack Start e Zod per semplificare e validare la logica.
+
+Prima di salutarci, ecco alcuni link utili:
+
+- Demo Live: https://tanstack-start-theme-demo.netlify.app/
+- Repository GitHub: https://github.com/Balastrong/start-theme-demo
+- Video Walkthrough: https://youtu.be/NoxvbjkyLAg
+
+Ora tocca a te: lascia una stella al repo, un like al video e... divertiti!
+
+Fammi sapere cosa ne pensi nei commenti!
