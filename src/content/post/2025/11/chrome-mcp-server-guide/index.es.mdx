@@ -1,0 +1,119 @@
+---
+title: 'Automatiza la Corrección de Errores de UI con el Servidor MCP de Chrome y Copilot'
+description: 'Un vistazo rápido al servidor MCP de Chrome y cómo puede automatizar la corrección de errores de interfaz.'
+publishDate: '2025-11-22'
+image: ./_cover.png
+slug: guia-servidor-mcp-chrome
+tags:
+  - mcp
+  - chrome
+  - copilot
+  - ai
+  - github
+---
+
+import Image from '~/components/widgets/Image.astro';
+import YouTube from '~/components/widgets/YouTube.astro';
+
+Hace poco estuve probando el servidor MCP de Chrome y la verdad es que se ve genial. Así que déjame mostrarte un ejemplo rápido de lo que es capaz de hacer.
+
+<YouTube id="7M7O-tuAkN8" />
+
+## Primeros Pasos
+
+Antes de nada, si aún no lo tienes instalado, hay instrucciones disponibles. Como con cualquier otro servidor MCP, solo necesitas tener la cadena de configuración en algún lugar de la configuración de tu cliente.
+
+```json
+{
+  "mcpServers": {
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest"]
+    }
+  }
+}
+```
+
+Yo utilizo VS Code, que tiene un comando en la CLI para esto. Puedes abrir una nueva terminal, pegar el comando y eso es básicamente todo.
+
+```bash
+code --add-mcp '{"name":"chrome-devtools","command":"npx","args":["chrome-devtools-mcp@latest"]}'
+```
+
+En cualquier caso, las instrucciones completas están en la [documentación del servidor MCP de Chrome](https://github.com/ChromeDevTools/chrome-devtools-mcp/).
+
+Si quieres asegurarte de que está instalado, puedes abrir tu configuración de usuario (`F1` => `MCP: Open User Configuration`) y buscar el servidor allí. Además, en cuanto abras un nuevo chat, puedes hacer clic en el icono de herramientas y encontrarás "Chrome tools" en la lista.
+
+import tools from './_tools.png';
+
+<Image src={tools} alt="herramientas" />
+
+## Demo en Ejecución
+
+Tengo una aplicación corriendo en localhost, pero tiene un pequeño problema de interfaz (UI). Si pasas el cursor sobre una tarjeta específica, el texto de algunas etiquetas se vuelve ilegible. Ese es el bug que vamos a validar y corregir a través de las herramientas del servidor MCP de Chrome.
+
+import bug from './_bug.png';
+
+<Image src={bug} alt="bug" />
+
+_^ ¡esta captura ha sido tomada por el propio servidor MCP!_
+
+Volviendo a nuestro proyecto, puedo pedirle a la IA que navegue a la página con el error y tome medidas. Este fue mi prompt:
+
+> Navega aquí con el mcp chrome-devtools: http://localhost:3000/events/js-event-2026
+>
+> Notarás que si pasas el cursor sobre las tarjetas en eventos similares, algunas etiquetas son difíciles de leer. Verifica y arregla eso.
+
+## La Solución en Acción
+
+Una vez hecha la petición, comienza lanzando el servidor MCP de Chrome. Aparece una ventana de Chrome, controlada enteramente por el agente.
+
+El primer paso que da es navegar a la página. Luego, toma una instantánea (snapshot). Esto no es solo una captura de pantalla, sino una vista deconstruida de la página donde se asignan identificadores únicos a cada texto, enlace o botón. Esto permite al agente entender la estructura de la página utilizando muchos menos tokens que un volcado completo de HTML.
+
+Aquí tienes un ejemplo:
+
+```js
+# respuesta de take_snapshot
+## Page content
+uid=1_0 RootWebArea "JS Event - ConfHub" url="http://localhost:3000/events/js-event-2026"
+  uid=1_1 banner
+    uid=1_2 link "ConfHub" url="http://localhost:3000/"
+      uid=1_3 StaticText "ConfHub"
+    uid=1_4 navigation "Main"
+      uid=1_5 link "Submit Event" url="http://localhost:3000/events/submit"
+        uid=1_6 StaticText "Submit Event"
+      uid=1_7 link "Communities"
+...
+```
+
+Después identifica el elemento correcto, en este caso, la tarjeta "React Conference 2026" (a través de su `uid=1_31`), y decide pasar el cursor sobre ella. Autorizo la acción y Chrome realiza el hover automáticamente. Luego toma una captura de pantalla para visualizar el problema dentro del contexto del chat.
+
+Así es como se ve el registro del chat en este punto, después de que el agente ejecutara las herramientas proporcionadas por el servidor MCP:
+
+import chat from './_chat.png';
+
+<Image src={chat} alt="chat" />
+
+Tras confirmar el problema, el agente busca el componente relevante. Identifica el error (en este caso revisando el componente badge) y aplica una corrección.
+
+## Validación
+
+Para asegurar que la corrección funciona, el agente vuelve a la página. Dado que el proyecto tiene Hot Module Reload, los cambios deberían ser inmediatos, pero para estar seguro, refresca la página. Luego intenta pasar el cursor de nuevo sobre la tarjeta.
+
+import fix from './_fix.png';
+
+<Image src={fix} alt="fix" />
+
+_^ sí, ¡esta pantalla también ha sido tomada por el servidor MCP para validar el arreglo!_
+
+¡El bug ya está arreglado! El texto es legible 👀
+
+## Conclusión
+
+En esta demo (como puedes [ver en el vídeo](https://youtu.be/7M7O-tuAkN8)), fui autorizando cada llamada a las herramientas manualmente para mantener el control total y explicarlas paso a paso. Sin embargo, imagina dejar correr esto en un agente en la nube con todas las herramientas ejecutables de forma autónoma. Es impresionante que un agente independiente pueda navegar, interactuar, tomar capturas y validar arreglos sin intervención humana constante.
+
+El resultado será una pull request que contenga no solo los cambios de código, sino también las capturas de validación, haciendo el proceso de revisión mucho más fácil.
+
+Esto ha sido solo una muestra rápida de una funcionalidad que probé recientemente en el servidor MCP de Chrome DevTools. Si tienes curiosidad sobre otros servidores MCP que quieras que pruebe, solo dímelo. Dime el nombre del servidor y le echaré un vistazo.
+
+¡Gracias por leer!
