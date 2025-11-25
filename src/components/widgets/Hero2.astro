@@ -51,7 +51,13 @@ const {
                   {typeof callToAction === 'string' ? (
                     <Fragment set:html={callToAction} />
                   ) : (
-                    <a class="btn btn-primary sm:mb-0 w-full" href={callToAction?.href} target="_blank" rel="noopener">
+                    <a
+                      class="btn btn-primary sm:mb-0 w-full"
+                      href={callToAction?.href}
+                      target="_blank"
+                      rel="noopener"
+                      data-analytics="hero2-cta"
+                    >
                       {callToAction?.icon && (
                         <>
                           <Icon name={callToAction.icon} class="w-5 h-5 mr-1 -ml-1.5" />{' '}
@@ -69,7 +75,7 @@ const {
                   {typeof callToAction2 === 'string' ? (
                     <Fragment set:html={callToAction2} />
                   ) : (
-                    <a class="btn w-full" href={callToAction2?.href}>
+                    <a class="btn w-full" href={callToAction2?.href} data-analytics="hero2-cta-2">
                       {callToAction2?.icon && (
                         <>
                           <Icon name={callToAction2.icon} class="w-5 h-5 mr-1 -ml-1.5" />{' '}

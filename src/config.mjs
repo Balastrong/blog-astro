@@ -26,6 +26,7 @@ const CONFIG = {
 
   googleAnalyticsId: 'G-RVH4XDNBX3',
   googleSiteVerificationId: 'orcPxI47GSa-cRvY11tUe6iGg2IO_RPvnA1q95iEM3M',
+  collectAnalytics: !import.meta.env.DEV,
 
   blog: {
     disabled: false,

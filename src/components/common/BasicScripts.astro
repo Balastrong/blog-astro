@@ -2,7 +2,7 @@
 import { SITE } from '~/config.mjs';
 ---
 
-<script is:inline define:vars={{ defaultTheme: SITE.defaultTheme }}>
+<script is:inline define:vars={{ defaultTheme: SITE.defaultTheme, collectAnalytics: SITE.collectAnalytics }}>
   function applyTheme(theme) {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
@@ -84,6 +84,15 @@ import { SITE } from '~/config.mjs';
       newlink.target = '_blank';
       newlink.href = href;
       newlink.click();
+    });
+
+    attachEvent('[data-analytics]', 'click', function (_, elem) {
+      if (typeof window.gtag === 'function' && collectAnalytics) {
+        window.gtag('event', 'click', {
+          event_category: 'engagement',
+          event_label: elem.getAttribute('data-analytics'),
+        });
+      }
     });
 
     function appyHeaderStylesOnScroll() {

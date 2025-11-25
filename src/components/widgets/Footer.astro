@@ -38,6 +38,7 @@ const { socialLinks = [], theme = 'light' } = Astro.props;
                   aria-label={ariaLabel}
                   href={href}
                   target="_blank"
+                  data-analytics={'footer-social-' + ariaLabel}
                 >
                   {icon && <Icon name={icon} class="w-5 h-5" />}
                   <Fragment set:html={text} />

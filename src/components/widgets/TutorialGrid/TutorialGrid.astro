@@ -21,6 +21,7 @@ const { tutorial } = Astro.props;
           target={'_blank'}
           class="hover:opacity-85"
           title={`Watch the full playlist (${tutorial.chapters.length})`}
+          data-analytics={'tanstack-playlist-' + tutorial.title}
         >
           Watch the full playlist ({tutorial.chapters.length}) »
         </a>

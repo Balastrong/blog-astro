@@ -1,5 +1,4 @@
 ---
-import { GoogleAnalytics } from '@astrolib/analytics';
 import { AstroSeo } from '@astrolib/seo';
 
 import { SITE } from '~/config.mjs';
@@ -41,6 +40,9 @@ const image =
     ? // @ts-ignore
       new URL(getRelativeUrlByFilePath(_image.src), Astro.site)
     : null;
+
+const analyticsId = SITE.googleAnalyticsId;
+const collectAnalytics = SITE.collectAnalytics
 ---
 
 <meta charset="UTF-8" />
@@ -89,8 +91,18 @@ const image =
 
 <!-- Google Analytics -->
 {
-  SITE.googleAnalyticsId && !import.meta.env.DEV && (
-    <GoogleAnalytics id={String(SITE.googleAnalyticsId)} partytown={true} />
+  collectAnalytics && (
+    <>
+      <script is:inline type="text/partytown" src={`https://www.googletagmanager.com/gtag/js?id=${analyticsId}`} ></script>
+      <script is:inline type="text/partytown" define:vars={{ analyticsId }}>
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function gtag() {
+          window.dataLayer.push(arguments);
+        };
+        window.gtag('js', new Date());
+        window.gtag('config', String(analyticsId));
+      </script>
+  </>
   )
 }
 

@@ -71,7 +71,7 @@ const items = (await Promise.allSettled(promises))
                     alt={login}
                     class={`w-8 h-8 ${type === 'Organization' ? 'rounded-lg' : 'rounded-full'}`}
                   />
-                  <a href={html_url} target="_blank" rel="noopener noreferrer">
+                  <a href={html_url} target="_blank" rel="noopener noreferrer" data-analytics={'project-repo-' + name}>
                     <h2>
                       <span class="text-x">{login}</span> / <span class="text-xl font-bold">{name}</span>
                     </h2>
@@ -88,6 +88,7 @@ const items = (await Promise.allSettled(promises))
                     href={`${html_url}/pulls?q=is%3Apr+is%3Aclosed+author%3ABalastrong`}
                     class="pt-4 mt-auto text-sm font-semibold text-primary dark:text-blue-200 hover:underline"
                     target="_blank"
+                    data-analytics={'project-prs-' + name}
                   >
                     {pullRequests.total_count} Pull Requests
                   </a>

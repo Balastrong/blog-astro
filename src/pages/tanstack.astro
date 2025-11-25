@@ -81,8 +81,11 @@ const tutorialsCount = tanStackTutorials.reduce((acc, tutorial) => acc + tutoria
         </p>
         <p>
           While the
-          <a href="https://tanstack.com/" target="_blank" title="TanStack Official Documentation"
-            >official documentation</a
+          <a
+            href="https://tanstack.com/"
+            target="_blank"
+            title="TanStack Official Documentation"
+            data-analytics="tanstack-official-docs">official documentation</a
           > is the best starting point, this collection offers <i>step by step tutorials</i> where we work together to build
           <strong>practical examples</strong>.
         </p>
@@ -100,7 +103,12 @@ const tutorialsCount = tanStackTutorials.reduce((acc, tutorial) => acc + tutoria
         </div>
         {
           tanStackTutorials.map((tutorial) => (
-            <a href={`#${tutorial.key}`} class="w-full min-[500px]:w-fit" title={`Jump to ${tutorial.title}`}>
+            <a
+              href={`#${tutorial.key}`}
+              class="w-full min-[500px]:w-fit"
+              title={`Jump to ${tutorial.title}`}
+              data-analytics={`tanstack-jump-${tutorial.key}`}
+            >
               <div
                 class:list={[
                   'text-white px-3 py-1 rounded-full font-semibold hover:bg-opacity-85 transition ease-in duration-200 text-center',

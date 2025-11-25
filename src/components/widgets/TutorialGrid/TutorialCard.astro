@@ -33,6 +33,7 @@ const { chapterNumber, chapter, mainColor } = Astro.props;
         ]}
         target="_blank"
         title={`Subscribe to my YouTube Channel for ${chapter.title}`}
+        data-analytics={'tanstack-subscribe-' + chapter.title}
       >
         <span class="text-white flex items-center justify-center gap-1 font-semibold">
           <Icon name="tabler:bell-ringing" class="w-4 h-4" /> Coming Soon!
@@ -50,6 +51,7 @@ const { chapterNumber, chapter, mainColor } = Astro.props;
               ]}
               target="_blank"
               title={`Watch Video for ${chapter.title}`}
+              data-analytics={'tanstack-video-' + chapter.title}
             >
               <span class="text-white flex items-center justify-center gap-1 font-semibold">
                 <Icon name="tabler:player-play" class="w-4 h-4" /> Watch Video
@@ -66,6 +68,7 @@ const { chapterNumber, chapter, mainColor } = Astro.props;
                 `text-${mainColor}`,
               ]}
               target="_blank"
+              data-analytics={'tanstack-code-' + chapter.title}
               title={`View Code for ${chapter.title}`}
             >
               <Icon name="tabler:code" class="w-3 h-3" /> Code
@@ -79,6 +82,7 @@ const { chapterNumber, chapter, mainColor } = Astro.props;
                 `text-${mainColor}`,
               ]}
               target="_blank"
+              data-analytics={'tanstack-article-' + chapter.title}
               title={`Read Article for ${chapter.title}`}
             >
               <Icon name="tabler:file-text" class="w-3 h-3" /> Article

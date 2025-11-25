@@ -43,7 +43,7 @@ export default defineConfig({
     react(),
     ...whenExternalScripts(() =>
       partytown({
-        config: { forward: ['dataLayer.push'] },
+        config: { forward: ['dataLayer.push', 'gtag'] },
       })
     ),
     icon(),
