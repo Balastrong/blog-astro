@@ -149,11 +149,13 @@ const services = [
             class="p-[1px] rounded-2xl bg-gradient-to-br from-gray-200 via-gray-300 to-gray-200 dark:from-slate-600 dark:via-slate-500 dark:to-slate-600"
           >
             <form
+              action="/contact?success=true"
               name="contact"
               method="POST"
               data-netlify="true"
               class="p-8 rounded-2xl bg-white dark:bg-slate-900 space-y-6"
             >
+              <input type="hidden" name="form-name" value="contact" />
               <input type="hidden" name="service" id="service-input" />
               <div class="grid gap-6 sm:grid-cols-2">
                 <div>
@@ -202,6 +204,7 @@ const services = [
                   Send Message
                 </button>
               </div>
+              <div id="form-message" class="hidden"></div>
             </form>
           </div>
         </div>
@@ -221,5 +224,15 @@ const services = [
         }
       });
     });
+
+    // Check for success param in URL
+    if (new URLSearchParams(window.location.search).get('success') === 'true') {
+      const messageDiv = document.getElementById('form-message');
+      if (messageDiv) {
+        messageDiv.textContent = 'Message sent successfully! I will get back to you soon.';
+        messageDiv.className = 'text-green-600 dark:text-green-400 text-center mt-4 font-semibold';
+        messageDiv.classList.remove('hidden');
+      }
+    }
   </script>
 </Layout>
