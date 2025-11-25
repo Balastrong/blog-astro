@@ -149,13 +149,11 @@ const services = [
             class="p-[1px] rounded-2xl bg-gradient-to-br from-gray-200 via-gray-300 to-gray-200 dark:from-slate-600 dark:via-slate-500 dark:to-slate-600"
           >
             <form
-              action="/contact?success=true"
-              name="contact"
+              id="contact-form-element"
+              action="/.netlify/functions/contact"
               method="POST"
-              data-netlify="true"
               class="p-8 rounded-2xl bg-white dark:bg-slate-900 space-y-6"
             >
-              <input type="hidden" name="form-name" value="contact" />
               <input type="hidden" name="service" id="service-input" />
               <div class="grid gap-6 sm:grid-cols-2">
                 <div>
@@ -233,6 +231,48 @@ const services = [
         messageDiv.className = 'text-green-600 dark:text-green-400 text-center mt-4 font-semibold';
         messageDiv.classList.remove('hidden');
       }
+    }
+
+    const form = document.getElementById('contact-form-element');
+    const messageDiv = document.getElementById('form-message');
+
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(form as HTMLFormElement);
+        const data = Object.fromEntries(formData.entries());
+
+        // Disable button state if needed
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (submitBtn) (submitBtn as HTMLButtonElement).disabled = true;
+
+        try {
+          const response = await fetch('/.netlify/functions/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+          });
+
+          if (response.ok) {
+            if (messageDiv) {
+              messageDiv.textContent = 'Message sent successfully! I will get back to you soon.';
+              messageDiv.className = 'text-green-600 dark:text-green-400 text-center mt-4 font-semibold';
+              messageDiv.classList.remove('hidden');
+            }
+            (form as HTMLFormElement).reset();
+          } else {
+            throw new Error('Form submission failed');
+          }
+        } catch (error) {
+          if (messageDiv) {
+            messageDiv.textContent = 'Something went wrong. Please try again later.';
+            messageDiv.className = 'text-red-600 dark:text-red-400 text-center mt-4 font-semibold';
+            messageDiv.classList.remove('hidden');
+          }
+        } finally {
+          if (submitBtn) (submitBtn as HTMLButtonElement).disabled = false;
+        }
+      });
     }
   </script>
 </Layout>

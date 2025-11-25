@@ -1,16 +1,22 @@
 import type { Handler } from '@netlify/functions';
 
 export const handler: Handler = async (event) => {
-  // Only run on POST requests (though submission-created is always POST)
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
   try {
-    const { payload } = JSON.parse(event.body || '{}');
+    let data;
+    const contentType = event.headers['content-type'] || event.headers['Content-Type'] || '';
 
-    // Netlify form data is inside payload.data
-    const { name, email, message, service } = payload.data;
+    if (contentType.includes('application/json')) {
+      data = JSON.parse(event.body || '{}');
+    } else {
+      const params = new URLSearchParams(event.body || '');
+      data = Object.fromEntries(params);
+    }
+
+    const { name, email, message, service } = data;
 
     if (!process.env.DISCORD_WEBHOOK_URL) {
       console.error('Missing DISCORD_WEBHOOK_URL environment variable');
@@ -23,7 +29,7 @@ export const handler: Handler = async (event) => {
       embeds: [
         {
           title: '📬 New Contact Form Submission',
-          color: 5793266,
+          color: 5793266, // A nice blue color
           fields: [
             {
               name: 'Name',
@@ -66,10 +72,19 @@ export const handler: Handler = async (event) => {
       throw new Error(`Discord API responded with ${response.status}: ${response.statusText}`);
     }
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ message: 'Notification sent successfully' }),
-    };
+    if (contentType.includes('application/json')) {
+      return {
+        statusCode: 200,
+        body: JSON.stringify({ message: 'Notification sent successfully' }),
+      };
+    } else {
+      return {
+        statusCode: 303,
+        headers: {
+          Location: '/contact?success=true',
+        },
+      };
+    }
   } catch (error) {
     console.error('Error processing submission:', error);
     return {
