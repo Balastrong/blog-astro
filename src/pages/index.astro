@@ -11,7 +11,7 @@ import { blueskyUrl, linkedinUrl, twitterUrl, youTubeChannelUrl, youTubeChannelU
 import Layout from '~/layouts/PageLayout.astro';
 import { getVideos } from '~/libs/youtube';
 import { findLatestPosts, getPostsCount } from '~/utils/blog';
-import { getBlogPermalink, NEWSLETTER_BASE } from '~/utils/permalinks';
+import { getBlogPermalink, getContactPermalink } from '~/utils/permalinks';
 
 const meta = {
   title: 'Leonardo Montini',
@@ -57,9 +57,9 @@ const { shortVideos, longVideos } = await getVideos();
 <Layout {meta}>
   <Hero
     callToAction={{
-      text: 'Read my Newsletter',
-      href: NEWSLETTER_BASE,
-      icon: 'tabler:mail-spark',
+      text: 'Contact Me',
+      href: getContactPermalink(),
+      icon: 'tabler:send',
     }}
     callToAction2={{
       text: 'Join me on YouTube',
@@ -69,7 +69,7 @@ const { shortVideos, longVideos } = await getVideos();
     }}
   >
     <Fragment slot="title">
-      Hello! <span class="text-accent dark:text-white highlight">Leonardo</span> here :)
+      Hello! <span class="text-primary dark:text-white highlight">Leonardo</span> here :)
     </Fragment>
 
     <Fragment slot="subtitle">

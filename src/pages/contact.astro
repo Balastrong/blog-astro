@@ -1,0 +1,225 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import { Icon } from 'astro-icon/components';
+import type { MetaSEO } from '~/types';
+import contactBanner from 'src/assets/images/banner-contact.png';
+import { Schema } from 'astro-seo-schema';
+import propic from 'src/assets/images/propic-blue.jpg';
+import { SITE } from '~/config.mjs';
+import { blueskyUrl, linkedinUrl, twitterUrl, youTubeChannelUrl } from '~/data';
+
+const meta: MetaSEO = {
+  title: 'Contact Me',
+  description: 'Get in touch with Leonardo Montini (Balastrong) for questions, mentorship, or paid services.',
+  image: contactBanner,
+  author: 'Leonardo Montini',
+};
+
+const services = [
+  {
+    title: 'Corporate Training & Consulting',
+    description:
+      'Level up your engineering team with tailored workshops on the <b>TanStack</b> ecosystem (Router, Start, Form, Query), <b>AI-assisted development</b> (Copilot, MCP), and modern <b>Frontend Architecture</b>.',
+    icon: 'tabler:briefcase',
+  },
+  {
+    title: 'Conference Speaking',
+    description:
+      'Engaging technical and inspirational talks on <b>Web Development</b>, <b>AI Tools for Developers</b>, and <b>Open Source</b>, perfect for conferences, meetups, and corporate events.',
+    icon: 'tabler:microphone-2',
+  },
+  {
+    title: '1:1 Mentorship',
+    description:
+      'Personalized guidance to boost your career in <b>Frontend</b>, <b>DevRel</b>, or <b>AI-assisted development</b>.',
+    icon: 'tabler:school',
+  },
+  {
+    title: 'YouTube Sponsorships',
+    description:
+      'Promote your product to a focused audience of developers through my YouTube content on <b>Web Development</b>, <b>Open Source</b>, and <b>Artificial Intelligence</b>.',
+    icon: 'tabler:brand-youtube',
+  },
+];
+---
+
+<Schema
+  item={{
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Leonardo Montini',
+    url: 'https://leonardomontini.dev',
+    image: SITE.origin + propic.src,
+    jobTitle: 'Frontend Developer',
+    sameAs: [blueskyUrl, youTubeChannelUrl, linkedinUrl, twitterUrl],
+    knowsAbout: [
+      'Web Development',
+      'TanStack',
+      'Open Source',
+      'JavaScript',
+      'React',
+      'TypeScript',
+      'GitHub',
+      'Copilot',
+      'AI',
+    ],
+    description: meta.description,
+    potentialAction: [
+      {
+        '@type': 'SubscribeAction',
+        target: youTubeChannelUrl,
+      },
+      {
+        '@type': 'FollowAction',
+        target: twitterUrl,
+      },
+      {
+        '@type': 'FollowAction',
+        target: linkedinUrl,
+      },
+    ],
+    award: ['GitHub Star', 'Microsoft MVP'],
+  }}
+/>
+
+<Layout {meta}>
+  <section class="relative">
+    <div class="absolute inset-0 bg-blue-50 dark:bg-slate-800 pointer-events-none mb-32" aria-hidden="true"></div>
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 mb-12 flex flex-col gap-4">
+      <div class="pt-8 sm:pt-6 lg:pt-12 mb-4 md:mb-8">
+        <div class="md:mx-auto text-center max-w-3xl">
+          <p class="text-base text-primary dark:text-blue-200 font-semibold tracking-wide uppercase">Contact</p>
+          <h1 class="text-5xl md:text-6xl font-bold leading-tighter tracking-tighter mb-4 font-heading">
+            Let's <span class="text-primary dark:text-blue-200">Work Together</span>
+          </h1>
+          <p class="max-w-3xl mx-auto sm:text-center text-xl text-muted dark:text-slate-400">
+            Whether you need training for your team, a speaker for your event, or personalized guidance, I'm here to
+            help.
+          </p>
+        </div>
+      </div>
+
+      <!-- Services Section -->
+      <div class="mb-12">
+        <div class="grid gap-6 lg:grid-cols-2 lg:max-w-6xl max-w-4xl mx-auto">
+          {
+            services.map((service) => (
+              <a
+                href="#contact-form"
+                data-service-title={service.title}
+                class="group relative p-[1px] rounded-2xl bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200 dark:from-slate-700 dark:via-slate-600 dark:to-slate-700 hover:from-primary hover:via-blue-400 hover:to-primary transition-all duration-300 hover:shadow-xl hover:shadow-primary/20 hover:-translate-y-1"
+              >
+                <div class="h-full p-6 rounded-2xl bg-white dark:bg-slate-900 flex items-start gap-6">
+                  <div class="flex-shrink-0 w-16 h-16 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 dark:from-primary/30 dark:to-primary/10 flex items-center justify-center group-hover:from-primary group-hover:to-blue-600 group-hover:scale-110 transition-all duration-300">
+                    <Icon
+                      name={service.icon}
+                      class="w-8 h-8 text-primary dark:text-blue-200 group-hover:text-white transition-colors duration-300"
+                    />
+                  </div>
+                  <div class="flex-1">
+                    <h3 class="text-xl font-bold mb-2 group-hover:text-primary dark:group-hover:text-blue-200 transition-colors duration-300">
+                      {service.title}
+                    </h3>
+                    <p
+                      class="text-gray-600 dark:text-slate-400 text-base leading-relaxed"
+                      set:html={service.description}
+                    />
+                  </div>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Contact Form Section -->
+      <div class="mb-20 relative">
+        <div class="absolute -top-24" id="contact-form"></div>
+        <div class="max-w-2xl mx-auto">
+          <div class="text-center mb-10">
+            <p class="text-sm font-semibold tracking-wide uppercase text-primary dark:text-blue-200 mb-2">
+              Get Started
+            </p>
+            <h2 class="text-3xl md:text-4xl font-bold font-heading mb-3">Send me a message</h2>
+            <p class="text-gray-600 dark:text-slate-400">
+              Interested in working together? Fill out the form below and I'll get back to you soon.
+            </p>
+          </div>
+          <div
+            class="p-[1px] rounded-2xl bg-gradient-to-br from-gray-200 via-gray-300 to-gray-200 dark:from-slate-600 dark:via-slate-500 dark:to-slate-600"
+          >
+            <form
+              name="contact"
+              method="POST"
+              data-netlify="true"
+              class="p-8 rounded-2xl bg-white dark:bg-slate-900 space-y-6"
+            >
+              <input type="hidden" name="service" id="service-input" />
+              <div class="grid gap-6 sm:grid-cols-2">
+                <div>
+                  <label for="name" class="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2"
+                    >Name</label
+                  >
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    required
+                    placeholder="Your name"
+                    class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                  />
+                </div>
+                <div>
+                  <label for="email" class="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2"
+                    >Email</label
+                  >
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    required
+                    placeholder="you@example.com"
+                    class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                  />
+                </div>
+              </div>
+              <div>
+                <label for="message" class="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2"
+                  >Message</label
+                >
+                <textarea
+                  name="message"
+                  id="message"
+                  rows="5"
+                  required
+                  placeholder="Tell me about your project or how I can help..."
+                  class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 resize-none"
+                ></textarea>
+              </div>
+              <div class="pt-2">
+                <button type="submit" class="btn btn-primary w-full py-4 text-lg font-semibold">
+                  <Icon name="tabler:send" class="w-5 h-5 mr-2" />
+                  Send Message
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const serviceLinks = document.querySelectorAll('a[data-service-title]');
+    const serviceInput = document.getElementById('service-input');
+
+    serviceLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        const title = link.getAttribute('data-service-title');
+        if (serviceInput && title) {
+          (serviceInput as HTMLInputElement).value = title;
+        }
+      });
+    });
+  </script>
+</Layout>

@@ -1,4 +1,4 @@
-import { getAsset, getBlogPermalink, getPermalink } from '../utils/permalinks';
+import { getAsset, getBlogPermalink, getContactPermalink, getPermalink } from '../utils/permalinks';
 
 export * from './projects';
 export * from './speaking.ts';
@@ -42,7 +42,7 @@ export const headerData = {
       href: getPermalink('/speaking'),
     },
   ],
-  actions: [{ type: 'button', text: 'YouTube', href: youTubeChannelUrlSubscribe }],
+  actions: [{ type: 'button', text: 'Contact', href: getContactPermalink() }],
 };
 
 export const footerData = {

@@ -26,6 +26,7 @@ export const BLOG_BASE = cleanSlug(BLOG?.list?.pathname);
 export const SERIES_BASE = cleanSlug(BLOG?.series?.pathname || 'series');
 export const TAG_BASE = cleanSlug(BLOG?.tag?.pathname) || 'tag';
 export const NEWSLETTER_BASE = cleanSlug(BLOG?.newsletter?.pathname) || 'newsletter';
+export const CONTACT_BASE = '/contact';
 
 /** */
 export const getCanonical = (path = ''): string | URL => {
@@ -73,6 +74,8 @@ export const getHomePermalink = (): string => getPermalink('/');
 
 /** */
 export const getBlogPermalink = (): string => getPermalink(BLOG_BASE);
+
+export const getContactPermalink = (): string => getPermalink(CONTACT_BASE);
 
 /** */
 export const getAsset = (path: string): string =>
