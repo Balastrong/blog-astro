@@ -4,7 +4,7 @@ import { SITE, BLOG } from '~/config.mjs';
 import { fetchPosts } from '~/utils/blog';
 import { getPermalink } from '~/utils/permalinks';
 
-export const get = async () => {
+export const GET = async () => {
   if (BLOG.disabled) {
     return new Response(null, {
       status: 404,
@@ -26,6 +26,6 @@ export const get = async () => {
       pubDate: post.publishDate,
     })),
 
-    trailingSlash: SITE.trailingSlash
+    trailingSlash: SITE.trailingSlash,
   });
 };
