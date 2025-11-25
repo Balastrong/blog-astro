@@ -81,7 +81,7 @@ export const handler: Handler = async (event) => {
       return {
         statusCode: 303,
         headers: {
-          Location: '/contact?success=true',
+          Location: '/contact?success=true#contact-form',
         },
       };
     }
