@@ -1,6 +1,8 @@
 ---
 import { Icon } from 'astro-icon/components';
+import { Schema } from 'astro-seo-schema';
 import { speakingSessions } from '~/data';
+import { SITE } from '~/config.mjs';
 import Layout from '~/layouts/PageLayout.astro';
 import type { MetaSEO } from '~/types';
 import speakingBanner from 'src/assets/images/banner-speaking.png';
@@ -78,6 +80,43 @@ const getAnimationClass = (type: 'session' | 'interview') => {
     : `${baseAnimation} hover:shadow-purple-300/60 dark:hover:shadow-purple-700/40 group`;
 };
 ---
+
+<Schema
+  item={{
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: meta.title,
+    headline: meta.title,
+    description: meta.description,
+    image: SITE.origin + speakingBanner.src,
+    author: {
+      '@type': 'Person',
+      name: 'Leonardo Montini',
+    },
+    itemListElement: speakingSessions.map((session, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'Event',
+        name: session.title,
+        description: session.event,
+        startDate: session.date,
+        eventAttendanceMode:
+          session.mode === 'remote'
+            ? 'https://schema.org/OnlineEventAttendanceMode'
+            : session.mode === 'hybrid'
+            ? 'https://schema.org/MixedEventAttendanceMode'
+            : 'https://schema.org/OfflineEventAttendanceMode',
+        location: {
+          '@type': session.mode === 'remote' ? 'VirtualLocation' : 'Place',
+          name: session.event,
+          url: session.eventUrl,
+        },
+        url: session.eventUrl || session.recording,
+      },
+    })),
+  }}
+/>
 
 <Layout {meta}>
   <section class="relative">

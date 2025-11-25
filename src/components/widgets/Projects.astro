@@ -1,5 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
+import { Schema } from 'astro-seo-schema';
 import { getRepoData } from '~/libs/github';
 import { type GitHubRepo } from '~/types';
 
@@ -24,6 +25,38 @@ const items = (await Promise.allSettled(promises))
   .map((res) => res.value)
   .sort((a, b) => b.repoData.stargazers_count - a.repoData.stargazers_count);
 ---
+
+<Schema
+  item={{
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: title,
+    description: subtitle,
+    itemListElement: items.map(({ repoData }, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'SoftwareSourceCode',
+        name: repoData.name,
+        description: repoData.description,
+        url: repoData.html_url,
+        programmingLanguage: repoData.language,
+        author:
+          repoData.owner.login === 'Balastrong'
+            ? {
+                '@type': 'Person',
+                name: 'Leonardo Montini',
+                url: 'https://leonardomontini.dev',
+              }
+            : {
+                '@type': 'Person',
+                name: repoData.owner.login,
+                url: repoData.owner.html_url,
+              },
+      },
+    })),
+  }}
+/>
 
 <section class="relative">
   <div class="absolute inset-0 bg-blue-50 dark:bg-slate-800 pointer-events-none mb-32" aria-hidden="true"></div>

@@ -48,6 +48,8 @@ const meta: MetaSEO = {
         hreflang: lang,
       }))
     : [],
+  publishDate: post.publishDate,
+  tags: post.tags,
 };
 ---
 
@@ -61,15 +63,52 @@ const meta: MetaSEO = {
     },
     headline: meta.title,
     description: meta.description,
-    datePublished: post.publishDate.toDateString(),
+    image: meta.image ? (typeof meta.image === 'string' ? meta.image : meta.image.src) : undefined,
+    datePublished: post.publishDate.toISOString(),
+    dateModified: post.publishDate.toISOString(),
     author: {
       '@type': 'Person',
       name: meta.author,
+      url: 'https://leonardomontini.dev',
     },
+    publisher: {
+      '@type': 'Person',
+      name: 'Leonardo Montini',
+      url: 'https://leonardomontini.dev',
+    },
+    keywords: post.tags?.join(', '),
+    wordCount: post.content?.split(/\s+/).length,
     potentialAction: {
       '@type': 'ReadAction',
       target: meta.canonical?.toString(),
     },
+  }}
+/>
+
+<Schema
+  item={{
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://leonardomontini.dev',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Blog',
+        item: 'https://leonardomontini.dev/blog',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: meta.title,
+        item: meta.canonical?.toString(),
+      },
+    ],
   }}
 />
 

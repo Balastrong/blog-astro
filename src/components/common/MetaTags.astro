@@ -10,6 +10,8 @@ import CustomStyles from '~/components/CustomStyles.astro';
 
 export type Props = MetaSEO & {
   dontUseTitleTemplate?: boolean;
+  publishDate?: Date;
+  tags?: string[];
 };
 
 const defaultImage = SITE.defaultImage;
@@ -29,6 +31,8 @@ const {
 
   dontUseTitleTemplate = false,
   languageAlternates,
+  publishDate,
+  tags,
 } = Astro.props;
 
 const pageTitle = `${title}${dontUseTitleTemplate ? '' : ` | ${SITE.name}`}`;
@@ -47,6 +51,18 @@ const collectAnalytics = SITE.collectAnalytics
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Preconnect to external resources for better performance -->
+<link rel="preconnect" href="https://www.youtube.com" />
+<link rel="preconnect" href="https://i.ytimg.com" />
+<link rel="preconnect" href="https://www.googletagmanager.com" />
+<link rel="dns-prefetch" href="https://www.youtube.com" />
+<link rel="dns-prefetch" href="https://i.ytimg.com" />
+
+<!-- Article meta tags for blog posts -->
+{publishDate && <meta property="article:published_time" content={publishDate.toISOString()} />}
+{publishDate && <meta property="article:modified_time" content={publishDate.toISOString()} />}
+{tags && tags.map((tag) => <meta property="article:tag" content={tag} />)}
 
 <AstroSeo
   title={pageTitle}

@@ -62,6 +62,9 @@ export type MetaSEO = {
   ogType?: string;
 
   languageAlternates?: AstroSeoProps['languageAlternates'];
+
+  publishDate?: Date;
+  tags?: string[];
 };
 
 export type GitHubRepository = {

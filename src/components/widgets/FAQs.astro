@@ -1,5 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
+import { Schema } from 'astro-seo-schema';
 
 type Item = {
   question: string;
@@ -19,7 +20,28 @@ const {
   highlight,
   items = [],
 } = Astro.props;
+
+const allFaqs = items.flat();
 ---
+
+{
+  allFaqs.length > 0 && (
+    <Schema
+      item={{
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: allFaqs.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.answer,
+          },
+        })),
+      }}
+    />
+  )
+}
 
 <div class="px-4 py-16 mx-auto max-w-6xl lg:py-20">
   <div class="max-w-xl sm:mx-auto lg:max-w-2xl">

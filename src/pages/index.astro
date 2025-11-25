@@ -54,6 +54,19 @@ const { shortVideos, longVideos } = await getVideos();
     award: ['GitHub Star', 'Microsoft MVP'],
   }}
 />
+<Schema
+  item={{
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: SITE.name,
+    url: SITE.origin,
+    description: SITE.description,
+    author: {
+      '@type': 'Person',
+      name: 'Leonardo Montini',
+    },
+  }}
+/>
 <Layout {meta}>
   <Hero
     callToAction={{
