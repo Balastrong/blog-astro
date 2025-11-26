@@ -20,7 +20,6 @@ const whenExternalScripts = (items = []) =>
 export default defineConfig({
   site: SITE.origin,
   base: SITE.basePathname,
-  trailingSlash: SITE.trailingSlash ? 'always' : 'never',
 
   output: 'static',
 
