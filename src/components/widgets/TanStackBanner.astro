@@ -16,7 +16,7 @@ const { libraryName = 'this' } = Astro.props;
   class="flex flex-row items-center gap-4 p-4 rounded-lg max-w-xl mx-auto my-4 bg-slate-100 dark:bg-slate-800 not-prose"
 >
   <div class="w-1/4">
-    <a href="/tanstack" title="Learn more about TanStack" rel="noopener">
+    <a href="/tanstack" title="Learn more about TanStack" rel="noopener" data-analytics="tanstack-banner-logo-link">
       <Picture class="w-full h-auto rounded-md" src={tanstack} alt="TanStack Logo" width="100" height="100" />
     </a>
   </div>
@@ -31,6 +31,7 @@ const { libraryName = 'this' } = Astro.props;
       class="inline-block mt-2 px-4 py-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-md transition-colors"
       title="Learn more about TanStack!"
       rel="noopener"
+      data-analytics="tanstack-banner-browse-tutorials"
     >
       Browse Tutorials
     </a>

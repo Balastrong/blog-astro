@@ -113,6 +113,11 @@ export const tanStackTutorials: Tutorial[] = [
         video: 'https://youtu.be/MXffKeNfOvQ',
         code: 'https://github.com/Balastrong/confhub',
       },
+      {
+        title: 'Breadcrumbs',
+        video: 'https://youtu.be/6vfmfSCcs54',
+        code: 'https://github.com/Balastrong/tanstack-router-demo/tree/11-breadcrumbs',
+      },
     ],
   },
   {
