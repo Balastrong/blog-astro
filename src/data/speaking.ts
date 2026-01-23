@@ -188,4 +188,13 @@ export const speakingSessions: SpeakingSession[] = [
     language: '🇬🇧',
     eventUrl: 'https://academy.claranet.it/pages/coding-agents-sed9',
   },
+  {
+    date: '2026-01-21',
+    title: 'From AI chats in our apps, to our apps in AI chats',
+    event: 'Claranet - Software Engineering Days',
+    type: 'session',
+    mode: 'remote',
+    language: '🇬🇧',
+    eventUrl: 'https://academy.claranet.it/pages/interactive-user-interface-in-ai-chats',
+  },
 ];
