@@ -1,6 +1,5 @@
 ---
 agent: agent
-model: Gemini 3 Pro (Preview) (copilot)
 ---
 
 If there is no `subtitles.md` file in the project root, reply with exactly:
