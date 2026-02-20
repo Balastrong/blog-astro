@@ -6,7 +6,6 @@ import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 import partytown from '@astrojs/partytown';
-import compress from 'astro-compress';
 import react from '@astrojs/react';
 import { readingTimeRemarkPlugin } from './src/utils/frontmatter.mjs';
 
@@ -46,7 +45,6 @@ export default defineConfig({
       })
     ),
     icon(),
-    compress(),
   ],
 
   vite: {
