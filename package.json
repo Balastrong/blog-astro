@@ -44,7 +44,7 @@
     "vitest": "^1.4.0"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=24"
   },
   "dependencies": {
     "@astrojs/react": "^4.3.0",
