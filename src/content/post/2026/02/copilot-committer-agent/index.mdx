@@ -1,0 +1,31 @@
+---
+title: 'A Custom Copilot Agent That Splits Your Commits for You'
+description: 'Custom GitHub Copilot agent that splits staged files into logical commits: proposes the grouping, handles branch creation, and works across all projects.'
+publishDate: '2026-02-23'
+image: './_cover.png'
+tags: ['copilot', 'git', 'commit', 'workflow', 'vscode']
+---
+
+import YouTube from '~/components/widgets/YouTube.astro';
+
+## Too Many Staged Files?
+
+When I started doing spec-driven development, I noticed a pattern: you tell the agent to implement a whole spec, it runs through everything, and then you're left with dozens of staged files spread across different concerns. You can try to split them by hand, but that breaks the flow right when you want to move on.
+
+## The Committer Agent
+
+So I built a custom GitHub Copilot agent for it. It scans through all the staged changes, decides how to group them into logical commits, and proposes the split before touching anything. There's also a branch creation step, so if you're on main it asks first. The interesting part is where it lives: the user data folder, not the repository. That means one agent, available across all your projects.
+
+If you're curious I published the code on a GitHub gist, feel free to give it a try or suggest improvements.
+
+Link: https://gist.github.com/Balastrong/10c2add743da3e99a739b02ffc9fc4d4
+
+## What This Unlocks
+
+Once you approve the commit groups, it runs all the git operations on its own. If you allow git operations once for the session, the whole flow runs super fast. You can even wire the same agent to Copilot CLI, so you end up with a clean state, the right branch, and proper commits without leaving the terminal.
+
+## Watch the Full Demo
+
+I walk through the full flow on screen, including a custom prompt to invoke the agent in one keystroke. Easier to show than to explain.
+
+<YouTube id="1SRJ4cYCpa4" />
