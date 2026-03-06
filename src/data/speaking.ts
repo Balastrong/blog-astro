@@ -197,4 +197,13 @@ export const speakingSessions: SpeakingSession[] = [
     language: '🇬🇧',
     eventUrl: 'https://academy.claranet.it/pages/interactive-user-interface-in-ai-chats',
   },
+  {
+    date: '2026-04-09',
+    title: 'Can we make type-safety look like JavaScript?',
+    event: 'JSDay 2026',
+    type: 'session',
+    mode: 'in-person',
+    language: '🇬🇧',
+    eventUrl: 'https://www.jsday.it/talk/can-we-make-typesafety-look-like-javascript/',
+  },
 ];
