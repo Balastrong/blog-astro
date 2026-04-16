@@ -205,5 +205,6 @@ export const speakingSessions: SpeakingSession[] = [
     mode: 'in-person',
     language: '🇬🇧',
     eventUrl: 'https://www.jsday.it/talk/can-we-make-typesafety-look-like-javascript/',
+    image: 'jsday2026.jpg',
   },
 ];
