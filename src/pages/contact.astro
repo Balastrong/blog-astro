@@ -93,8 +93,8 @@ const services = [
             Let's <span class="text-primary dark:text-blue-200">Work Together</span>
           </h1>
           <p class="max-w-3xl mx-auto sm:text-center text-xl text-muted dark:text-slate-400">
-            Whether you need training for your team, a speaker for your event, or personalized guidance, I'm here to
-            help.
+            I help teams grow, share knowledge at events, and mentor developers. If any of the above resonates, I'd love
+            to hear from you.
           </p>
         </div>
       </div>
@@ -105,8 +105,9 @@ const services = [
           {
             services.map((service) => (
               <a
-                href="#contact-form"
-                data-service-title={service.title}
+                href={linkedinUrl}
+                target="_blank"
+                rel="noreferrer"
                 class="group relative p-[1px] rounded-2xl bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200 dark:from-slate-700 dark:via-slate-600 dark:to-slate-700 hover:from-primary hover:via-blue-400 hover:to-primary transition-all duration-300 hover:shadow-xl hover:shadow-primary/20 hover:-translate-y-1"
               >
                 <div class="h-full p-6 rounded-2xl bg-white dark:bg-slate-900 flex items-start gap-6">
@@ -132,104 +133,24 @@ const services = [
         </div>
       </div>
 
-      <!-- Contact Form Section -->
+      <!-- CTA Section -->
       <div class="mb-20 relative">
-        <div class="absolute -top-24" id="contact-form"></div>
-        <div class="max-w-2xl mx-auto">
-          <div class="text-center mb-10">
-            <p class="text-sm font-semibold tracking-wide uppercase text-primary dark:text-blue-200 mb-2">
-              Get Started
-            </p>
-            <h2 class="text-3xl md:text-4xl font-bold font-heading mb-3">Send me a message</h2>
-            <p class="text-gray-600 dark:text-slate-400">
-              Interested in working together? Fill out the form below and I'll get back to you soon.
-            </p>
-          </div>
-          <div
-            class="p-[1px] rounded-2xl bg-gradient-to-br from-gray-200 via-gray-300 to-gray-200 dark:from-slate-600 dark:via-slate-500 dark:to-slate-600"
+        <div class="max-w-xl mx-auto text-center">
+          <h2 class="text-3xl md:text-4xl font-bold font-heading mb-4">Let's talk on LinkedIn</h2>
+          <p class="text-gray-600 dark:text-slate-400 mb-8">
+            The best way to reach me is a direct message. I read every one.
+          </p>
+          <a
+            href={linkedinUrl}
+            target="_blank"
+            rel="noreferrer"
+            class="btn btn-primary inline-flex items-center justify-center px-8 py-4 text-lg font-semibold"
           >
-            <form
-              action="/.netlify/functions/contact"
-              method="POST"
-              class="p-8 rounded-2xl bg-white dark:bg-slate-900 space-y-6"
-            >
-              <input type="hidden" name="service" id="service-input" />
-              <div class="grid gap-6 sm:grid-cols-2">
-                <div>
-                  <label for="name" class="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2"
-                    >Name</label
-                  >
-                  <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    required
-                    placeholder="Your name"
-                    class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
-                  />
-                </div>
-                <div>
-                  <label for="email" class="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2"
-                    >Email</label
-                  >
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    required
-                    placeholder="you@example.com"
-                    class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
-                  />
-                </div>
-              </div>
-              <div>
-                <label for="message" class="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2"
-                  >Message</label
-                >
-                <textarea
-                  name="message"
-                  id="message"
-                  rows="5"
-                  required
-                  placeholder="Tell me about your project or how I can help..."
-                  class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-slate-800 focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 resize-none"
-                ></textarea>
-              </div>
-              <div class="pt-2">
-                <button type="submit" class="btn btn-primary w-full py-4 text-lg font-semibold">
-                  <Icon name="tabler:send" class="w-5 h-5 mr-2" />
-                  Send Message
-                </button>
-              </div>
-              <div id="form-message" class="hidden"></div>
-            </form>
-          </div>
+            <Icon name="tabler:brand-linkedin" class="w-5 h-5 mr-2" />
+            Send me a message
+          </a>
         </div>
       </div>
     </div>
   </section>
-
-  <script>
-    const serviceLinks = document.querySelectorAll('a[data-service-title]');
-    const serviceInput = document.getElementById('service-input');
-
-    serviceLinks.forEach((link) => {
-      link.addEventListener('click', () => {
-        const title = link.getAttribute('data-service-title');
-        if (serviceInput && title) {
-          (serviceInput as HTMLInputElement).value = title;
-        }
-      });
-    });
-
-    // Check for success param in URL
-    if (new URLSearchParams(window.location.search).get('success') === 'true') {
-      const messageDiv = document.getElementById('form-message');
-      if (messageDiv) {
-        messageDiv.textContent = 'Message sent successfully! I will get back to you soon.';
-        messageDiv.className = 'text-green-600 dark:text-green-400 text-center mt-4 font-semibold';
-        messageDiv.classList.remove('hidden');
-      }
-    }
-  </script>
 </Layout>
