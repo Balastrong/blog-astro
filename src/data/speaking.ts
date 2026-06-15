@@ -207,4 +207,13 @@ export const speakingSessions: SpeakingSession[] = [
     eventUrl: 'https://www.jsday.it/talk/can-we-make-typesafety-look-like-javascript/',
     image: 'jsday2026.jpg',
   },
+  {
+    date: '2026-06-10',
+    title: 'A fresh take on React full-stack applications with TanStack Start',
+    event: "ElevateDev '26",
+    type: 'session',
+    mode: 'in-person',
+    language: '🇬🇧',
+    image: 'elevate26.jpeg',
+  },
 ];
