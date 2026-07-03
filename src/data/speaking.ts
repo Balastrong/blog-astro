@@ -157,7 +157,7 @@ export const speakingSessions: SpeakingSession[] = [
     type: 'session',
     mode: 'in-person',
     language: '🇬🇧',
-    eventUrl: 'https://www.reactjsday.it/talk/tanstack-start-a-fresh-take-on-react-full-stack-applications/',
+    eventUrl: 'https://www.reactjsday.it/talk-archive/tanstack-start-a-fresh-take-on-react-full-stack-applications/',
     image: 'reactjsday2025.jpeg',
   },
   {
@@ -204,7 +204,7 @@ export const speakingSessions: SpeakingSession[] = [
     type: 'session',
     mode: 'in-person',
     language: '🇬🇧',
-    eventUrl: 'https://www.jsday.it/talk/can-we-make-typesafety-look-like-javascript/',
+    eventUrl: 'https://www.jsday.it/talk-archive/can-we-make-typesafety-look-like-javascript/',
     image: 'jsday2026.jpg',
   },
   {
