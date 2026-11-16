@@ -216,4 +216,13 @@ export const speakingSessions: SpeakingSession[] = [
     language: '🇬🇧',
     image: 'elevate26.jpeg',
   },
+  {
+    date: '2026-10-08',
+    title: 'Belle le demo AI. Ma poi, nel lavoro vero?',
+    event: 'Firenze Dev',
+    type: 'session',
+    mode: 'in-person',
+    language: '🇮🇹',
+    eventUrl: 'https://firenze.dev/event/belle-le-demo-ai',
+  },
 ];
